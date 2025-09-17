@@ -93,7 +93,7 @@ class ShaderBackground {
                 float startupDuration = 3.0;
                 float startupProgress = min(u_time / startupDuration, 1.0);
                 
-                float camZ = 3.0 * u_time;
+                float camZ = 0.8 * u_time;
                 vec2 cam = position(camZ);
 
                 float dt = 1.1;

@@ -1103,8 +1103,8 @@ body:has(.shader-canvas) .uiverse-container {
             rgba(255,255,255,0.02) 78%, 
             transparent 88%);
     animation: 
-        liquidWave 35s cubic-bezier(0.4, 0, 0.6, 1) infinite,
-        colorTransition 20s ease-in-out infinite;
+        liquidWave 120s cubic-bezier(0.4, 0, 0.6, 1) infinite,
+        colorTransition 80s ease-in-out infinite;
     opacity: 0.6;
     z-index: -1;
     pointer-events: none;
@@ -1244,7 +1244,7 @@ body:has(.shader-canvas) .uiverse-container {
     margin-bottom: 0.3rem;
 }
 
-/* Publications page styles */
+/* Portfolio page styles */
 .section-intro {
     text-align: center;
     color: #9ca3af;
@@ -1254,6 +1254,27 @@ body:has(.shader-canvas) .uiverse-container {
     margin-left: auto;
     margin-right: auto;
     font-family: 'Raleway', system-ui, sans-serif;
+}
+
+/* Enhanced portfolio section styling */
+.portfolio-section {
+    position: relative;
+    margin-bottom: 5rem;
+}
+
+.portfolio-section::after {
+    content: '';
+    position: absolute;
+    top: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+}
+
+.portfolio-section:first-child::after {
+    display: none;
 }
 
 .publications-content {
@@ -1272,8 +1293,8 @@ body:has(.shader-canvas) .uiverse-container {
 }
 
 .publication-item {
-    background: rgba(17, 17, 17, 0.25);
-    border: 1px solid rgba(59, 130, 246, 0.15);
+    background: rgba(17, 17, 17, 0.3);
+    border: 1px solid rgba(59, 130, 246, 0.2);
     border-radius: 12px;
     padding: 2rem;
     backdrop-filter: blur(8px);
@@ -1301,12 +1322,10 @@ body:has(.shader-canvas) .uiverse-container {
 }
 
 .publication-item:hover {
-    background: rgba(17, 17, 17, 0.35);
-    border-color: rgba(59, 130, 246, 0.3);
-    transform: translateY(-5px);
-    box-shadow: 
-        0 8px 25px rgba(0, 0, 0, 0.3),
-        0 0 15px rgba(16, 235, 255, 0.2);
+    background: rgba(17, 17, 17, 0.5);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
 }
 
 .publication-header {
@@ -1319,11 +1338,16 @@ body:has(.shader-canvas) .uiverse-container {
 
 .publication-header h3 {
     color: #10ebff;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 500;
     margin: 0;
     font-family: 'Raleway', system-ui, sans-serif;
     line-height: 1.3;
+    background: linear-gradient(135deg, #10ebff 0%, #35e4f4 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 30px rgba(16, 235, 255, 0.3);
 }
 
 .publication-date {
