@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SHELF Loading - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.png" width="300"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/index.html#about" >About</a></li>
+            <li><a href="/index.html#team" >Team</a></li>
+            <li><a href="/index.html#services" >Services</a></li>
+            <li><a href="/index.html#cve-advisories" >Advisories</a></li>
+            <li><a href="/blog/" class="active">Blog</a></li>
+            <li><a href="/index.html#contact" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <script>
+document.body.classList.add('post-page');
+</script>
+
+<div class="container">
+    <article style="max-width: 900px; margin: 0 auto; padding: 5rem 2rem; position: relative;">
+        <!-- Enhanced title with gradient effect -->
+        <h1 style="
+            background: linear-gradient(90deg, #ffffff 0%, #10ebff 50%, #ffffff 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmerTitle 3s ease-in-out infinite;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 2rem;
+        ">SHELF Loading</h1>
+        
+        <!-- Enhanced post meta -->
+        <div style="
+            color: #35e4f4;
+            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        ">
+            April 08, 2021
+             • ulexec
+            <div style="
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #35e4f4, transparent);
+                border-radius: 1px;
+            "></div>
+        </div>
+        
+        <!-- Enhanced content area -->
+        <div style="
+            color: #d1d5db;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            text-align: left;
+        ">
+            <p>This is a mirror of <code class="language-plaintext highlighter-rouge">ulexec</code>’s article published at <em>Tmp.0ut</em> zine volume 1. Original post can be found <a href="https://tmpout.sh/1/">here</a>.</p>
+
+<p>SHELF Loading is a new type of ELF binary reflective loading that my colleague @Anonymous_ and I first documented on April 21st 2021.
+This new <code class="language-plaintext highlighter-rouge">ELF reflective loading</code> methodology enables the capability to generate compiler-based artifacts with properties that resemble those of <code class="language-plaintext highlighter-rouge">shellcode</code>.
+These compiler-based artifacts are ultimately a <code class="language-plaintext highlighter-rouge">Hybrid ELF</code> file between conventional static and PIE binaries.
+Had the pleasure to publish this research at <strong>Tmp0ut</strong>, a Linux VX zine. This was Volume #1, and its first release and their official site can be found at <a href="http://tmpout.sh">tmpout.sh</a>.</p>
+
+<p>Make sure to check other of the great articles published on this first volume if ELF mangling/golfing/fuckery is for you :)</p>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>Over the last several years there have been several enhancements in Linux 
+offensive tooling in terms of sophistication and complexity. Linux malware has
+become increasingly more popular, given the higher number of public reports
+documenting Linux threats. These include government-backed Linux implants such 
+as APT28’s VPNFilter, Drovorub or Winnti wide range of Linux Malware.</p>
+
+<p>However, this increase in popularity does not seem to have had much of an impact
+in the totality of the sophistication of the current Linux threat landscape just
+yet. It’s a fairly young ecosystem, where cybercriminals have not been able to 
+identify reliable targets for monetization apart from Cryptocurrency Mining, 
+DDoS, and more recently, Ransomware operations.</p>
+
+<p>In today’s Linux threat landscape, even the smallest refinement or introduction
+of complexity often results in AV evasion, and therefore Linux malware authors 
+do not tend to invest unnecessary resources to sophisticate their implants. 
+There are various reasons why this phenomenon occurs, and it is subject to 
+ambiguity. The Linux ecosystem, in contrast to other popular spheres such as 
+Windows and MacOS, is more dynamic and diverse, stemming from the many flavors 
+of ELF files for different architectures, the fact that ELF binaries can be 
+valid in many different forms, and that the visibility of Linux threats is often
+quite poor.</p>
+
+<p>Due to these issues, AV vendors face a completely different set of challenges 
+detecting these threats. Often times this disproportionate detection failure of
+simple/unsophisticated threats leaves an implicit impression that Linux malware
+is by nature not complex. This statement couldn’t be further from the truth, and
+those familiar with the ELF file format know that there is quite a lot of room 
+for innovation with ELF files that other file formats are not able to provide 
+due to their lack of flexibility, even if we have not seen it abused as much 
+over the years.</p>
+
+<p>In this article we are going to discuss a technique that achieves an uncommon 
+functionality of file formats, which generically converts full executables to 
+shellcode in a way that demonstrates, yet again, another example that ELF 
+binaries can be manipulated to achieve offensive innovation that is hard or 
+impossible to replicate in other file formats.</p>
+
+<h3 id="a-primer-on-elf-reflective-loading">A Primer On ELF Reflective Loading</h3>
+
+<p>In order to understand the technique, we must first give a contextual background
+on previously known ELF techniques upon which this one is based, with a 
+comparison of the benefits and tradeoffs.</p>
+
+<p>Most ELF packers, or any application implementing any form of ELF binary 
+loading, are primarily based on what’s known as <code class="language-plaintext highlighter-rouge">User-Land-Exec</code>.</p>
+
+<p>User-Land-Exec is a method first documented by @thegrugq, in which an ELF binary
+can be loaded without using any of the execve family of system calls, and hence 
+its name.</p>
+
+<p>For the sake of simplicity, the steps to implement an ordinary User-Land-Exec 
+with support of <code class="language-plaintext highlighter-rouge">ET_EXEC</code> and <code class="language-plaintext highlighter-rouge">ET_DYN</code> ELF binaries is illustrated in the following
+diagram, showcasing an implementation of the UPX packer for ELF binaries:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.1.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>As we can observe, this technique has the following requirements (by @thegrugq):</p>
+
+<ol>
+  <li>Clean out the address space</li>
+  <li>If the binary is dynamically linked, load the dynamic linker.</li>
+  <li>Load the binary.</li>
+  <li>Initialize the stack.</li>
+  <li>Determine the entry point (i.e. the dynamic linker or the main executable).</li>
+  <li>Transfer execution to the entry point.</li>
+</ol>
+
+<p>On a more technical level, we come up with the following requirements:</p>
+
+<ol>
+  <li>Setup the stack of the embedded executable with its correspondent Auxiliary
+Vector.</li>
+  <li>Parse PHDR’s and identify if there is a PT_INTERP segment, denoting that 
+the file is a dynamically linked executable.</li>
+  <li>LOAD interpreter if PT_INTERP is present.</li>
+  <li>LOAD target embedded executable.</li>
+  <li>Pivot to mapped e_entry of target executable or interpreter accordingly, 
+depending if the target executable is a dynamically linked binary.</li>
+</ol>
+
+<p>For a more in-depth explanation, we suggest reading @thegrugq’s comprehensive 
+paper on the matter [9].</p>
+
+<p>One of the capabilities of conventional <code class="language-plaintext highlighter-rouge">User-Land-Exec</code> are the evasion of an 
+execve footprint as previously mentioned, in contrast with other techniques 
+such as <code class="language-plaintext highlighter-rouge">memfd_create/execveat</code>, which are also widely used to load end execute
+a target ELF file. Since the loader maps and loads the target executable, the
+embedded executable has the flexibility of having a non-conventional structure.
+This has the side benefit of being useful for evasion and anti-forensics 
+purposes.</p>
+
+<p>On the other hand, since there are a lot of critical artifacts involved in the
+loading process, it can be easy to recognize by reverse-engineers, as well as 
+being somewhat fragile due to the fact that the technique is heavily dependent
+on these components. For this reason, writing <code class="language-plaintext highlighter-rouge">User-Land-Exec</code> based loaders have
+been somewhat tedious. As more features get added to the ELF file format, this 
+technique has been inclined to mature over time and thereby increasing its 
+complexity.</p>
+
+<p>The new technique that we will be covering in this paper relies on implementing
+a generic <code class="language-plaintext highlighter-rouge">User-Land-Exec</code> loader with a reduced set of constraints supporting a 
+hybrid <code class="language-plaintext highlighter-rouge">PIE</code> and statically linked ELF binaries that to our knowledge have yet to
+be reported.</p>
+
+<p>We believe this technique represents a drastic improvement of previous versions
+of User-Land-Exec loaders, since based on the lack of technical implementation 
+constraints and the nature of this new hybrid static/PIE ELF flavor, the extent
+of capabilities it can provide is wider and more evasive than with previous 
+<code class="language-plaintext highlighter-rouge">User-Land-Exec</code> variants.</p>
+
+<h3 id="internals-of-static-pie-executable-generation">Internals Of Static PIE Executable Generation</h3>
+
+<h4 id="background">Background</h4>
+
+<p>In July of 2017 H. J. Lu patched a bug entry in GCC bugzilla named ‘Support 
+creating static PIE’. This patch mentioned the implementation of a statically 
+based PIE in his branch at glibc <code class="language-plaintext highlighter-rouge">hjl/pie/static</code>, in which Lu documented that by
+supplying <code class="language-plaintext highlighter-rouge">–static</code> and <code class="language-plaintext highlighter-rouge">–pie</code> flags to the linker along with <code class="language-plaintext highlighter-rouge">PIE</code> versions of <code class="language-plaintext highlighter-rouge">crt*.o</code>
+as input, static PIE ELF executables could be generated. It is important to 
+note, that at the time of this patch, generation of fully statically linked <code class="language-plaintext highlighter-rouge">PIE</code>
+binaries was not possible.[1]</p>
+
+<p>In August, Lu submitted a second patch[2] to the GCC driver, for adding the 
+<code class="language-plaintext highlighter-rouge">–static</code> flag to support <code class="language-plaintext highlighter-rouge">static PIE</code> files that he was able to demonstrate in his
+previous patch. The patch was accepted in trunk[3], and this feature was 
+released in GCC v8.</p>
+
+<p>Moreover, in December of 2017 a commit was made in glibc[4] adding the option 
+<code class="language-plaintext highlighter-rouge">–enable-static-pie</code>. This patch made it possible to embed the needed parts of 
+ld.so to produce standalone static PIE executables.</p>
+
+<p>The major change in glibc to allow static PIE was the addition of the function
+<code class="language-plaintext highlighter-rouge">_dl_relocate_static_pie</code> which gets called by <code class="language-plaintext highlighter-rouge">__libc_start_main</code>. This function is
+used to locate the run-time load address, read the dynamic segment, and perform 
+dynamic relocations before initialization, then transfer control flow of 
+execution to the subject application.</p>
+
+<p>In order to know which flags and compilation/linking stages were needed in order
+to generate static <code class="language-plaintext highlighter-rouge">PIE</code> executables, we passed the flag <code class="language-plaintext highlighter-rouge">–static-pie –v</code> to GCC. 
+However, we soon realized by doing this that the linker generated a plethora of
+flags and calls to internal wrappers. As an example, the linking phase is 
+handled by the tool <code class="language-plaintext highlighter-rouge">/usr/lib/gcc/x86_64-linux-gnu/9/collect2</code> and GCC itself is 
+wrapped by <code class="language-plaintext highlighter-rouge">/usr/lib/gcc/x86_64-linux-gnu/9/cc1</code>. Nevertheless, we managed to 
+remove the irrelevant flags and we ended up with the following steps:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.2.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>These steps are in fact the same provided by Lu, supplying the linker with input
+files compiled with <code class="language-plaintext highlighter-rouge">–fpie</code>, and <code class="language-plaintext highlighter-rouge">–static, -pie, -z text, --no-dynamic-linker</code>. 
+In particular, the most relevant artifacts for static PIE creation are <code class="language-plaintext highlighter-rouge">rcrt1.o</code>,
+<code class="language-plaintext highlighter-rouge">libc.a</code>, and our own supplied input file, <code class="language-plaintext highlighter-rouge">test.o</code>. The <code class="language-plaintext highlighter-rouge">rcrt1.o</code> object contains the
+<code class="language-plaintext highlighter-rouge">_start</code> code which has the code required to correctly load the application before
+executing its entry point by calling the correspondent libc startup code 
+contained in <code class="language-plaintext highlighter-rouge">__libc_start_main</code>:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.3.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>As previously mentioned, <code class="language-plaintext highlighter-rouge">__libc_start_main</code> will call the new added function 
+<code class="language-plaintext highlighter-rouge">_dl_relocate_static_pie</code> (defined at <code class="language-plaintext highlighter-rouge">elf/dl-reloc-static-pie.c</code> file of glibc 
+source). The primary steps performed by this function are commented in the 
+source:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.4.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>With the help of these features, GCC is capable of generating static executables
+which can be loaded at any arbitrary address.</p>
+
+<p>We can observe that <code class="language-plaintext highlighter-rouge">_dl_relocate_static_pie</code> will handle the needed dynamic 
+relocations. One noticeable difference of <code class="language-plaintext highlighter-rouge">rcrt1.o</code> from conventional <code class="language-plaintext highlighter-rouge">crt1.o</code> is 
+that all contained code is position independent. Inspecting what the generated 
+binaries look like we see the following:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.5.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>At first glance they seem to be common dynamically linked PIE executables, based
+on the <code class="language-plaintext highlighter-rouge">ET_DYN</code> executable type retrieved from the ELF header. However, upon 
+closer examination of the segments, we will observe the nonexistent <code class="language-plaintext highlighter-rouge">PT_INTERP</code> 
+segment usually denoting the path to the interpreter in dynamically linked 
+executables and the existence of a <code class="language-plaintext highlighter-rouge">PT_TLS</code> segment, usually contained only in 
+statically linked executables.</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.6.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>If we check what the dynamic linker identifies the subject executable as, we 
+will see it identifies the file type correctly:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.7.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>In order to load this file, all we would need to do is map all the <code class="language-plaintext highlighter-rouge">PT_LOAD</code> 
+segments to memory, set up the process stack with the correspondent <code class="language-plaintext highlighter-rouge">Auxiliary
+Vector</code> entries, and then pivot to the mapped executable’s entry point. We do 
+not need to be concerned about mapping the <code class="language-plaintext highlighter-rouge">RTLD</code> since we don’t have any external
+dependencies or link time address restrictions.</p>
+
+<p>As we can observe, we have four loadable segments commonly seen in <code class="language-plaintext highlighter-rouge">SCOP ELF 
+binaries</code>. However, for the sake of easier deployment, it will be crucial if we 
+could merge all those segments into one as is usually done with ELF disk 
+injection into a foreign executable. We can do just this by using the <code class="language-plaintext highlighter-rouge">–N</code> linker
+flag to merge data and text within a single segment.</p>
+
+<h3 id="non-compatibility-of-gccs--n-and-static-pie-flags">Non-compatibility of GCC’s -N and static-pie flags</h3>
+
+<p>If we pass <code class="language-plaintext highlighter-rouge">–static-pie</code> and <code class="language-plaintext highlighter-rouge">–N</code> flags together to GCC we see that it generates the
+following executable:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.8.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>The first thing we noticed about the type of generated ELF when using 
+<code class="language-plaintext highlighter-rouge">–static-pie</code> alone was that it had a type of <code class="language-plaintext highlighter-rouge">ET_DYN</code>, and now together with <code class="language-plaintext highlighter-rouge">–N</code> it 
+results in an <code class="language-plaintext highlighter-rouge">ET_EXEC</code>.</p>
+
+<p>In addition, if we take a closer look at the segment’s virtual addresses, we see
+that the generated binary is not a Position Independent Executable. This is due 
+to the fact that the virtual addresses appear to be absolute addresses and not 
+relative ones. To understand why our program is not being linked as expected, we
+inspected the linker script that was being used.</p>
+
+<p>As we are using the ld linker from binutils, we took a look on how ld selected 
+the linker script; this is done in the <code class="language-plaintext highlighter-rouge">ld/ldmain.c</code> code at line 345:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.9.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>The <code class="language-plaintext highlighter-rouge">ldfile_open_default_command_file</code> is in fact an indirect call to an 
+architecture independent function generated at compile time that contains a set
+of internal linker scripts to be selected depending upon the flags passed to ld.
+Because we are using the x86_64 architecture, the generated source will be 
+<code class="language-plaintext highlighter-rouge">ld/elf_x86_64.c</code>, and the function which is called to select the script is 
+<code class="language-plaintext highlighter-rouge">gldelf_x86_64_get_script</code>, which is simply a set of if-else-if statements to 
+select the internal linker script. The <code class="language-plaintext highlighter-rouge">–N</code> option sets the config.text_read_only
+variable to false, which forces the selection function to use an internal script
+which does not produce PIC as can be seen below:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.10.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>This way of selecting the default script makes the <code class="language-plaintext highlighter-rouge">–static-pie</code> and <code class="language-plaintext highlighter-rouge">–N</code> flags 
+non-compatible, because the forced test of selecting the script based on –N is 
+parsed before <code class="language-plaintext highlighter-rouge">–static-pie</code>.</p>
+
+<h3 id="circumvention-via-custom-linker-script">Circumvention via custom Linker Script</h3>
+
+<p>The incompatibility between <code class="language-plaintext highlighter-rouge">–N</code>, <code class="language-plaintext highlighter-rouge">-static</code>, and <code class="language-plaintext highlighter-rouge">–pie</code> flags led us to a dead end, 
+and we were forced to think of different ways to overcome this barrier. What we
+attempted was to provide a custom script to drive the linker. As we essentially
+needed to merge the behavior of two separate linker scripts, our approach was to
+choose one of the scripts and adapt it to generate the desired outcome with 
+features of the remaining script.</p>
+
+<p>We chose the default script of <code class="language-plaintext highlighter-rouge">–static-pie</code> over the one used with <code class="language-plaintext highlighter-rouge">–N</code> because in
+our case it was easier to modify as opposed to changing the –N default script to
+support PIE generation.</p>
+
+<p>To accomplish this goal, we would need to change the definition of the segments,
+which are controlled by the <code class="language-plaintext highlighter-rouge">PHDRS</code> [5] field in the linker script. If the command
+is not used the linker will provide program headers generated by default – 
+However, if we neglect this in the linker script, the linker will not create any
+additional program headers and will strictly follow the guidelines defined in 
+the subject linker script.</p>
+
+<p>Taking into account the details discussed above, we added a PHDRS command to the
+default linker script, starting with all the original segments which are created
+by default when using <code class="language-plaintext highlighter-rouge">–static-pie</code>:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.2.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>After this we need to know how each section maps to each segment – and for this 
+we can use readelf as shown below:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.12.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>With knowledge of the mappings, we just needed to change the section output 
+definition in the linker script which adds the appropriate segment name at the
+end of each function definition, as shown in the following example:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.13.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>Here, the .tdata and .tbss sections are being assigned to the segments that get
+mapped in the same order that we saw in the output of the readelf –l command. 
+Eventually, we ended up having a working script precisely changing all mapped 
+sections which were mapped in data to the text segment:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.14.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>If we compile our subject test file with this linker script, we see the 
+following generated executable:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.15.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>We now have a static-pie with just one loadable segment. The same approach can 
+be repeated to remove other irrelevant segments, keeping only critical segments
+necessary for the execution of the binary. As an example, the following is a 
+static-pie executable instance with minimal program headers needed to run:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.16.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>The following is the final output of our desired ELF structure – having only one
+PT_LOAD segment generated by a linker script with the PHDRS command configured 
+as in the screenshot below:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.17.png" style="width: 100%; height: auto;" />
+</div>
+
+<h3 id="shelf-loading">SHELF Loading</h3>
+
+<p>This generated ELF flavor gives us some interesting capabilities that other ELF
+types are not able to provide. For the sake of simplicity, we have labelled this
+type of ELF binary as SHELF, and we will be referencing it throughout the rest 
+of this paper. The following is an updated diagram of the loading stages needed
+for SHELF loading:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.18.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>As we can see in the diagram above, the process of loading SHELF files is highly
+reduced in complexity compared to conventional ELF loading schemes.</p>
+
+<p>To illustrate the reduced set of constraints to load these types of files, a 
+snippet of a minimalistic SHELF User-Land-Exec approach is as follows:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.19.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>By using this approach, a subject SHELF file would look as follows in memory and
+on disk:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.20.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>As we can observe, the ELF header and Program Headers are missing from the 
+process image. This is a feature that this flavor of ELF enables us to implement
+and is discussed in the following section.</p>
+
+<h3 id="anti-forensic-capabilities">Anti-Forensic Capabilities</h3>
+
+<p>This new approach to <code class="language-plaintext highlighter-rouge">User-Land-Exec</code> has also two optional stages useful for 
+anti-forensic purposes. Since the <code class="language-plaintext highlighter-rouge">dl_relocate_static_pie</code> function will obtain 
+all of the required fields for relocation from the Auxiliary Vector, this leaves
+us room to play with how the subject <code class="language-plaintext highlighter-rouge">SHELF</code> file structure may look in memory and
+on disk.</p>
+
+<p>Removing the ELF header will directly impact reconstruction capabilities, 
+because most Linux-based scanners will scan process memory for existing ELF 
+images by first identifying ELF headers. The ELF header will be parsed and will
+contain further information on where to locate the Program Header Table and 
+consequently the rest of the mapped artifacts of the file.</p>
+
+<p>Removal of the ELF header is trivial since this artifact is not really needed by
+the loader – all required information in the subject file will be retrieved from
+the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> as previously mentioned.</p>
+
+<p>An additional artifact that can be hidden is the Program Header Table. This is a
+slightly different case when compared with the ELF Header. The <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> 
+needs to locate the Program Header Table in order for the <code class="language-plaintext highlighter-rouge">RTLD</code> to successfully 
+load the file by applying the needed runtime relocations. Regardless, there are
+many approaches to obfuscating the <code class="language-plaintext highlighter-rouge">PHT</code>. The simplest approach is to remove the
+original <code class="language-plaintext highlighter-rouge">Program Header Table</code> location, and relocate it somewhere in the file 
+that is only known by the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code>.</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.21.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>We can precompute the location of each of the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> entries and 
+define each entry as a macro in an include file, tailoring our loader to every
+subject SHELF file at compile-time. The following is an example of how these 
+macros can be generated:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.22.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>As we can observe, we have parsed the subject <code class="language-plaintext highlighter-rouge">SHELF</code> file for its e_entry and 
+e_phnum fields, creating corresponding macros to hold those values. We also have
+to choose a random base image to load the file. Finally, we locate the PHT and 
+convert it to an array, then remove it from its original location. Applying 
+these modifications allows us to completely remove the ELF header and change the
+default location of the subject <code class="language-plaintext highlighter-rouge">SHELF</code> file PHT both on disk and in memory(!)</p>
+
+<p>Without successful retrieval of the <code class="language-plaintext highlighter-rouge">Program Header Table</code>, reconstruction 
+capabilities may be strictly limited and further heuristics will have to be 
+applied for successful process image reconstruction.</p>
+
+<p>An additional approach to make the reconstruction of the Program Header Table 
+much harder is by instrumenting the way glibc implements the resolution of the
+Auxiliary Vector fields.</p>
+
+<h3 id="obscuring-shelf-features-by-pt_tls-patching">Obscuring SHELF features by PT_TLS patching</h3>
+
+<p>Even after modifying the default location of the <code class="language-plaintext highlighter-rouge">Program Header Table</code> by 
+choosing a new arbitrary location when crafting the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code>, the 
+Program Header Table would still reside in memory and could be found with some
+effort. To obscure ourselves even further we can cover how the startup code 
+reads the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> fields.</p>
+
+<p>The code that does this is in <code class="language-plaintext highlighter-rouge">elf/dl_support.c</code> in the function <code class="language-plaintext highlighter-rouge">_dl_aux_init</code>. In
+abstract, the code iterates over all the <code class="language-plaintext highlighter-rouge">auxv_t</code> entries, and each of these 
+entries initialize internal variables from glibc:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.23.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>The only reason the Auxiliary Vector is required is to initialize internal <code class="language-plaintext highlighter-rouge">_dl_*</code>
+variables. Knowing this, we can bypass the creation of the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> 
+entirely and do the same job that <code class="language-plaintext highlighter-rouge">_dl_aux_init</code> would do before passing control
+of execution to the subject <code class="language-plaintext highlighter-rouge">SHELF</code> file.</p>
+
+<p>The only entries which are critical are <code class="language-plaintext highlighter-rouge">AT_PHDR</code>, <code class="language-plaintext highlighter-rouge">AT_PHNUM</code>, and <code class="language-plaintext highlighter-rouge">AT_RANDOM</code>. 
+Therefore, we only need to patch the respective <code class="language-plaintext highlighter-rouge">_dl_*</code> variables that depend on
+these fields. As an example of how to retrieve these values, we can use the 
+following one-liner to generate an include file with precomputed macros holding
+the offset to every <code class="language-plaintext highlighter-rouge">dl_*</code> variable:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.24.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>With the offset to these variables located, we only need to patch them in the
+same way the original startup code would do so using the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code>. As a
+way to illustrate this technique, the following code will initialize the 
+addresses of the <code class="language-plaintext highlighter-rouge">Program Headers</code> to <code class="language-plaintext highlighter-rouge">new_address</code>, and the number of program 
+headers to the correct number:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.25.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>At this point we have a working program without supplying the <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code>.
+Because the subject binary is <code class="language-plaintext highlighter-rouge">statically linked</code>, and the code that will load the
+<code class="language-plaintext highlighter-rouge">SHELF</code> file is our loader, we can neglect every other segment in the Auxiliary 
+Vector’s <code class="language-plaintext highlighter-rouge">AT_PHDR</code> and <code class="language-plaintext highlighter-rouge">AT_PHNUM</code> or <code class="language-plaintext highlighter-rouge">dl_phdr</code> and <code class="language-plaintext highlighter-rouge">dl_phnum</code> respectively. There is an
+exception, which is the <code class="language-plaintext highlighter-rouge">PT_TLS</code> segment which is the interface in which Thread 
+Local Storage is implemented in the ELF file format.</p>
+
+<p>The following code which resides in <code class="language-plaintext highlighter-rouge">csu/libc-tls.c</code> on function <code class="language-plaintext highlighter-rouge">__libc_setup_tls</code>
+show the type of information that gets retrieved from the <code class="language-plaintext highlighter-rouge">PT_TLS</code> segment:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.26.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>In the code snippet above, we can see that TLS initialization relies on the 
+presence of the <code class="language-plaintext highlighter-rouge">PT_TLS</code> segment. We have several approaches that can obfuscate 
+this artifact, such as patching the <code class="language-plaintext highlighter-rouge">__libc_setup_tls</code> function to just return and
+then initialize the TLS with our own code. Here, we’ll choose to implement a 
+quick patch to glibc instead as a PoC.</p>
+
+<p>To avoid the need of the <code class="language-plaintext highlighter-rouge">PT_TLS</code> Program Header we have added a global variable 
+to hold the values from <code class="language-plaintext highlighter-rouge">PT_TLS</code> and set the values inside <code class="language-plaintext highlighter-rouge">__libc_setup_tls</code>, 
+reading from our global variable instead of the subject <code class="language-plaintext highlighter-rouge">SHELF</code> file Program 
+Header Table. With this small change we finally strip all the program headers:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.27.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>Using the following script to generate <code class="language-plaintext highlighter-rouge">_phdr.h</code>:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.28.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>We can apply our patches in the following way after including <code class="language-plaintext highlighter-rouge">_phdr.h</code>:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.29.png" style="width: 100%; height: auto;" />
+</div>
+
+<p>Applying the methodology shown above, we gain a high level of evasiveness by 
+loading and executing our <code class="language-plaintext highlighter-rouge">SHELF</code> file without an ELF header, Program Header 
+Table, and <code class="language-plaintext highlighter-rouge">Auxiliary Vector</code> – just as shellcode gets loaded. The following 
+diagram illustrates how straightforward the loading process of <code class="language-plaintext highlighter-rouge">SHELF</code> files is:</p>
+
+<div align="center">
+<img src="https://tmpout.sh/1/10/10.30.png" style="width: 100%; height: auto;" />
+</div>
+
+<h3 id="conclusion">Conclusion</h3>
+
+<p>We have covered the internals of Reflective Loading of ELF files, explaining 
+previous implementations of User-Land-Exec, along with its benefits and 
+drawbacks. We then explained the latest patches in the GCC code base that 
+implemented support for static-pie binaries, discussing our desired outcome, 
+and the approaches we followed to achieve the generation of static-pie ELF files
+with one single PT_LOAD segment. Finally, we discussed the anti-forensic 
+features that SHELF loading can provide, which we think to be a considerable 
+enhancement when compared with previous versions of ELF Reflective Loading.</p>
+
+<p>We think this could be the next generation of ELF Reflective Loading, and it may
+benefit readers to understand the extent of offensive capabilities that the ELF
+file format can provide. If you would like access to the source code, contact 
+@sblip or @ulexec.</p>
+
+<h3 id="references">References</h3>
+
+<ul>
+  <li>[1] (support static pie) 
+  <a href="https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81498">https://gcc.gnu.org/bugzilla/show_bug.cgi?id=81498</a></li>
+  <li>[2] (first patch gcc)<a href="https://gcc.gnu.org/ml/gcc-patches/2017-08/msg00638.html">
+  https://gcc.gnu.org/ml/gcc-patches/2017-08/msg00638.html</a></li>
+  <li>[3] (gcc patch)
+  <a href="https://gcc.gnu.org/viewcvs/gcc?view=revision&amp;revision=252034">https://gcc.gnu.org/viewcvs/gcc?view=revision&amp;revision=252034</a></li>
+  <li>[4] (glibc –enable-static-pie)
+  <a href="https://sourceware.org/git/?p=glibc.git;a=commit;h=9d7a3741c9e59eba87fb3ca6b9f979befce07826">https://sourceware.org/git/?p=glibc.git;a=commit;h=9d7a3741c9e59eba87fb3ca6b9f979befce07826</a></li>
+  <li>[5] (ldscript doc)
+  <a href="https://sourceware.org/binutils/docs/ld/PHDRS.html#PHDRS">https://sourceware.org/binutils/docs/ld/PHDRS.html#PHDRS</a></li>
+  <li>[6] <a href="https://sourceware.org/binutils/docs/ld/
+    Output-Section-Phdr.html#Output-Section-Phdr">https://sourceware.org/binutils/docs/ld/
+    Output-Section-Phdr.html#Output-Section-Phdr</a></li>
+  <li>[7] <a href="https://www.akkadia.org/drepper/tls.pdf">https://www.akkadia.org/drepper/tls.pdf</a></li>
+  <li>[8] (why ld doesn’t allow -static -pie -N)
+  <a href="https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=blob;f=ld/ldmain.c;h=c4af10f4e9121949b1b66df6428e95e66ce3eed4;hb=HEAD#l345">https://sourceware.org/git/gitweb.cgi?p=binutils-gdb.git;a=blob;f=ld/ldmain.c;h=c4af10f4e9121949b1b66df6428e95e66ce3eed4;hb=HEAD#l345</a></li>
+  <li>[9] (grugq ul_exec paper)<a href="https://grugq.github.io/docs/ul_exec.txt">https://grugq.github.io/docs/ul_exec.txt</a></li>
+  <li>[10] (ELF UPX internals)<a href="https://ulexec.github.io/ulexec.github.io/article/2017/11/17/UnPacking_a_Linux_Tsunami_Sample.html">https://ulexec.github.io/ulexec.github.io/article/2017/11/17/UnPacking_a_Linux_Tsunami_Sample.html</a></li>
+</ul>
+
+
+        </div>
+        
+        <style>
+        /* Text formatting and indentation */
+        .container article p {
+            margin-bottom: 1.5rem !important;
+            text-indent: 0 !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+        }
+        
+        .container article blockquote {
+            border-left: 4px solid #10ebff !important;
+            padding-left: 1.5rem !important;
+            margin: 1.5rem 0 !important;
+            font-style: italic !important;
+            opacity: 0.9 !important;
+        }
+        
+        .container article ul {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+        
+        .container article ol {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+        
+        .container article ol li {
+            padding-left: 0.5rem !important;
+        }
+        
+        .container article ul li {
+            padding-left: 0.5rem !important;
+        }
+        
+        .container article li {
+            margin-bottom: 0.5rem !important;
+            line-height: 1.6 !important;
+        }
+        
+        .container article h2, .container article h3, .container article h4 {
+            margin-top: 2.5rem !important;
+            margin-bottom: 1rem !important;
+            color: #10ebff !important;
+        }
+        
+        /* Better hyperlink colors for blog content */
+        .container article a {
+            color: #10ebff !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+            border-bottom: 1px solid rgba(16, 235, 255, 0.3) !important;
+        }
+        
+        .container article a:hover {
+            color: #35e4f4 !important;
+            border-bottom-color: rgba(53, 228, 244, 0.8) !important;
+            text-shadow: 0 0 8px rgba(16, 235, 255, 0.3) !important;
+        }
+        
+        .container article a:visited {
+            color: #8b5cf6 !important;
+            border-bottom-color: rgba(139, 92, 246, 0.3) !important;
+        }
+        
+        .container article a:visited:hover {
+            color: #a78bfa !important;
+            border-bottom-color: rgba(167, 139, 250, 0.8) !important;
+        }
+        
+        /* Override link styles specifically for back button */
+        .container article .back-to-blog-button,
+        .container article .back-to-blog-button:link,
+        .container article .back-to-blog-button:visited,
+        .container article .back-to-blog-button:active,
+        .container article .back-to-blog-button:hover {
+            color: #ffffff !important;
+            border-bottom: none !important;
+        }
+        
+        /* Back to blog button with gradient theme */
+        .back-to-blog-button,
+        .back-to-blog-button:link,
+        .back-to-blog-button:visited,
+        .back-to-blog-button:active {
+            display: inline-block !important;
+            margin-top: 4rem !important;
+            padding: 12px 24px !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.1) 0%, rgba(185, 26, 238, 0.1) 100%) !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-radius: 8px !important;
+            font-weight: 400 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            font-size: 0.95rem !important;
+            border: 1px solid transparent !important;
+            position: relative !important;
+            overflow: hidden !important;
+            font-family: 'Raleway', system-ui, sans-serif !important;
+            border-bottom: none !important;
+        }
+        
+        .back-to-blog-button::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: linear-gradient(90deg, #10ebff, #b91aee) !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s ease !important;
+            border-radius: 8px !important;
+            z-index: -1 !important;
+            padding: 1px !important;
+            margin: -1px !important;
+        }
+        
+        .back-to-blog-button:hover::before {
+            opacity: 0.6 !important;
+        }
+        
+        .back-to-blog-button:hover,
+        .back-to-blog-button:hover:link,
+        .back-to-blog-button:hover:visited,
+        .back-to-blog-button:hover:active {
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(16, 235, 255, 0.2), 0 0 20px rgba(185, 26, 238, 0.1) !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.15) 0%, rgba(185, 26, 238, 0.15) 100%) !important;
+            border-bottom: none !important;
+        }
+        </style>
+        
+        <!-- Enhanced back button with gradient theme -->
+        <a href="/blog/" class="back-to-blog-button">← Back to Blog</a>
+    </article>
+</div>
+
+<style>
+@keyframes shimmerTitle {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Enhanced code block styling */
+.container article code {
+    background: rgba(16, 235, 255, 0.1) !important;
+    border: 1px solid rgba(16, 235, 255, 0.2) !important;
+    color: #10ebff !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.container article pre {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+.container article pre code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+.container article .highlight {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.25) !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    overflow: hidden !important;
+    font-size: 0.9rem !important;
+}
+
+.container article .highlight pre {
+    background: none !important;
+    border: none !important;
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+}
+
+.container article .highlight code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+/* Hide line numbers */
+.container article .highlight .lineno,
+.container article .highlight .gutter,
+.container article .highlight .gutter .lineno {
+    display: none !important;
+}
+
+.container article .highlight table {
+    border: none !important;
+    background: none !important;
+}
+
+.container article .highlight table td {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.container article .highlight table .code {
+    padding: 0 !important;
+}
+
+/* Custom scrollbar styling for code blocks - black theme */
+.container article pre::-webkit-scrollbar,
+.container article .highlight::-webkit-scrollbar {
+    height: 8px !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb,
+.container article .highlight::-webkit-scrollbar-thumb {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(80, 80, 80, 0.5) !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb:hover,
+.container article .highlight::-webkit-scrollbar-thumb:hover {
+    background: rgba(60, 60, 60, 0.9) !important;
+    border-color: rgba(100, 100, 100, 0.7) !important;
+}
+
+.container article pre::-webkit-scrollbar-track,
+.container article .highlight::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+/* Firefox scrollbar styling - black theme */
+.container article pre,
+.container article .highlight {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(40, 40, 40, 0.9) rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    /* Post title - add top padding and reduce size */
+    .container article h1 {
+        font-size: 2rem !important;
+        padding-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Force all code elements to same size - very aggressive approach */
+    .container article pre *,
+    .container article .highlight *,
+    .container article code,
+    .container article pre,
+    .container article .highlight,
+    .container article .highlight pre,
+    .container article .highlight code,
+    .container article .highlight table *,
+    .container article .highlight .gutter *,
+    .container article .highlight .code *,
+    .container article p code,
+    .container article li code,
+    .container article td code,
+    .container article h1 code,
+    .container article h2 code,
+    .container article h3 code,
+    .container article h4 code {
+        font-size: 0.7rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    /* Code block containers - uniform padding */
+    .container article pre,
+    .container article .highlight {
+        padding: 0.8rem !important;
+        margin: 1rem 0 !important;
+    }
+}
+</style>
+
+<script>
+// Nuclear option - force ALL code to be uniform on mobile
+function fixMobileCodeFonts() {
+    if (window.innerWidth <= 768) {
+        // Get EVERY element that might contain code
+        const allElements = document.querySelectorAll('*');
+        
+        allElements.forEach(element => {
+            // Check if element is code-related
+            if (element.tagName === 'CODE' || 
+                element.tagName === 'PRE' || 
+                element.classList.contains('highlight') ||
+                element.classList.contains('language-plaintext') ||
+                element.classList.contains('highlighter-rouge') ||
+                element.className.includes('language-') ||
+                element.className.includes('highlight')) {
+                
+                // Force the font size
+                element.style.setProperty('font-size', '0.6rem', 'important');
+                element.style.setProperty('line-height', '1.2', 'important');
+                
+                // Also check all children
+                const children = element.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.setProperty('font-size', '0.6rem', 'important');
+                    child.style.setProperty('line-height', '1.2', 'important');
+                });
+            }
+        });
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', fixMobileCodeFonts);
+
+// Run on window resize
+window.addEventListener('resize', fixMobileCodeFonts);
+
+// Run again after a short delay to catch any dynamically loaded content
+setTimeout(fixMobileCodeFonts, 100);
+</script>
+    </main>
+
+    <footer>
+    <div class="container">
+        <img src="/images/logo.png" width="400" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>
+</html>
