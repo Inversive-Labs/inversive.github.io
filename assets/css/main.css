@@ -536,7 +536,7 @@ nav {
 }
 
 .team-member {
-    background: rgba(17, 17, 17, 0.9);
+    background: rgba(17, 17, 17, 0.25);
     border: 2px solid rgba(59, 130, 246, 0.15);
     border-radius: 12px;
     padding: 2.5rem;
@@ -569,32 +569,27 @@ nav {
     opacity: 0;
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 14px;
-    z-index: -1;
+    z-index: -2;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    padding: 2px;
 }
 
-.team-member::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(17, 17, 17, 0.9);
-    border-radius: 12px;
-    z-index: -1;
-}
 
 .team-member:hover::before {
-    opacity: 1;
+    opacity: 0.8;
 }
 
 .team-member:hover {
-    background: rgba(17, 17, 17, 0.95);
+    background: rgba(17, 17, 17, 0.35);
     transform: translateY(-8px);
     box-shadow: 
         0 8px 30px rgba(0, 0, 0, 0.5),
-        0 0 15px rgba(16, 235, 255, 0.2),
-        0 0 25px rgba(185, 26, 238, 0.15);
+        0 0 20px rgba(16, 235, 255, 0.6),
+        0 0 35px rgba(185, 26, 238, 0.4),
+        0 0 5px rgba(16, 235, 255, 0.8);
 }
 
 .member-photo {
@@ -720,7 +715,7 @@ nav {
 }
 
 .service-card {
-    background: rgba(17, 17, 17, 0.9);
+    background: rgba(17, 17, 17, 0.25);
     border: 2px solid rgba(59, 130, 246, 0.15);
     border-radius: 12px;
     padding: 2rem;
@@ -772,32 +767,27 @@ nav {
     opacity: 0;
     transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 14px;
-    z-index: -1;
+    z-index: -2;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    padding: 2px;
 }
 
-.service-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(17, 17, 17, 0.9);
-    border-radius: 12px;
-    z-index: -1;
-}
 
 .service-card:hover::before {
-    opacity: 1;
+    opacity: 0.8;
 }
 
 .service-card:hover {
-    background: rgba(17, 17, 17, 0.95);
+    background: rgba(17, 17, 17, 0.35);
     transform: translateY(-12px);
     box-shadow: 
         0 12px 40px rgba(0, 0, 0, 0.5),
-        0 0 20px rgba(16, 235, 255, 0.3),
-        0 0 40px rgba(185, 26, 238, 0.2);
+        0 0 25px rgba(16, 235, 255, 0.6),
+        0 0 50px rgba(185, 26, 238, 0.4),
+        0 0 5px rgba(16, 235, 255, 0.8);
 }
 
 .service-card h3 {
@@ -902,7 +892,7 @@ nav {
 
 /* Enhanced contact section with rotating border */
 .contact {
-    background: rgba(17, 17, 17, 0.9);
+    background: rgba(17, 17, 17, 0.6);
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
