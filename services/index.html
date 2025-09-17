@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Inversive Labs - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.svg" width="250"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/index.html#about" >About</a></li>
+            <li><a href="/index.html#team" >Team</a></li>
+            <li><a href="/services/" class="active">Services</a></li>
+            <li><a href="/publications/" >Publications</a></li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/index.html#contact" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <section class="section" id="services">
+    <div class="container">
+        <h2>S e r v i c e s</h2>
+        <div class="services-grid">
+            <div class="service-card" onclick="scrollToSection('security-research')">
+                <h3>Security Research</h3>
+                <p>Custom cybersecurity research and development projects addressing your organization's unique security challenges.</p>
+                <ul class="service-features">
+                    <li>Vulnerability Research</li>
+                    <li>Custom Security Tools</li>
+                    <li>Security Innovation Projects</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" onclick="scrollToSection('reverse-engineering')">
+                <h3>Reverse Engineering</h3>
+                <p>Advanced malware analysis, binary analysis and reverse engineering</p>
+                <ul class="service-features">
+                    <li>Malware Research</li>
+                    <li>Black-Box Binaries</li>
+                    <li>Network Protocols</li>
+                    <li>Firmware</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" onclick="scrollToSection('security-reviews')">
+                <h3>Security Reviews</h3>
+                <p>Security reviews for applications and system software. We provide a deep understanding of technology from an attacker's perspective</p>
+                <ul class="service-features">
+                    <li>Manual Code Review</li>
+                    <li>Security Assessments</li>
+                    <li>Structural Security Consulting</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" onclick="scrollToSection('security-automation')">
+                <h3>Security Automation</h3>
+                <p>Continuous automated testing using advanced fuzzing techniques to discover vulnerabilities in software.</p>
+                <ul class="service-features">
+                    <li>Custom Fuzzer Development</li>
+                    <li>Component Reachability And Strategy</li>
+                    <li>Continuous Integration</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" onclick="scrollToSection('security-trainings')">
+                <h3>Security Trainings</h3>
+                <p>Tailored, in-depth training programs designed to upskill teams in advanced security topics.</p>
+                <ul class="service-features">
+                    <li>Vulnerability Research & Exploitation Techniques</li>
+                    <li>Reverse Engineering & Malware Analysis</li>
+                    <li>Secure Software Development & Code Auditing</li>
+                </ul>
+            </div>
+            
+            <div class="service-card" onclick="scrollToSection('application-hardening')">
+                <h3>Application Hardening</h3>
+                <p>Advanced protection techniques to secure applications against reverse engineering, tampering, and unauthorized analysis.</p>
+                <ul class="service-features">
+                    <li>Anti-Reverse Engineering</li>
+                    <li>Anti-Tampering Protection</li>
+                    <li>Tailored Code Obfuscation</li>
+                    <li>Native Binary Hardening</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="service-details">
+    <div class="container">
+        <div class="service-detail" id="security-research">
+            <h3>Security Research</h3>
+            <p>Our security research services encompass cutting-edge investigation into emerging threats, vulnerability discovery, and the development of novel security solutions. We conduct deep-dive analysis into complex security challenges, providing actionable intelligence and custom tools tailored to your specific needs.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Vulnerability Research:</strong> Systematic discovery and analysis of security vulnerabilities in software, hardware, and network protocols</li>
+                <li><strong>Custom Security Tools:</strong> Development of specialized security tools and frameworks designed for your unique operational requirements</li>
+                <li><strong>Security Innovation Projects:</strong> Research and development of next-generation security technologies and methodologies</li>
+                <li><strong>Threat Intelligence:</strong> Comprehensive analysis of emerging threats and attack vectors relevant to your industry</li>
+                <li><strong>Research Reports:</strong> Detailed documentation of findings, methodologies, and recommendations for remediation</li>
+            </ul>
+        </div>
+
+        <div class="service-detail" id="reverse-engineering">
+            <h3>Reverse Engineering</h3>
+            <p>Our reverse engineering expertise spans malware analysis, binary analysis, and protocol reverse engineering. We dissect complex systems to understand their inner workings, identify vulnerabilities, and provide comprehensive security assessments.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Malware Research:</strong> Deep analysis of sophisticated malware families, including advanced persistent threats and state-sponsored attacks</li>
+                <li><strong>Black-Box Binaries:</strong> Complete reverse engineering of proprietary software and firmware to understand functionality and identify security issues</li>
+                <li><strong>Network Protocols:</strong> Analysis and documentation of undocumented or proprietary network protocols and communication standards</li>
+                <li><strong>Firmware Analysis:</strong> Security assessment of embedded systems and IoT device firmware</li>
+                <li><strong>Technical Documentation:</strong> Comprehensive reports detailing system architecture, security implications, and recommended countermeasures</li>
+            </ul>
+        </div>
+
+        <div class="service-detail" id="security-reviews">
+            <h3>Security Reviews</h3>
+            <p>Our security review services provide comprehensive evaluation of your applications and systems from an attacker's perspective. We combine manual analysis with automated tools to identify vulnerabilities and provide actionable remediation guidance.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Manual Code Review:</strong> Line-by-line analysis of source code to identify security vulnerabilities, logic flaws, and design weaknesses</li>
+                <li><strong>Security Assessments:</strong> Comprehensive evaluation of system architecture, configuration, and implementation security</li>
+                <li><strong>Structural Security Consulting:</strong> Analysis of security architecture and recommendations for secure design patterns</li>
+                <li><strong>Penetration Testing:</strong> Controlled attacks to identify exploitable vulnerabilities in live systems</li>
+                <li><strong>Remediation Guidance:</strong> Detailed recommendations and best practices for addressing identified security issues</li>
+            </ul>
+        </div>
+
+        <div class="service-detail" id="security-automation">
+            <h3>Security Automation</h3>
+            <p>We develop and implement advanced automated security testing solutions, including custom fuzzing frameworks and continuous security monitoring systems. Our automation solutions integrate seamlessly into development workflows to provide ongoing security validation.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Custom Fuzzer Development:</strong> Tailored fuzzing tools designed for your specific applications, protocols, or file formats</li>
+                <li><strong>Component Reachability And Strategy:</strong> Analysis of code coverage and development of targeted testing strategies</li>
+                <li><strong>Continuous Integration:</strong> Integration of security testing into CI/CD pipelines for automated vulnerability detection</li>
+                <li><strong>Automated Reporting:</strong> Real-time dashboards and automated alerting for security issues discovered during testing</li>
+                <li><strong>Performance Optimization:</strong> Tuning of automated testing tools for maximum efficiency and coverage</li>
+            </ul>
+        </div>
+
+        <div class="service-detail" id="security-trainings">
+            <h3>Security Trainings</h3>
+            <p>Our training programs are designed to elevate your team's security expertise through hands-on, practical instruction in advanced security topics. We deliver customized training that addresses your organization's specific security challenges and skill development needs.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Vulnerability Research & Exploitation Techniques:</strong> Advanced training in finding, analyzing, and responsibly disclosing security vulnerabilities</li>
+                <li><strong>Reverse Engineering & Malware Analysis:</strong> Comprehensive instruction in analyzing malicious software and understanding attack techniques</li>
+                <li><strong>Secure Software Development & Code Auditing:</strong> Training developers to write secure code and identify security issues during code review</li>
+                <li><strong>Hands-on Labs:</strong> Practical exercises using real-world scenarios and cutting-edge tools</li>
+                <li><strong>Customized Curriculum:</strong> Training programs tailored to your team's current skill level and specific security requirements</li>
+            </ul>
+        </div>
+
+        <div class="service-detail" id="application-hardening">
+            <h3>Application Hardening</h3>
+            <p>Our application hardening services implement advanced protection techniques to defend against reverse engineering, tampering, and unauthorized analysis. We deploy multi-layered security measures that protect intellectual property while maintaining application performance.</p>
+            
+            <h4>What We Deliver:</h4>
+            <ul>
+                <li><strong>Anti-Reverse Engineering:</strong> Implementation of sophisticated techniques to prevent static and dynamic analysis of your applications</li>
+                <li><strong>Anti-Tampering Protection:</strong> Deployment of integrity checking and self-defense mechanisms to detect and respond to modification attempts</li>
+                <li><strong>Tailored Code Obfuscation:</strong> Custom obfuscation strategies designed for your specific application architecture and threat model</li>
+                <li><strong>Native Binary Hardening:</strong> Low-level protection techniques for compiled applications, including control flow integrity and exploit mitigation</li>
+                <li><strong>Performance Analysis:</strong> Optimization to ensure security measures don't significantly impact application performance</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+
+    </main>
+
+    <footer>
+    <div class="container">
+        <img src="/images/logo.svg" width="400" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>
+</html>

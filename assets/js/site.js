@@ -1,5 +1,19 @@
 // Enhanced JavaScript for sophisticated interactions
 
+// Scroll to section function
+function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        const yOffset = -120; // Offset to show title properly
+        const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        
+        window.scrollTo({
+            top: y,
+            behavior: 'smooth'
+        });
+    }
+}
+
 // Scroll progress indicator
 function updateScrollProgress() {
     const scrollTop = window.pageYOffset;

@@ -21,7 +21,7 @@ class ShaderBackground {
         this.canvas.style.height = '100vh';
         this.canvas.style.zIndex = '-1';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.opacity = '0.3';
+        this.canvas.style.opacity = '0.5';
         
         // Insert canvas as first child of body
         document.body.insertBefore(this.canvas, document.body.firstChild);
