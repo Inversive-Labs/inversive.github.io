@@ -1163,30 +1163,16 @@ body:has(.shader-canvas) .uiverse-container {
     transform: translateX(-50%);
     width: 60px;
     height: 2px;
-    background: linear-gradient(90deg, #10ebff, #35e4f4);
+    background: linear-gradient(90deg, #10ebff 0%, #b91aee 100%);
     border-radius: 1px;
 }
 
 .service-detail h4 {
-    color: #35e4f4;
+    color: #10ebff;
     font-size: 1.3rem;
     font-weight: 500;
     margin: 2.5rem 0 1.5rem 0;
     font-family: 'Raleway', system-ui, sans-serif;
-    position: relative;
-    padding-left: 1rem;
-}
-
-.service-detail h4::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 20px;
-    background: linear-gradient(180deg, #10ebff, #35e4f4);
-    border-radius: 2px;
 }
 
 .service-detail p {
@@ -1200,7 +1186,8 @@ body:has(.shader-canvas) .uiverse-container {
 }
 
 .service-detail ul {
-    list-style: none;
+    list-style: none !important;
+    list-style-type: none !important;
     padding: 0;
     margin: 1.5rem 0;
     display: grid;
@@ -1208,34 +1195,47 @@ body:has(.shader-canvas) .uiverse-container {
 }
 
 .service-detail ul li {
-    color: #d1d5db;
+    color: #e5e7eb;
     position: relative;
-    padding: 1rem 1.5rem 1rem 3rem;
+    padding: 1rem 1.5rem;
     margin-bottom: 0;
     line-height: 1.7;
     font-family: 'Raleway', system-ui, sans-serif;
-    background: rgba(59, 130, 246, 0.05);
-    border-left: 3px solid rgba(16, 235, 255, 0.3);
-    border-radius: 0 8px 8px 0;
+    background: linear-gradient(135deg, rgba(17, 17, 17, 0.8) 0%, rgba(27, 27, 27, 0.6) 100%);
+    border-radius: 0 12px 12px 0;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    list-style: none !important;
+    list-style-type: none !important;
+}
+
+.service-detail ul li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, #10ebff 0%, #b91aee 100%);
     transition: all 0.3s ease;
 }
 
 .service-detail ul li:hover {
-    background: rgba(59, 130, 246, 0.08);
-    border-left-color: rgba(16, 235, 255, 0.6);
-    transform: translateX(5px);
+    background: linear-gradient(135deg, rgba(17, 17, 17, 0.9) 0%, rgba(27, 27, 27, 0.7) 100%);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateX(8px);
+    box-shadow: 
+        0 4px 15px rgba(0, 0, 0, 0.3),
+        0 0 10px rgba(16, 235, 255, 0.2);
 }
 
-.service-detail ul li::before {
-    content: "▶";
-    color: #10ebff;
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.8rem;
-    font-weight: bold;
+.service-detail ul li:hover::after {
+    width: 6px;
+    box-shadow: 0 0 10px rgba(16, 235, 255, 0.5);
 }
+
 
 .service-detail ul li strong {
     color: #ffffff;
@@ -1415,14 +1415,15 @@ body:has(.shader-canvas) .uiverse-container {
 @media (max-width: 768px) {
     .service-detail {
         margin-bottom: 3rem;
-        padding: 1.5rem;
+        padding: 1.5rem 0;
         max-width: 100%;
         opacity: 1 !important;
         transform: translateY(0) !important;
         display: block !important;
         visibility: visible !important;
-        background: rgba(17, 17, 17, 0.1);
-        border-radius: 8px;
+        background: none;
+        border-radius: 0;
+        border: none;
     }
     
     .service-detail h3 {
@@ -1439,12 +1440,6 @@ body:has(.shader-canvas) .uiverse-container {
     .service-detail h4 {
         font-size: 1.2rem;
         margin: 2rem 0 1rem 0;
-        padding-left: 0.8rem;
-    }
-    
-    .service-detail h4::before {
-        width: 3px;
-        height: 16px;
     }
     
     .service-detail p {
@@ -1454,14 +1449,9 @@ body:has(.shader-canvas) .uiverse-container {
     }
     
     .service-detail ul li {
-        padding: 0.8rem 1rem 0.8rem 2.5rem;
+        padding: 0.8rem 1rem;
         font-size: 0.95rem;
         margin-bottom: 0.8rem;
-    }
-    
-    .service-detail ul li::before {
-        left: 0.8rem;
-        font-size: 0.7rem;
     }
 }
 
