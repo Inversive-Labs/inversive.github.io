@@ -4,6 +4,12 @@
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
     if (section) {
+        // Force the section to be visible in case it hasn't been revealed yet
+        section.style.opacity = '1';
+        section.style.transform = 'translateY(0)';
+        section.style.visibility = 'visible';
+        section.classList.add('reveal');
+        
         const yOffset = -120; // Offset to show title properly
         const y = section.getBoundingClientRect().top + window.pageYOffset + yOffset;
         
