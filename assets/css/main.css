@@ -1378,6 +1378,54 @@ body:has(.shader-canvas) .uiverse-container {
     }
 }
 
+/* Mobile responsive for service details */
+@media (max-width: 768px) {
+    .service-detail {
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        max-width: 100%;
+    }
+    
+    .service-detail h3 {
+        font-size: 1.8rem;
+        margin-bottom: 2rem;
+        letter-spacing: 0.5px;
+    }
+    
+    .service-detail h3::after {
+        bottom: -15px;
+        width: 50px;
+    }
+    
+    .service-detail h4 {
+        font-size: 1.2rem;
+        margin: 2rem 0 1rem 0;
+        padding-left: 0.8rem;
+    }
+    
+    .service-detail h4::before {
+        width: 3px;
+        height: 16px;
+    }
+    
+    .service-detail p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 1.5rem;
+    }
+    
+    .service-detail ul li {
+        padding: 0.8rem 1rem 0.8rem 2.5rem;
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .service-detail ul li::before {
+        left: 0.8rem;
+        font-size: 0.7rem;
+    }
+}
+
 /* Remove conflicting transparency rules */
 
 @keyframes liquidWave {
