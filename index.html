@@ -34,8 +34,29 @@
         <ul class="nav-links">
             <li><a href="/index.html#about" >About</a></li>
             <li><a href="/index.html#team" >Team</a></li>
-            <li><a href="/services/" >Services</a></li>
-            <li><a href="/portfolio/" >Portfolio</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/#security-testing" class="nav-dropdown-link">Smart Contract Triaging</a>
+                    <a href="/services/#security-tooling" class="nav-dropdown-link">Security Tooling</a>
+                    <a href="/services/#vulnerability-research" class="nav-dropdown-link">Onchain Threat Intelligence</a>
+                    <a href="/services/#smart-contract-auditing" class="nav-dropdown-link">Smart Contract Obfuscation</a>
+                    <a href="/services/#protocol-development" class="nav-dropdown-link">Reverse Engineering</a>
+                    <a href="/services/#technical-advisory" class="nav-dropdown-link">Technical Advisory</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/portfolio/" >Portfolio</a>
+                <div class="nav-dropdown">
+                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
+                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
+                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
+                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
+                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
+                </div>
+            </li>
             <li><a href="/blog/" >Blog</a></li>
             <li><a href="/index.html#contact" >Contact</a></li>
         </ul>
@@ -47,8 +68,8 @@
     <div class="container">
         <div class="hero-content">
             <h1>I n v e r s i v e</h1>
-            <p class="tagline">Research-Driven Security Solutions</p>
-            <p class="subtitle">Specialized security research consultancy providing advanced technical services and strategic security advisory</p>
+            <p class="tagline">Security Through Technical Depth</p>
+            <p class="subtitle">Advanced Security Research and Custom Tooling for Web3 Infrastructure</p>
             <a href="#contact" class="cta-button">Contact Us</a>
         </div>
     </div>
@@ -59,11 +80,11 @@
         <h2>A b o u t</h2>
         <div class="about-content">
             <div class="team-story">
-                <p>We are a specialized security research and development firm providing advanced research capabilities and strategic consultancy services. Our mission is to perform rigorous research, innovative tooling development, and reverse engineering services.</p>
+                <p>Inversive Labs is a boutique R&D security firm specializing in low-level security research and advanced tooling development. We operate at the intersection of vulnerability research and tool engineering, focusing on the fundamental challenges that require deep technical expertise.</p>
+
+                <p>We focus on understanding systems at their lowest levels, analyzing bytecode, tracing execution flows, and building custom tools. This attention to detail is what makes us different, emphasizing rigorous analysis and technical excellence.</p>
                 
-                <p>With backgrounds in both defending against threats and exploiting vulnerabilities, we bring a unique perspective shaped by our experience in both offensive and defensive security. This has enabled us to craft practical, effective security strategies rooted in real-world experience across diverse domains.</p>     
-                
-                <p>Inversive Labs is founded by Ignacio Sanmillan, a security researcher with extensive experience in vulnerability research, exploit development, reverse engineering, malware analysis and threat intelligence. His research has led to multiple CVE discoveries in Apple ecosystem components and contributions to major security organizations including CrowdStrike, ESET, and L3 Harris. Ignacio has presented findings at leading security conferences like Virus Bulletin, and his work has been featured in industry publications focusing on advanced persistent threats and state-sponsored cyber operations.</p>    
+                <p>Founded by researchers with deep expertise in offensive security, threat intelligence, and smart contract security, Inversive Labs brings a unique perspective to security challenges. We thrive on technically complex problems that require innovative solutions.</p>
             </div>
         </div>
     </div>
@@ -78,12 +99,12 @@
                     <div class="member-photo">
                         <img src="/images/team/sergio.jpg" alt="Sergio Corrales" />
                         <div class="social-icons">
-                            <a href="#" class="social-link linkedin" aria-label="Sergio's LinkedIn">
+                            <a href="https://www.linkedin.com/in/sergio-corrales-alonso-barajas-52b6911a0/" class="social-link linkedin" aria-label="Sergio's LinkedIn" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" width="20" height="20">
                                     <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-link twitter" aria-label="Sergio's X (Twitter)">
+                            <a href="https://x.com/Seecoalba" class="social-link twitter" aria-label="Sergio's X (Twitter)" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" width="20" height="20">
                                     <path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
                                 </svg>
@@ -93,7 +114,11 @@
                     <div class="member-info">
                         <h3>Sergio Corrales</h3>
                         <p class="member-title">Co-Founder and Security Researcher</p>
-                        <p class="member-description">Experienced security engineer specializing in binary analysis, software security, and advanced exploitation techniques. Contributes expertise in secure development practices and vulnerability assessment methodologies.</p>
+                        <p class="member-description">Sergio Corrales, security researcher who previously founded a blockchain security company, with deep expertise in smart contract security, static analysis tooling, and blockchain protocol development.</p>
+                        <p class="member-description">His technical contributions span multiple blockchain ecosystems including EVM and Non-EVM, with notable work on security audits for high-profile clients, and custom security tooling such as Solana Static Analyzer.</p>
+                        <p class="member-description">In addition, Sergio has collaborated with R55, an experimental Ethereum Execution Environment that integrates RISCV smart contracts alongside traditional EVM smart contracts.</p>
+                        <p class="member-description">Sergio has developed custom static analysis detectors for Aderyn (winning a Cyfrin hackathon), built Solana indexers and DEX integrations, and conducted security assessments across 25+ private audits finding over 170 vulnerabilities.</p>
+                        <p class="member-description">His research focus on fuzzing campaigns, invariant testing, and low-level vulnerability analysis has uncovered critical issues in DeFi protocols, staking systems, and cross-chain infrastructure.</p>
                     </div>
                 </div>
 
@@ -101,12 +126,12 @@
                     <div class="member-photo">
                         <img src="/images/team/ignacio.jpg" alt="Ignacio Sanmillan" />
                         <div class="social-icons">
-                            <a href="#" class="social-link linkedin" aria-label="Ignacio's LinkedIn">
+                            <a href="https://www.linkedin.com/in/isanuro/" class="social-link linkedin" aria-label="Ignacio's LinkedIn" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" width="20" height="20">
                                     <path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
                                 </svg>
                             </a>
-                            <a href="#" class="social-link twitter" aria-label="Ignacio's X (Twitter)">
+                            <a href="https://x.com/ulexec" class="social-link twitter" aria-label="Ignacio's X (Twitter)" target="_blank" rel="noopener noreferrer">
                                 <svg viewBox="0 0 24 24" width="20" height="20">
                                     <path fill="currentColor" d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/>
                                 </svg>
@@ -116,7 +141,11 @@
                     <div class="member-info">
                         <h3>Ignacio Sanmillan</h3>
                         <p class="member-title">Co-Founder and Security Researcher</p>
-                        <p class="member-description">Security researcher with extensive experience in vulnerability research, exploit development, reverse engineering, malware analysis and threat intelligence. His research has led to multiple CVE discoveries in Apple ecosystem components.</p>
+                        <p class="member-description">Ignacio Sanmillan is an experienced security researcher with extensive experience in vulnerability research across browsers, IoT, and mobile platforms, with a proven track record of discovering critical vulnerabilities in major systems including Safari, Chrome, and iOS components.</p> 
+                        <p class="member-description">His expertise spans advanced exploitation techniques, reverse engineering, and fuzzing methodologies, with notable contributions to browser security through active participation in Apple Security Bounty and Google Chrome VRP programs.</p> 
+                        <p class="member-description">Ignacio has successfully led research teams focused on Safari sandbox escapes and user-space iOS vulnerability discovery. His technical contributions include developing custom fuzzing tools and conducting deep research on various topics, including Non-EVM runtime implementations, and ELF binary instrumentation and protection techniques.</p> 
+                        <p class="member-description">He has authored multiple security advisories and several critical WebKit vulnerabilities. With a background in APT tradecraft analysis and state-nexus threat intelligence, Ignacio has extensive experience in malware reverse engineering, supply-chain compromise, and state-sponsored cybersecurity operations.</p> 
+                        <p class="member-description">His work has been featured in prominent security conferences including VB2020 and r2con, and he maintains active open-source contributions to radare2 and various security research projects.</p>
                     </div>
                 </div>
             </div>
@@ -130,11 +159,47 @@
     <div class="container">
         <div class="contact">
             <h2>C o n t a c t</h2>
-             <p class="lead">For consulting inquiries and research collaboration opportunities, please contact us through our secure channels.</p>
-           
-            <div class="contact-info">
-                <a href="mailto:contact@inversive.xyz" class="cta-button">contact@inversive.xyz</a>
-            </div>
+            <p class="lead">For consulting inquiries and research collaboration opportunities, please reach out using the form below.</p>
+
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="company">Company (Optional)</label>
+                    <input type="text" id="company" name="company">
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="security-testing">Smart Contract Triaging</option>
+                        <option value="tooling">Automated Tooling Development</option>
+                        <option value="threat-intelligence">Onchain Threat Intelligence</option>
+                        <option value="obfuscation">Smart Contract Obfuscation</option>
+                        <option value="reverse-engineering">Reverse Engineering</option>
+                        <option value="technical-advisory">Technical Advisory</option>
+                        <option value="general">General Inquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="cta-button">Send Message</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>
@@ -142,7 +207,7 @@
 
     <footer>
     <div class="container">
-        <img src="/images/logo.svg" width="400" alt="Inversive Labs Logo" />
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
         <p>&copy; 2025 Inversive Labs</p>
     </div>
 </footer>

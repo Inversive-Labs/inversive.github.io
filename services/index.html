@@ -34,8 +34,29 @@
         <ul class="nav-links">
             <li><a href="/index.html#about" >About</a></li>
             <li><a href="/index.html#team" >Team</a></li>
-            <li><a href="/services/" class="active">Services</a></li>
-            <li><a href="/portfolio/" >Portfolio</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" class="active">Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/#security-testing" class="nav-dropdown-link">Smart Contract Triaging</a>
+                    <a href="/services/#security-tooling" class="nav-dropdown-link">Security Tooling</a>
+                    <a href="/services/#vulnerability-research" class="nav-dropdown-link">Onchain Threat Intelligence</a>
+                    <a href="/services/#smart-contract-auditing" class="nav-dropdown-link">Smart Contract Obfuscation</a>
+                    <a href="/services/#protocol-development" class="nav-dropdown-link">Reverse Engineering</a>
+                    <a href="/services/#technical-advisory" class="nav-dropdown-link">Technical Advisory</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/portfolio/" >Portfolio</a>
+                <div class="nav-dropdown">
+                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
+                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
+                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
+                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
+                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
+                </div>
+            </li>
             <li><a href="/blog/" >Blog</a></li>
             <li><a href="/index.html#contact" >Contact</a></li>
         </ul>
@@ -47,65 +68,65 @@
     <div class="container">
         <h2>S e r v i c e s</h2>
         <div class="services-grid">
-            <div class="service-card" onclick="scrollToSection('security-research')">
-                <h3>Security Research</h3>
-                <p>Custom cybersecurity research and development projects addressing your organization's unique security challenges.</p>
+            <div class="service-card" onclick="scrollToSection('security-testing')">
+                <h3>Smart Contract Triaging</h3>
+                <p>Testing campaigns combining taillored fuzzing, invariant testing, and continuous testing solutions for security assurance.</p>
                 <ul class="service-features">
-                    <li>Vulnerability Research</li>
-                    <li>Custom Security Tools</li>
-                    <li>Security Innovation Projects</li>
+                    <li>Fuzzing & Invariant Testing</li>
+                    <li>Custom Test Suite Development</li>
+                    <li>Continuous Testing</li>
                 </ul>
             </div>
-            
-            <div class="service-card" onclick="scrollToSection('reverse-engineering')">
-                <h3>Reverse Engineering</h3>
-                <p>Advanced malware analysis, binary analysis and reverse engineering</p>
+
+            <div class="service-card" onclick="scrollToSection('security-tooling')">
+                <h3>Automated Tooling Development</h3>
+                <p>Tailored tooling for blockchain ecosystems for various applications.</p>
                 <ul class="service-features">
-                    <li>Malware Research</li>
-                    <li>Black-Box Binaries</li>
-                    <li>Network Protocols</li>
-                    <li>Firmware</li>
+                    <li>Tailored Oracles for Dynamic and Static Analyzers</li>
+                    <li>Custom Blockchain Indexers</li>
+                    <li>Consulting and Tailored Research for automating security or architecture related procedures</li>
                 </ul>
             </div>
-            
-            <div class="service-card" onclick="scrollToSection('security-reviews')">
-                <h3>Security Reviews</h3>
-                <p>Security reviews for applications and system software. We provide a deep understanding of technology from an attacker's perspective</p>
+
+            <div class="service-card" onclick="scrollToSection('vulnerability-research')">
+                <h3>Onchain Threat Intelligence</h3>
+                <p>Proactive and Reactive monitoring of blockchain assets providing timely alerts and intelligence feeds</p>
                 <ul class="service-features">
-                    <li>Manual Code Review</li>
-                    <li>Security Assessments</li>
-                    <li>Structural Security Consulting</li>
+                    <li>Real-time Alerts</li>
+                    <li>Transaction Analysis</li>
+                    <li>Proactive Onchain Monitoring</li>
+                    <li>Cable Subscription Feed</li>
                 </ul>
             </div>
-            
-            <div class="service-card" onclick="scrollToSection('security-automation')">
-                <h3>Security Automation</h3>
-                <p>Continuous automated testing using advanced fuzzing techniques to discover vulnerabilities in software.</p>
+
+            <div class="service-card" onclick="scrollToSection('smart-contract-auditing')">
+                <h3>Smart Contract Obfuscation</h3>
+                <p>We provide advanced obfuscation services to protect smart contract intellectual property from reverse engineering and unauthorized analysis.</p>
                 <ul class="service-features">
-                    <li>Custom Fuzzer Development</li>
-                    <li>Component Reachability And Strategy</li>
-                    <li>Continuous Integration</li>
+                    <li>Prevent Reverse Engineering efforts from Malicious Actors</li>
+                    <li>Prevent IP Theft</li>
+                    <li>Supporting EVM and Non-EVM</li>
+                    <li>Verification & Differential Testing</li>
                 </ul>
             </div>
-            
-            <div class="service-card" onclick="scrollToSection('security-trainings')">
-                <h3>Security Trainings</h3>
-                <p>Tailored, in-depth training programs designed to upskill teams in advanced security topics.</p>
+
+                 <div class="service-card" onclick="scrollToSection('protocol-development')">
+                <h3>Reverse Engineering and Forensics</h3>
+                <p>Our reverse engineering service specializes in analyzing and documenting closed-source smart contracts and blockchain protocols.</p>
                 <ul class="service-features">
-                    <li>Vulnerability Research & Exploitation Techniques</li>
-                    <li>Reverse Engineering & Malware Analysis</li>
-                    <li>Secure Software Development & Code Auditing</li>
+                    <li>Implementation Validation</li>
+                    <li>Technical Reports for legal or compliance documentation</li>
+                    <li>Forensic Post-mortem analysis of incidents</li>
                 </ul>
             </div>
-            
-            <div class="service-card" onclick="scrollToSection('application-hardening')">
-                <h3>Application Hardening</h3>
-                <p>Advanced protection techniques to secure applications against reverse engineering, tampering, and unauthorized analysis.</p>
+
+            <div class="service-card" onclick="scrollToSection('technical-advisory')">
+                <h3>Technical Advisory</h3>
+                <p>Strategic security consulting and analysis for complex technical challenges.</p>
                 <ul class="service-features">
-                    <li>Anti-Reverse Engineering</li>
-                    <li>Anti-Tampering Protection</li>
-                    <li>Tailored Code Obfuscation</li>
-                    <li>Native Binary Hardening</li>
+                    <li>Security Architecture Review</li>
+                    <li>Threat Modeling Analysis</li>
+                    <li>Attack Surface Analysis</li>
                 </ul>
             </div>
         </div>
@@ -114,87 +135,82 @@
 
 <section class="section" id="service-details">
     <div class="container">
-        <div class="service-detail" id="security-research">
-            <h3>Security Research</h3>
-            <p>Our security research services encompass cutting-edge investigation into emerging threats, vulnerability discovery, and the development of novel security solutions. We conduct deep-dive analysis into complex security challenges, providing actionable intelligence and custom tools tailored to your specific needs.</p>
-            
+        <div class="service-detail" id="security-testing">
+            <h3>Smart Contract Triaging</h3>
+            <p>Our smart contract triaging service provides security assessment and prioritization of vulnerabilities in blockchain protocols. We combine automated analysis with expert manual review to quickly identify issues, assess their severity, and provide actionable remediation strategies. Our triaging process leverages advanced testing methodologies to ensure extensive coverage while maintaining efficiency. We also provide services to validate the correct implementation of remediation strategies.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Vulnerability Research:</strong> Systematic discovery and analysis of security vulnerabilities in software, hardware, and network protocols</li>
-                <li><strong>Custom Security Tools:</strong> Development of specialized security tools and frameworks designed for your unique operational requirements</li>
-                <li><strong>Security Innovation Projects:</strong> Research and development of next-generation security technologies and methodologies</li>
-                <li><strong>Threat Intelligence:</strong> Comprehensive analysis of emerging threats and attack vectors relevant to your industry</li>
-                <li><strong>Research Reports:</strong> Detailed documentation of findings, methodologies, and recommendations for remediation</li>
+                <li><strong>Fuzzing & Invariant Testing:</strong> Deployment of sophisticated fuzzing campaigns and invariant tests to uncover edge cases and protocol violations</li>
+                <li><strong>Custom Test Suite Development:</strong> Creation of tailored test frameworks specific to your protocol's architecture and business logic</li>
+                <li><strong>Continuous Testing Infrastructure:</strong> Implementation of automated testing pipelines that continuously validate contract security throughout development</li>
+                <li><strong>Actionable Response:</strong> Mitigation support for found issues, providing advice and validation for remediation strategies</li>
             </ul>
         </div>
 
-        <div class="service-detail" id="reverse-engineering">
-            <h3>Reverse Engineering</h3>
-            <p>Our reverse engineering expertise spans malware analysis, binary analysis, and protocol reverse engineering. We dissect complex systems to understand their inner workings, identify vulnerabilities, and provide comprehensive security assessments.</p>
-            
+        <div class="service-detail" id="security-tooling">
+            <h3>Automated Tooling Development</h3>
+            <p>We develop and deploy tailored tooling for blockchain ecosystems. Our tooling suite encompasses both dynamic and static analysis capabilities, advanced blockchain indexing systems, and specialized utilities. We also provide services to perform consulting on architecture design aswell as tailored security tooling.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Malware Research:</strong> Deep analysis of sophisticated malware families, including advanced persistent threats and state-sponsored attacks</li>
-                <li><strong>Black-Box Binaries:</strong> Complete reverse engineering of proprietary software and firmware to understand functionality and identify security issues</li>
-                <li><strong>Network Protocols:</strong> Analysis and documentation of undocumented or proprietary network protocols and communication standards</li>
-                <li><strong>Firmware Analysis:</strong> Security assessment of embedded systems and IoT device firmware</li>
-                <li><strong>Technical Documentation:</strong> Comprehensive reports detailing system architecture, security implications, and recommended countermeasures</li>
+                <li><strong>Dynamic and Static Analyzers:</strong> Custom-built analysis engines that detect vulnerabilities through both runtime monitoring and code inspection</li>
+                <li><strong>Blockchain Indexers:</strong> High-throughput indexing systems for real-time transaction analysis and historical data mining</li>
+                <li><strong>Custom Tooling:</strong> We provide consulting and research services to address specific challenges through automation pipelines</li>
+                <li><strong>Open-Source Contributions:</strong> Development and maintenance of community security tools to advance ecosystem-wide security</li>
             </ul>
         </div>
 
-        <div class="service-detail" id="security-reviews">
-            <h3>Security Reviews</h3>
-            <p>Our security review services provide comprehensive evaluation of your applications and systems from an attacker's perspective. We combine manual analysis with automated tools to identify vulnerabilities and provide actionable remediation guidance.</p>
-            
+        <div class="service-detail" id="vulnerability-research">
+            <h3>Onchain Threat Intelligence</h3>
+            <p>Our onchain threat intelligence service provides monitoring and analysis of blockchain ecosystems to identify emerging threats, monitor on-chain assets, and provide alerts of potential malicious transactions. We combine real-time transaction monitoring with advanced pattern recognition to deliver actionable intelligence that protects your protocols from emerging threats.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Manual Code Review:</strong> Line-by-line analysis of source code to identify security vulnerabilities, logic flaws, and design weaknesses</li>
-                <li><strong>Security Assessments:</strong> Comprehensive evaluation of system architecture, configuration, and implementation security</li>
-                <li><strong>Structural Security Consulting:</strong> Analysis of security architecture and recommendations for secure design patterns</li>
-                <li><strong>Penetration Testing:</strong> Controlled attacks to identify exploitable vulnerabilities in live systems</li>
-                <li><strong>Remediation Guidance:</strong> Detailed recommendations and best practices for addressing identified security issues</li>
+                <li><strong>Real-time Alerts:</strong> Instant notifications of suspicious activities, anomalous transactions, and potential exploit attempts</li>
+                <li><strong>Transaction Analysis:</strong> Deep forensic analysis of transaction patterns to identify attack vectors and malicious behavior</li>
+                <li><strong>Proactive Onchain Monitoring:</strong> Continuous surveillance of smart contracts, protocol interactions, and cross-chain activities</li>
+                <li><strong>Cable Subscription Feed:</strong> Premium threat intelligence feed providing curated insights on emerging vulnerabilities and active threats</li>
+                <li><strong>Incident Investigation:</strong> Rapid response team for analyzing and documenting security incidents as they unfold</li>
             </ul>
         </div>
 
-        <div class="service-detail" id="security-automation">
-            <h3>Security Automation</h3>
-            <p>We develop and implement advanced automated security testing solutions, including custom fuzzing frameworks and continuous security monitoring systems. Our automation solutions integrate seamlessly into development workflows to provide ongoing security validation.</p>
-            
+        <div class="service-detail" id="smart-contract-auditing">
+            <h3>Smart Contract Obfuscation</h3>
+            <p>We implement advanced obfuscation techniques to protect your smart contract intellectual property from reverse engineering and unauthorized analysis. Our multi-layered approach create robust protection while maintaining gas efficiency and contract functionality across both EVM and non-EVM ecosystems.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Custom Fuzzer Development:</strong> Tailored fuzzing tools designed for your specific applications, protocols, or file formats</li>
-                <li><strong>Component Reachability And Strategy:</strong> Analysis of code coverage and development of targeted testing strategies</li>
-                <li><strong>Continuous Integration:</strong> Integration of security testing into CI/CD pipelines for automated vulnerability detection</li>
-                <li><strong>Automated Reporting:</strong> Real-time dashboards and automated alerting for security issues discovered during testing</li>
-                <li><strong>Performance Optimization:</strong> Tuning of automated testing tools for maximum efficiency and coverage</li>
+                <li><strong>Anti-Reverse Engineering Protection:</strong> Implementation of sophisticated code transformation techniques that resist decompilation and analysis tools</li>
+                <li><strong>IP Theft Prevention:</strong> Multiple layers of protection to safeguard proprietary algorithms, trading strategies, and business logic</li>
+                <li><strong>Cross-Chain Support:</strong> Obfuscation solutions optimized for EVM and non-EVM platforms</li>
+                <li><strong>Gas-Optimized Protection:</strong> Carefully balanced obfuscation that maintains reasonable gas costs without compromising security</li>
+                <li><strong>Verification & Differential Testing:</strong> Comprehensive validation to ensure obfuscated contracts maintain identical functionality and security properties</li>
             </ul>
         </div>
 
-        <div class="service-detail" id="security-trainings">
-            <h3>Security Trainings</h3>
-            <p>Our training programs are designed to elevate your team's security expertise through hands-on, practical instruction in advanced security topics. We deliver customized training that addresses your organization's specific security challenges and skill development needs.</p>
-            
+        <div class="service-detail" id="protocol-development">
+            <h3>Reverse Engineering and Forensics</h3>
+            <p>Our reverse engineering service specializes in analyzing and documenting closed-source smart contracts and blockchain protocols. We reconstruct business logic from deployed bytecode, validate implementation against specifications, and provide expert witness services for legal proceedings. Our analysis helps organizations understand protocols, verify security claims, and resolve disputes with technical precision.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Vulnerability Research & Exploitation Techniques:</strong> Advanced training in finding, analyzing, and responsibly disclosing security vulnerabilities</li>
-                <li><strong>Reverse Engineering & Malware Analysis:</strong> Comprehensive instruction in analyzing malicious software and understanding attack techniques</li>
-                <li><strong>Secure Software Development & Code Auditing:</strong> Training developers to write secure code and identify security issues during code review</li>
-                <li><strong>Hands-on Labs:</strong> Practical exercises using real-world scenarios and cutting-edge tools</li>
-                <li><strong>Customized Curriculum:</strong> Training programs tailored to your team's current skill level and specific security requirements</li>
+                <li><strong>Post-mortem Analysis:</strong> Analysis of Post-mortem transactions to identify root-cause analysis of malicious behavior</li>
+                <li><strong>Closed-Source Contract Analysis:</strong> Reconstruction of smart contract logic from bytecode</li>
+                <li><strong>Implementation Validation:</strong> Verification that deployed contracts match whitepapers, documentation, and specifications</li>
+                <li><strong>Legal & Compliance Documentation:</strong> Expert technical reports suitable for regulatory filings, legal proceedings, and dispute resolution</li>
             </ul>
         </div>
 
-        <div class="service-detail" id="application-hardening">
-            <h3>Application Hardening</h3>
-            <p>Our application hardening services implement advanced protection techniques to defend against reverse engineering, tampering, and unauthorized analysis. We deploy multi-layered security measures that protect intellectual property while maintaining application performance.</p>
-            
+        <div class="service-detail" id="technical-advisory">
+            <h3>Technical Advisory</h3>
+            <p>Our technical advisory service provides strategic guidance on blockchain security architecture, threat modeling, and risk management. We leverage our extensive experience in vulnerability research, protocol development, and incident response to help organizations build resilient systems and respond effectively to security challenges. Our advisory engagements range from one-time assessments to ongoing strategic partnerships.</p>
+
             <h4>What We Deliver:</h4>
             <ul>
-                <li><strong>Anti-Reverse Engineering:</strong> Implementation of sophisticated techniques to prevent static and dynamic analysis of your applications</li>
-                <li><strong>Anti-Tampering Protection:</strong> Deployment of integrity checking and self-defense mechanisms to detect and respond to modification attempts</li>
-                <li><strong>Tailored Code Obfuscation:</strong> Custom obfuscation strategies designed for your specific application architecture and threat model</li>
-                <li><strong>Native Binary Hardening:</strong> Low-level protection techniques for compiled applications, including control flow integrity and exploit mitigation</li>
-                <li><strong>Performance Analysis:</strong> Optimization to ensure security measures don't significantly impact application performance</li>
+                <li><strong>Security Architecture Review:</strong>  Evaluation of system design, identifying potential weaknesses and recommending improvements</li>
+                <li><strong>Threat Modeling Analysis:</strong> Systematic identification and prioritization of threats specific to your protocol and deployment environment</li>
+                <li><strong>Attack Surface Analysis:</strong> Detailed mapping of potential attack vectors and recommendations for surface reduction</li>
             </ul>
         </div>
     </div>
@@ -205,7 +221,7 @@
 
     <footer>
     <div class="container">
-        <img src="/images/logo.svg" width="400" alt="Inversive Labs Logo" />
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
         <p>&copy; 2025 Inversive Labs</p>
     </div>
 </footer>

@@ -34,8 +34,29 @@
         <ul class="nav-links">
             <li><a href="/index.html#about" >About</a></li>
             <li><a href="/index.html#team" >Team</a></li>
-            <li><a href="/services/" >Services</a></li>
-            <li><a href="/portfolio/" >Portfolio</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/#security-testing" class="nav-dropdown-link">Smart Contract Triaging</a>
+                    <a href="/services/#security-tooling" class="nav-dropdown-link">Security Tooling</a>
+                    <a href="/services/#vulnerability-research" class="nav-dropdown-link">Onchain Threat Intelligence</a>
+                    <a href="/services/#smart-contract-auditing" class="nav-dropdown-link">Smart Contract Obfuscation</a>
+                    <a href="/services/#protocol-development" class="nav-dropdown-link">Reverse Engineering</a>
+                    <a href="/services/#technical-advisory" class="nav-dropdown-link">Technical Advisory</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/portfolio/" >Portfolio</a>
+                <div class="nav-dropdown">
+                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
+                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
+                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
+                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
+                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
+                </div>
+            </li>
             <li><a href="/blog/" class="active">Blog</a></li>
             <li><a href="/index.html#contact" >Contact</a></li>
         </ul>
@@ -88,7 +109,7 @@
 
     <footer>
     <div class="container">
-        <img src="/images/logo.svg" width="400" alt="Inversive Labs Logo" />
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
         <p>&copy; 2025 Inversive Labs</p>
     </div>
 </footer>

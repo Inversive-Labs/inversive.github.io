@@ -1,5 +1,140 @@
 // Enhanced JavaScript for sophisticated interactions
 
+// Navbar Dropdowns (Portfolio & Services)
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdowns = document.querySelectorAll('.has-dropdown');
+
+    dropdowns.forEach(dropdown => {
+        const navDropdown = dropdown.querySelector('.nav-dropdown');
+        const parentLink = dropdown.querySelector('a');
+
+        if (navDropdown && parentLink) {
+            // Simple click handler for all devices
+            parentLink.addEventListener('click', function(e) {
+                // Check if on mobile (viewport width)
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // Close other dropdowns
+                    dropdowns.forEach(other => {
+                        if (other !== dropdown) {
+                            const otherDropdown = other.querySelector('.nav-dropdown');
+                            if (otherDropdown) {
+                                otherDropdown.classList.remove('show');
+                            }
+                        }
+                    });
+
+                    // Toggle current dropdown
+                    navDropdown.classList.toggle('show');
+                }
+            });
+
+            // Handle dropdown link clicks for smooth scrolling
+            const dropdownLinks = navDropdown.querySelectorAll('.nav-dropdown-link');
+            dropdownLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    // Check if we're on the same page as the link target
+                    if (href.includes('/portfolio/') && window.location.pathname.includes('/portfolio') ||
+                        href.includes('/services/') && window.location.pathname.includes('/services')) {
+                        e.preventDefault();
+                        const targetId = href.split('#')[1];
+                        const targetSection = document.getElementById(targetId);
+
+                        if (targetSection) {
+                            // Force visibility of the section
+                            targetSection.style.opacity = '1';
+                            targetSection.style.transform = 'translateY(0)';
+                            targetSection.style.visibility = 'visible';
+                            targetSection.classList.add('reveal');
+
+                            const yOffset = -120;
+                            const y = targetSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+                            window.scrollTo({
+                                top: y,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+
+                    // Close dropdown and mobile menu after clicking
+                    navDropdown.classList.remove('show');
+                    const hamburger = document.querySelector('.hamburger');
+                    const navLinks = document.querySelector('.nav-links');
+                    if (hamburger && navLinks) {
+                        hamburger.classList.remove('active');
+                        navLinks.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                });
+            });
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.has-dropdown')) {
+            dropdowns.forEach(dropdown => {
+                const navDropdown = dropdown.querySelector('.nav-dropdown');
+                if (navDropdown) {
+                    navDropdown.classList.remove('show');
+                }
+            });
+        }
+    });
+});
+
+// Portfolio Navigation Dropdown
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Portfolio navigation script loaded');
+    
+    const navButton = document.getElementById('portfolioNavButton');
+    const navMenu = document.getElementById('portfolioNavMenu');
+    
+    console.log('NavButton:', navButton);
+    console.log('NavMenu:', navMenu);
+    
+    if (navButton && navMenu) {
+        console.log('Portfolio navigation elements found');
+        
+        // Toggle dropdown menu
+        navButton.addEventListener('click', function(e) {
+            console.log('Button clicked');
+            e.stopPropagation();
+            navButton.classList.toggle('active');
+            navMenu.classList.toggle('show');
+            console.log('Menu classes:', navMenu.className);
+        });
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navButton.contains(e.target) && !navMenu.contains(e.target)) {
+                navButton.classList.remove('active');
+                navMenu.classList.remove('show');
+            }
+        });
+        
+        // Handle navigation link clicks
+        const navLinks = document.querySelectorAll('.portfolio-nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                scrollToSection(sectionId);
+                
+                // Close dropdown after navigation
+                navButton.classList.remove('active');
+                navMenu.classList.remove('show');
+            });
+        });
+    } else {
+        console.log('Portfolio navigation elements not found');
+    }
+});
+
 // Scroll to section function
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -158,16 +293,25 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close menu when clicking on nav items
         navItems.forEach(item => {
             item.addEventListener('click', function(e) {
+                // Skip dropdown parent links on mobile
+                if (window.innerWidth <= 768 && item.parentElement.classList.contains('has-dropdown')) {
+                    // Let the dropdown handler manage this
+                    return;
+                }
+
                 if (item.getAttribute('href').startsWith('#')) {
                     e.preventDefault();
                     const target = item.getAttribute('href');
                     // Use slower scroll speed for mobile nav
                     smoothScrollTo(target, 2200);
                 }
-                
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-                document.body.classList.remove('menu-open');
+
+                // Don't close menu if clicking on dropdown parent
+                if (!item.parentElement.classList.contains('has-dropdown')) {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                    document.body.classList.remove('menu-open');
+                }
             });
         });
 
