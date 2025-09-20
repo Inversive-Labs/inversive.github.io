@@ -22,13 +22,13 @@ class ShaderBackground {
         this.canvas.style.zIndex = '-1';
         this.canvas.style.pointerEvents = 'none';
         this.canvas.style.opacity = '0.5';
-        
+
         // Insert canvas as first child of body
         document.body.insertBefore(this.canvas, document.body.firstChild);
-        
+
         // Add shader-active class for fallback browsers
         document.body.classList.add('shader-active');
-        
+
         // Initialize WebGL
         this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
         
@@ -229,7 +229,7 @@ class ShaderBackground {
     resize() {
         const displayWidth = this.canvas.clientWidth;
         const displayHeight = this.canvas.clientHeight;
-        
+
         if (this.canvas.width !== displayWidth || this.canvas.height !== displayHeight) {
             this.canvas.width = displayWidth;
             this.canvas.height = displayHeight;
