@@ -812,6 +812,7 @@ nav {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
 .service-card {
@@ -1342,6 +1343,21 @@ body:has(.shader-canvas) .uiverse-container {
 #service-details.section {
     opacity: 1 !important;
     transform: translateY(0) !important;
+    padding-top: 5rem;
+    margin-top: 3rem;
+    position: relative;
+}
+
+/* Separator line before service details section - matches service-detail separators */
+#service-details.section::before {
+    content: '';
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
 }
 
 .service-detail::after {
