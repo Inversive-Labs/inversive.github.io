@@ -19,16 +19,16 @@ body {
     scroll-behavior: smooth;
 }
 
-/* Much darker background for all pages except index - minimizes shader distraction */
+/* Darker background for all pages except index - minimizes shader distraction */
 body:not(.home-page) {
-    background: #000000;
-    /* Solid black background to prevent shader from being distracting */
+    background: linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 50%, #141414 100%);
+    /* Dark gradient background to reduce shader distraction while maintaining some depth */
 }
 
 /* Reduce shader visibility on non-index pages */
 body:not(.home-page) .shader-canvas {
-    opacity: 0.15 !important;
-    /* Much lower opacity to make shader very subtle */
+    opacity: 0.25 !important;
+    /* Lower opacity to make shader subtle but still visible */
 }
 
 
