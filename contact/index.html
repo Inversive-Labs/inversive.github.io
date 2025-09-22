@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blog - Inversive Labs - Inversive Labs</title>
+    <title>Contact - Inversive Labs - Inversive Labs</title>
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
     
@@ -49,43 +49,58 @@
                     <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
                 </div>
             </li>
-            <li><a href="/blog/" class="active">Blog</a></li>
-            <li><a href="/contact/" >Contact</a></li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/contact/" class="active">Contact</a></li>
         </ul>
     </nav>
 </header>
 
     <main>
-        <section class="section">
-    <div class="container"> 
-        <h2>B l o g</h2>
-        
-        <div class="blog-posts">
-            
-            <article class="blog-post-preview">
-                <h3><a href="/blog/SHELFChrome/">SHELF encounters of the elements kind</a></h3>
-                <div class="blog-post-meta">
-                    <span class="blog-post-date">Feb 22, 2022</span>
-                    
+        <section class="section" id="contact">
+    <div class="container">
+        <div class="contact">
+            <h2>C o n t a c t</h2>
+            <p class="lead">For consulting inquiries and research collaboration opportunities, please reach out using the form below.</p>
+
+            <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
                 </div>
-            </article>
-            
-            <article class="blog-post-preview">
-                <h3><a href="/blog/SHELF_Loading/">SHELF Loading</a></h3>
-                <div class="blog-post-meta">
-                    <span class="blog-post-date">Apr 08, 2021</span>
-                    
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
-            </article>
-            
-            <article class="blog-post-preview">
-                <h3><a href="/blog/Deobfuscation_1/">Tales Of Binary Deobfuscation</a></h3>
-                <div class="blog-post-meta">
-                    <span class="blog-post-date">Mar 03, 2020</span>
-                    
+
+                <div class="form-group">
+                    <label for="company">Company (Optional)</label>
+                    <input type="text" id="company" name="company">
                 </div>
-            </article>
-            
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="security-testing">Smart Contract Triaging</option>
+                        <option value="tooling">Automated Tooling Development</option>
+                        <option value="threat-intelligence">Onchain Threat Intelligence</option>
+                        <option value="obfuscation">Smart Contract Obfuscation</option>
+                        <option value="reverse-engineering">Reverse Engineering</option>
+                        <option value="technical-advisory">Technical Advisory</option>
+                        <option value="general">General Inquiry</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="cta-button">Send Message</button>
+                </div>
+            </form>
         </div>
     </div>
 </section>

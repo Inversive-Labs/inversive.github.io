@@ -19,6 +19,18 @@ body {
     scroll-behavior: smooth;
 }
 
+/* Much darker background for all pages except index - minimizes shader distraction */
+body:not(.home-page) {
+    background: #000000;
+    /* Solid black background to prevent shader from being distracting */
+}
+
+/* Reduce shader visibility on non-index pages */
+body:not(.home-page) .shader-canvas {
+    opacity: 0.15 !important;
+    /* Much lower opacity to make shader very subtle */
+}
+
 
 .logo-container {
     display: flex;
@@ -475,7 +487,7 @@ nav {
 
 /* Enhanced sections with reveal animations */
 .section {
-    padding: 5rem 0;
+    padding: 1rem 0;
     position: relative;
     z-index: 2;
     opacity: 0;
@@ -553,12 +565,19 @@ nav {
 /* Enhanced about section */
 .about-content {
     margin-bottom: 4rem;
+    min-height: 60vh; /* Ensure minimum height */
+    padding-bottom: 8rem; /* Add substantial padding at the bottom */
 }
 
 .team-story {
     max-width: 900px;
     margin: 0 auto;
     text-align: left;
+}
+
+/* Specific padding for standalone about page */
+#about.section {
+    padding-bottom: 10rem; /* Extra padding for about page */
 }
 
 .team-story .lead {
@@ -577,6 +596,7 @@ nav {
     margin-bottom: 1.5rem;
     font-family: 'Raleway', system-ui, sans-serif;
     font-weight: 200;
+    text-align: left;
     opacity: 0;
     transform: translateY(20px);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -755,7 +775,7 @@ nav {
 .member-description {
     color: #d1d5db;
     margin-bottom: 1.5rem;
-    text-align: center;
+    text-align: left;
     line-height: 1.65;
     font-family: 'Raleway', system-ui, sans-serif;
     font-size: 0.95rem;
@@ -925,9 +945,9 @@ nav {
 }
 
 .cve-content .lead {
-    text-align: center;
+    text-align: left;
     font-size: 1.1rem;
-    color: #9ca3af;
+    color: #ffffff;
     margin-bottom: 40px;
     max-width: 900px;
     margin-left: auto;
@@ -946,8 +966,8 @@ nav {
 
 .cve-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
     max-width: 1200px;
     margin: 0 auto;
     justify-items: center;
@@ -964,7 +984,7 @@ nav {
 }
 
 .cve-description {
-    color: #555;
+    color: #ffffff;
     font-size: 1em;
     margin-bottom: 15px;
     text-align: left;
@@ -982,16 +1002,17 @@ nav {
 
 /* Enhanced contact section with rotating border */
 .contact {
-    background: rgba(17, 17, 17, 0.6);
-    border-radius: 12px;
-    padding: 2.5rem;
-    text-align: center;
+    background: rgba(17, 17, 17, 0.4);
+    border-radius: 16px;
+    padding: 3rem;
+    text-align: left;
     max-width: 700px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-    backdrop-filter: blur(10px);
-    margin: 0.3rem auto 0.5rem auto;
+    border: 1px solid rgba(200, 200, 200, 0.2);
+    backdrop-filter: blur(12px);
+    margin: 2rem auto;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .contact::before {
@@ -1001,7 +1022,7 @@ nav {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(16, 235, 255, 0.1), transparent 30%);
+    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.05), transparent 30%);
     animation: rotate 10s linear infinite;
     z-index: -1;
 }
@@ -1010,12 +1031,26 @@ nav {
     to { transform: rotate(360deg); }
 }
 
+.contact h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.contact p {
+    text-align: left;
+    line-height: 1.7;
+    color: #d1d5db;
+    margin-bottom: 1.5rem;
+}
+
 .contact-info {
     display: flex;
     justify-content: center;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    gap: 2.5rem;
+    margin-top: 2rem;
     flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(200, 200, 200, 0.1);
 }
 
 .contact-item {
@@ -1129,7 +1164,7 @@ footer {
     background: rgba(0, 0, 0, 0.9);
     padding: 2rem 0;
     text-align: center;
-    border-top: 1px solid rgba(59, 130, 246, 0.2);
+    border-top: 1px solid rgba(200, 200, 200, 0.2);
     backdrop-filter: blur(10px);
     position: relative;
     z-index: 2;
@@ -1439,9 +1474,10 @@ body:has(.shader-canvas) .uiverse-container {
 /* Enhanced portfolio section styling */
 .portfolio-section {
     position: relative;
-    margin-bottom: 5rem;
+    margin-bottom: 0.5rem;
 }
 
+/* Divider removed between portfolio sections
 .portfolio-section::after {
     content: '';
     position: absolute;
@@ -1452,6 +1488,7 @@ body:has(.shader-canvas) .uiverse-container {
     height: 1px;
     background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
 }
+*/
 
 .portfolio-section:first-child::after {
     display: none;
@@ -1465,23 +1502,23 @@ body:has(.shader-canvas) .uiverse-container {
 
 .publications-content .lead {
     font-size: 1.1rem;
-    color: #9ca3af;
+    color: #ffffff;
     margin-bottom: 2rem;
     line-height: 1.6;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+    text-align: left;
 }
 
 .publications-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
-    margin-top: 3rem;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
-    justify-items: center;
 }
 
 /* Center single grant item */
@@ -1504,7 +1541,6 @@ body:has(.shader-canvas) .uiverse-container {
     position: relative;
     overflow: hidden;
     width: 100%;
-    max-width: 450px;
 }
 
 .publication-item::before {
@@ -1579,6 +1615,7 @@ body:has(.shader-canvas) .uiverse-container {
     margin-bottom: 1.5rem;
     font-family: 'Raleway', system-ui, sans-serif;
     font-size: 1rem;
+    text-align: left;
 }
 
 .publication-tags {
@@ -1999,7 +2036,7 @@ body:has(.shader-canvas) .uiverse-container {
 
     .publications-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.8rem;
     }
     
     .publication-item {
@@ -2846,19 +2883,22 @@ article h1:first-child:not(.section h1), article h2:first-child:not(.section h2)
     padding-left: 1rem !important;
 }
 
-.cve-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-}
-
-.cve-grid .service-card:nth-child(4) {
-    grid-column: 2 / 3; /* Places the 4th card in the middle column */
+/* Grid layout is defined earlier in the file */
+.cve-grid .service-card:nth-child(4):last-child {
+    grid-column: 2 / 3; /* Center the 4th item if it's the last one */
 }
 
 /* Prevent body scroll when menu is open */
 body.menu-open {
     overflow: hidden;
+}
+
+/* Tablet responsive */
+@media (max-width: 1024px) {
+    .cve-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+    }
 }
 
 /* Mobile responsive enhancements */
@@ -3036,7 +3076,7 @@ body.menu-open {
     }
 
     .section {
-        padding: 3rem 0;
+        padding: 0.5rem 0;
     }
     
     .section h2 {
@@ -3071,7 +3111,7 @@ body.menu-open {
         height: 100px;
     }
     
-    .cve-grid .service-card:nth-child(4) {
+    .cve-grid .service-card:nth-child(4):last-child {
         grid-column: 1; /* Reset on mobile */
     }
 
