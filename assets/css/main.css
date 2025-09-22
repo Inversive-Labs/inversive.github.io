@@ -12,17 +12,17 @@ body {
     font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     line-height: 1.6;
     color: #e5e7eb;
-    background: linear-gradient(135deg, #000000 0%, #111111 50%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #000000 0%, #0d0d0d 50%, #161616 100%);
     min-height: 100vh;
     font-weight: 300;
     overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
-/* Darker background for all pages except index - minimizes shader distraction */
+/* Much darker background for all pages except index - minimizes shader distraction */
 body:not(.home-page) {
-    background: linear-gradient(135deg, #0a0a0a 0%, #0f0f0f 50%, #141414 100%);
-    /* Dark gradient background to reduce shader distraction while maintaining some depth */
+    background: linear-gradient(135deg, #000000 0%, #060606 50%, #0a0a0a 100%);
+    /* Very dark gradient background to reduce shader distraction while maintaining some depth */
 }
 
 /* Reduce shader visibility on non-index pages */
@@ -493,6 +493,16 @@ nav {
     opacity: 0;
     transform: translateY(40px);
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* First section on landing pages needs more top padding to avoid navbar overlap */
+main > .section:first-child {
+    padding-top: 8rem;
+}
+
+/* Hero section doesn't need extra padding */
+.hero {
+    padding-top: 1rem;
 }
 
 .section.reveal {
@@ -1001,19 +1011,24 @@ nav {
     min-height: 30px;
 }
 
-/* Enhanced contact section with rotating border */
+/* Enhanced contact section with sophisticated design */
 .contact {
-    background: rgba(17, 17, 17, 0.4);
-    border-radius: 16px;
-    padding: 3rem;
-    text-align: left;
-    max-width: 700px;
-    border: 1px solid rgba(200, 200, 200, 0.2);
-    backdrop-filter: blur(12px);
-    margin: 2rem auto;
+    background: linear-gradient(135deg,
+        rgba(17, 17, 17, 0.6) 0%,
+        rgba(25, 25, 25, 0.4) 50%,
+        rgba(17, 17, 17, 0.6) 100%);
+    border-radius: 20px;
+    padding: 4rem;
+    text-align: center;
+    max-width: 800px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    margin: 3rem auto;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .contact::before {
@@ -1067,21 +1082,24 @@ nav {
 
 /* Contact Form Styles */
 .contact-form {
-    max-width: 600px;
-    margin: 2rem auto 0;
+    max-width: 650px;
+    margin: 3rem auto 0;
     text-align: left;
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
-    color: #10ebff;
-    font-size: 0.9rem;
-    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
     text-transform: uppercase;
 }
@@ -1090,28 +1108,32 @@ nav {
 .form-group select,
 .form-group textarea {
     width: 100%;
-    padding: 0.75rem;
-    background: rgba(10, 10, 20, 0.7);
-    border: 1px solid rgba(16, 235, 255, 0.2);
-    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
     color: #ffffff;
     font-size: 1rem;
     font-family: 'Raleway', system-ui, sans-serif;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     outline: none;
+    backdrop-filter: blur(10px);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-    color: rgba(209, 213, 219, 0.4);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: rgba(16, 235, 255, 0.5);
-    background: rgba(10, 10, 20, 0.9);
-    box-shadow: 0 0 20px rgba(16, 235, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow:
+        0 0 0 4px rgba(255, 255, 255, 0.05),
+        0 10px 40px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
 }
 
 .form-group select {
@@ -1137,23 +1159,34 @@ nav {
 
 .form-submit {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 3rem;
 }
 
 .form-submit .cta-button {
     width: 100%;
-    max-width: 200px;
-    padding: 0.9rem 2rem;
-    border: none;
+    max-width: 300px;
+    padding: 1.2rem 2.5rem;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
     cursor: pointer;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    text-transform: uppercase;
 }
 
 .form-submit .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(16, 235, 255, 0.4);
+    background: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.08) 100%);
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 40px rgba(255, 255, 255, 0.1),
+        0 0 0 2px rgba(255, 255, 255, 0.2);
 }
 
 .contact-item:hover {
@@ -1545,6 +1578,11 @@ body:has(.shader-canvas) .uiverse-container {
 
 #grants-funding .publication-item {
     max-width: 500px;
+}
+
+/* Add padding after grants section - last section in portfolio */
+#grants-funding {
+    padding-bottom: 8rem;
 }
 
 .publication-item {
@@ -3169,17 +3207,23 @@ body.menu-open {
     }
     
     .contact {
-        padding: 1.5rem 1.2rem;
-        margin: 0.3rem 10px 0.5rem 10px;
+        padding: 2.5rem 1.5rem;
+        margin: 1rem 10px;
+        border-radius: 16px;
+        background: linear-gradient(135deg,
+            rgba(17, 17, 17, 0.8) 0%,
+            rgba(25, 25, 25, 0.6) 100%);
     }
 
     .contact h2 {
-        font-size: 1.8rem;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .contact .lead {
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
     }
 
     .contact-info {
@@ -3209,13 +3253,16 @@ body.menu-open {
     .form-group input,
     .form-group select,
     .form-group textarea {
-        padding: 0.65rem;
-        font-size: 0.95rem;
+        padding: 0.9rem 1rem;
+        font-size: 1rem;
+        border-radius: 10px;
     }
 
     .form-submit .cta-button {
         width: 100%;
         max-width: none;
+        padding: 1rem 2rem;
+        font-size: 1rem;
     }
 
     .blog-posts {
