@@ -496,8 +496,11 @@ nav {
 }
 
 /* First section on landing pages needs more top padding to avoid navbar overlap */
+/* Also make it immediately visible */
 main > .section:first-child {
     padding-top: 8rem;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Hero section doesn't need extra padding */
