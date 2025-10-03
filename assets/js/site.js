@@ -9,12 +9,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const parentLink = dropdown.querySelector('a');
 
         if (navDropdown && parentLink) {
+            // Track click count and timing for double-tap behavior
+            let lastClickTime = 0;
+
             // Simple click handler for all devices
             parentLink.addEventListener('click', function(e) {
                 // Check if on mobile (viewport width)
                 if (window.innerWidth <= 768) {
+                    const currentTime = new Date().getTime();
+                    const timeDiff = currentTime - lastClickTime;
+
+                    // If clicked within 500ms (double tap), allow navigation
+                    if (timeDiff < 500 && navDropdown.classList.contains('show')) {
+                        // Let the link navigate to the parent page
+                        return;
+                    }
+
                     e.preventDefault();
                     e.stopPropagation();
+                    lastClickTime = currentTime;
 
                     // Close other dropdowns
                     dropdowns.forEach(other => {
@@ -36,14 +49,18 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdownLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     const href = this.getAttribute('href');
-                    // Check if we're on the same page as the link target
-                    if (href.includes('/portfolio/') && window.location.pathname.includes('/portfolio') ||
-                        href.includes('/services/') && window.location.pathname.includes('/services')) {
-                        e.preventDefault();
-                        const targetId = href.split('#')[1];
-                        const targetSection = document.getElementById(targetId);
 
-                        if (targetSection) {
+                    // Only handle anchor links (starting with #) for same-page scrolling
+                    if (href.includes('#')) {
+                        const targetId = href.split('#')[1];
+                        // Only intercept if we're on the same base page AND there's a matching element
+                        const currentPath = window.location.pathname.replace(/\/$/, '');
+                        const linkPath = href.split('#')[0].replace(/\/$/, '');
+
+                        if (currentPath === linkPath && document.getElementById(targetId)) {
+                            e.preventDefault();
+                            const targetSection = document.getElementById(targetId);
+
                             // Force visibility of the section
                             targetSection.style.opacity = '1';
                             targetSection.style.transform = 'translateY(0)';

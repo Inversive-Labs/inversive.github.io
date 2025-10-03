@@ -6,7 +6,7 @@
     <title>Inversive Labs - Inversive Labs</title>
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
@@ -34,19 +34,33 @@
         <ul class="nav-links">
             <li><a href="/about/" >About</a></li>
             <li><a href="/team/" >Team</a></li>
-            <li>
+            <li class="has-dropdown">
                 <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Smart Contract Testing</a>
+                    <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
+                    <a href="/services/threat-intelligence/" class="nav-dropdown-link">Threat Intelligence</a>
+                </div>
             </li>
             <li class="has-dropdown">
-                <a href="/portfolio/" >Portfolio</a>
+                <a href="/products/" >Products</a>
                 <div class="nav-dropdown">
-                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
-                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
-                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
-                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
-                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
-                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
-                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                    <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
+                    <a href="/photon/" class="nav-dropdown-link">Photon</a>
+                    <a href="/rewind/" class="nav-dropdown-link">Rewind</a>
+                    <a href="/Aethra/" class="nav-dropdown-link">Aethra</a>
+                    <a href="/pulsar/" class="nav-dropdown-link">Pulsar</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" >Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
                 </div>
             </li>
             <li><a href="/blog/" >Blog</a></li>
@@ -59,27 +73,20 @@
         <section class="hero">
     <div class="container">
         <div class="hero-content">
-            <h1>I n v e r s i v e</h1>
-            <p class="tagline">Automating Runtime Innovation</p>
-            <p class="subtitle">Specialized Security Research and Tooling for Web3 Infrastructure</p>
-            <a href="/contact/" class="cta-button">Contact Us</a>
+            <h1><span class="gradient-text">I n v e r s i v e</span></h1>
+            <p class="tagline">Securing High-Performance Distributed Systems</p>
+            <p class="subtitle">Security Research and Engineering for Solana and other Non-EVMs</p>
+            <div class="hero-actions">
+                <a href="/contact/" class="cta-primary">Get Started</a>
+                <a href="/services/" class="cta-secondary">View Services</a>
+            </div>
         </div>
     </div>
 </section>
-
-
-
-
     </main>
 
-    <footer>
-    <div class="container">
-        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
-        <p>&copy; 2025 Inversive Labs</p>
-    </div>
-</footer>
+    
 
     <script src="/assets/js/shader-background.js"></script>
     <script src="/assets/js/site.js"></script>
 </body>
-</html>

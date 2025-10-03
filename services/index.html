@@ -6,7 +6,7 @@
     <title>Services - Inversive Labs - Inversive Labs</title>
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
@@ -34,19 +34,33 @@
         <ul class="nav-links">
             <li><a href="/about/" >About</a></li>
             <li><a href="/team/" >Team</a></li>
-            <li>
+            <li class="has-dropdown">
                 <a href="/services/" class="active">Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Smart Contract Testing</a>
+                    <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
+                    <a href="/services/threat-intelligence/" class="nav-dropdown-link">Threat Intelligence</a>
+                </div>
             </li>
             <li class="has-dropdown">
-                <a href="/portfolio/" >Portfolio</a>
+                <a href="/products/" >Products</a>
                 <div class="nav-dropdown">
-                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
-                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
-                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
-                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
-                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
-                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
-                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                    <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
+                    <a href="/photon/" class="nav-dropdown-link">Photon</a>
+                    <a href="/rewind/" class="nav-dropdown-link">Rewind</a>
+                    <a href="/Aethra/" class="nav-dropdown-link">Aethra</a>
+                    <a href="/pulsar/" class="nav-dropdown-link">Pulsar</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" >Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
                 </div>
             </li>
             <li><a href="/blog/" >Blog</a></li>
@@ -58,97 +72,91 @@
     <main>
         <section class="section" id="services">
     <div class="container">
-        <h2>S e r v i c e s</h2>
-        <div class="services-grid">
-            <div class="service-card" onclick="scrollToSection('security-testing')">
-                <h3>Smart Contract Testing</h3>
-                <p>Testing campaigns combining tailored fuzzing and invariant testing solutions for security assurance.</p>
-                <ul class="service-features">
-                    <li>Fuzzing & Invariant Testing</li>
-                    <li>Custom Test Suite Development</li>
-                    <li>Continuous Testing</li>
-                </ul>
+        <div class="section-header">
+            <h2 class="section-title">Services</h2> 
+            <p class="section-subtitle">Security Solutions Engineered for High-Performance Distributed Systems</p>
+        </div>
+
+        <div class="services-grid sophisticated">
+            <div class="service-card-sophisticated" id="smart-contract-testing">
+                <div class="service-content">
+                    <h3 class="service-title">Smart Contract Testing</h3>
+                    <p class="service-summary">Security Validation Through Testing Methodologies Tailored to your Protocol's Architecture.</p>
+
+                    <ul class="service-features-list">
+                        <li>Fuzzing & Invariant Testing</li>
+                        <li>Formal Verification</li>
+                        <li>Custom Test Suite Development</li>
+                        <li>Continuous Testing Integration</li>
+                    </ul>
+                    <a href="/services/smart-contract-testing/" class="service-link">
+                        <span>Explore Testing Services</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
-            <div class="service-card" onclick="scrollToSection('security-tooling')">
-                <h3>Security Engineering</h3>
-                <p>Tailored tooling for blockchain security applications.</p>
-                <ul class="service-features">
-                    <li>Tailored Oracles for Dynamic and Static Analyzers</li>
-                    <li>Custom Blockchain Indexers</li>
-                    <li>Tailored solutions to address security or architecture related challenges</li>
-                </ul>
+            <div class="service-card-sophisticated" id="security-engineering">
+                <div class="service-content">
+                    <h3 class="service-title">Security Engineering</h3>
+                    <p class="service-summary">Bespoke Security Infrastructure and Tooling Designed to address Complex Security Challenges.</p>
+
+                    <ul class="service-features-list">
+                        <li>Dynamic and Static Analyzers</li>
+                        <li>Custom Blockchain Indexers</li>  
+                        <li>Security Monitoring Infrastructure</li>
+                        <li>Tailored Solutions to address Security or Architecture Challenges</li>
+                    </ul>
+                    <a href="/services/security-engineering/" class="service-link">
+                        <span>View Engineering Solutions</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
 
-            <div class="service-card" onclick="scrollToSection('vulnerability-research')">
-                <h3>Onchain Threat Intelligence</h3>
-                <p>Proactive and Reactive monitoring of blockchain assets providing timely alerts and intelligence feeds</p>
-                <ul class="service-features">
-                    <li>Real-time Alerts</li>
-                    <li>Transaction Analysis</li>
-                    <li>Proactive Onchain Monitoring</li>
-                    <li>Cable Subscription Feed</li>
-                </ul>
+            <div class="service-card-sophisticated" id="threat-intelligence" style="position: relative;">
+                <div style="position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 500; opacity: 0.7; transform: rotate(12deg);">
+                    WIP
+                </div>
+                <div class="service-content">
+                    <h3 class="service-title">Threat Intelligence</h3>
+                    <p class="service-summary">Real-time onchain monitoring and predictive threat analysis powered by advanced pattern recognition and deep learning.</p>
+
+                    <ul class="service-features-list">
+                        <li>Real-time Threat Alerts</li>
+                        <li>Transaction Proactive Monitoring</li>
+                        <li>Bytecode Code-reuse Analysis</li>
+                        <li>Cable Subscription Feed</li>
+                    </ul>
+                    <a href="/services/threat-intelligence/" class="service-link">
+                        <span>Discover Intelligence Platform</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
 </section>
-
-<section class="section" id="service-details">
-    <div class="container">
-        <div class="service-detail" id="security-testing">
-            <h3>Smart Contract Testing</h3>
-            <p>Our smart contract testing service provides security assessment and prioritization of vulnerabilities in blockchain protocols. We combine automated analysis with expert manual review to identify issues, assess their severity, and provide actionable remediation strategies.</p>
-
-            <h4>What We Deliver:</h4>
-            <ul>
-                <li><strong>Fuzzing and Invariant Testing:</strong> Deployment of tailored fuzzing campaigns and invariant tests to uncover edge cases and protocol violations</li>
-                <li><strong>Custom Test Suite Development:</strong> Creation of tailored test frameworks specific to protocol architecture and business logic</li>
-                <li><strong>Continuous Testing Infrastructure:</strong> Implementation of automated testing pipelines that continuously validate contract security throughout development</li>
-                <li><strong>Actionable Response:</strong> Mitigation support for found issues, providing remediation strategies advice and validation</li>
-            </ul>
-        </div>
-
-        <div class="service-detail" id="security-tooling">
-            <h3>Security Engineering</h3>
-            <p>We develop tailored tooling encompassing both dynamic and static analysis capabilities, advanced blockchain indexing systems, and specialized tooling to address complex security challenges.</p>
-
-            <h4>What We Deliver:</h4>
-            <ul>
-                <li><strong>Dynamic and Static Analyzers:</strong> Custom-built analysis engines that detect vulnerabilities through both runtime monitoring and code inspection</li>
-                <li><strong>Blockchain Indexers:</strong> Indexing systems for real-time transaction analysis and historical data mining</li>
-                <li><strong>Custom Tooling R&D:</strong> Research and development services to address specific challenges through automation pipelines</li>
-                <li><strong>Open-Source Contributions:</strong> Development and maintenance of community security tools to advance ecosystem-wide security</li>
-            </ul>
-        </div>
-
-        <div class="service-detail" id="vulnerability-research">
-            <h3>Onchain Threat Intelligence</h3>
-            <p>Our onchain threat intelligence service provides monitoring and analysis of blockchain ecosystems to identify emerging threats, monitor on-chain assets, and provide alerts of potential malicious transactions. We combine real-time transaction monitoring with advanced pattern recognition to deliver actionable intelligence that protects protocols from emerging threats.</p>
-
-            <h4>What We Deliver:</h4>
-            <ul>
-                <li><strong>Real-time Alerts:</strong> Instant notifications of suspicious activities, anomalous transactions, and potential exploit attempts</li>
-                <li><strong>Transaction Analysis:</strong> Deep forensic analysis of transaction patterns to identify attack vectors and malicious behavior</li>
-                <li><strong>Proactive Onchain Monitoring:</strong> Continuous surveillance of smart contracts, protocol interactions, and cross-chain activities</li>
-                <li><strong>Cable Subscription Feed:</strong> Premium threat intelligence feed providing curated insights on emerging vulnerabilities and active threats</li>
-                <li><strong>Incident Investigation:</strong> Rapid response team for analyzing and documenting security incidents as they unfold</li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-
     </main>
 
-    <footer>
+    
+        <footer>
     <div class="container">
         <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
         <p>&copy; 2025 Inversive Labs</p>
     </div>
 </footer>
+    
 
     <script src="/assets/js/shader-background.js"></script>
     <script src="/assets/js/site.js"></script>
 </body>
-</html>

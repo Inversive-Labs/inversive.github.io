@@ -6,10 +6,43 @@ class ShaderBackground {
         this.program = null;
         this.startTime = Date.now();
         this.animationId = null;
-        
+        this.isVisible = true;
+        this.pausedTime = 0;
+        this.lastActiveTime = Date.now();
+
         this.init();
+        this.setupVisibilityHandling();
     }
-    
+
+    setupVisibilityHandling() {
+        // Handle page visibility changes
+        const handleVisibilityChange = () => {
+            if (document.hidden) {
+                this.isVisible = false;
+                this.pausedTime = Date.now() - this.lastActiveTime;
+            } else {
+                this.isVisible = true;
+                this.startTime += Date.now() - this.lastActiveTime - this.pausedTime;
+                this.lastActiveTime = Date.now();
+            }
+        };
+
+        // Listen for visibility change events
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+
+        // Also handle window blur/focus for additional coverage
+        window.addEventListener('blur', () => {
+            this.isVisible = false;
+            this.pausedTime = Date.now() - this.lastActiveTime;
+        });
+
+        window.addEventListener('focus', () => {
+            this.isVisible = true;
+            this.startTime += Date.now() - this.lastActiveTime - this.pausedTime;
+            this.lastActiveTime = Date.now();
+        });
+    }
+
     init() {
         // Create canvas element
         this.canvas = document.createElement('canvas');
@@ -21,7 +54,7 @@ class ShaderBackground {
         this.canvas.style.height = '100vh';
         this.canvas.style.zIndex = '-1';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.opacity = '0.5';
+        this.canvas.style.opacity = '0.3';
 
         // Insert canvas as first child of body
         document.body.insertBefore(this.canvas, document.body.firstChild);
@@ -58,6 +91,9 @@ class ShaderBackground {
     }
     
     setupShaders() {
+        // Check if we're on the home page
+        const isHomePage = document.body.classList.contains('home-page');
+
         // Vertex shader
         const vertexShaderSource = `
             attribute vec2 a_position;
@@ -65,13 +101,14 @@ class ShaderBackground {
                 gl_Position = vec4(a_position, 0.0, 1.0);
             }
         `;
-        
+
         // Fragment shader - adapted from your Shadertoy code
         const fragmentShaderSource = `
             precision mediump float;
             uniform vec2 u_resolution;
             uniform float u_time;
             uniform float u_randomSeed;
+            uniform float u_scrollProgress;
             
             vec2 position(float z) {
                 // Add random offsets to create unique tunnel patterns
@@ -108,31 +145,27 @@ class ShaderBackground {
                     float screenZ = realZ - camZ;
                     float r = 20.0 / screenZ;
                     vec2 c = (position(realZ) - cam) * 12.0 / screenZ - dcamdt * 0.1;
-                    // Create progression: cyan -> pink -> purple -> dark purple
-                    float progression = realZ * 0.03; // Slower color progression
-                    
-                    // Define color stops matching site color scheme
-                    vec3 cyan = vec3(0.063, 0.922, 1.0);     // #10ebff (start)
-                    vec3 pink = vec3(0.9, 0.3, 0.8);         // Pink transition
-                    vec3 purple = vec3(0.725, 0.102, 0.933); // #b91aee
-                    vec3 darkPurple = vec3(0.3, 0.1, 0.6);   // Dark purple (end)
-                    
-                    // Smooth interpolation between color stops
-                    float t = mod(progression, 4.5);
+                    // Color based on page
                     vec3 color;
-                    if (t < 1.5) {
-                        // Stay in cyan a bit longer
-                        color = cyan;
-                    } else if (t < 2.5) {
-                        // Cyan to pink
-                        color = mix(cyan, pink, t - 1.5);
-                    } else if (t < 3.5) {
-                        // Pink to purple
-                        color = mix(pink, purple, t - 2.5);
+                    ${isHomePage ? `
+                    // Higher contrast gradient colors for home page
+                    float progression = realZ * 0.03;
+                    vec3 darkCyan = vec3(0.2, 0.9, 1.0);       // Brighter cyan
+                    vec3 darkPurple = vec3(0.8, 0.2, 0.9);     // Brighter purple
+                    vec3 darkPink = vec3(0.9, 0.35, 0.75);     // Brighter pink
+
+                    float t = mod(progression, 3.0);
+                    if (t < 1.0) {
+                        color = mix(darkCyan, darkPurple, t);
+                    } else if (t < 2.0) {
+                        color = mix(darkPurple, darkPink, t - 1.0);
                     } else {
-                        // Purple to dark purple
-                        color = mix(purple, darkPurple, t - 3.5);
+                        color = mix(darkPink, darkCyan, t - 2.0);
                     }
+                    ` : `
+                    // White for other pages
+                    color = vec3(1.0, 1.0, 1.0);
+                    `}
                     
                     // Apply smooth startup fade-in effect
                     float intensity = 0.02;
@@ -171,14 +204,19 @@ class ShaderBackground {
         this.uniforms = {
             resolution: this.gl.getUniformLocation(this.program, 'u_resolution'),
             time: this.gl.getUniformLocation(this.program, 'u_time'),
-            randomSeed: this.gl.getUniformLocation(this.program, 'u_randomSeed')
+            randomSeed: this.gl.getUniformLocation(this.program, 'u_randomSeed'),
+            scrollProgress: this.gl.getUniformLocation(this.program, 'u_scrollProgress')
         };
         
         // Generate random seed for unique tunnel patterns each load
         this.randomSeed = Math.random() * 1000.0;
-        
+
         // Get attribute location
         this.positionAttributeLocation = this.gl.getAttribLocation(this.program, 'a_position');
+
+        // Track scroll position
+        this.scrollProgress = 0;
+        this.setupScrollTracking();
     }
     
     createShader(type, source) {
@@ -225,7 +263,34 @@ class ShaderBackground {
         this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.positionBuffer);
         this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array(positions), this.gl.STATIC_DRAW);
     }
-    
+
+    setupScrollTracking() {
+        // Track scroll to detect when dark sections are visible
+        const updateScroll = () => {
+            const heroSection = document.querySelector('.service-hero-minimal');
+            if (heroSection) {
+                const heroHeight = heroSection.offsetHeight;
+                const scrollY = window.scrollY;
+                const viewportHeight = window.innerHeight;
+
+                // Calculate how much of the viewport shows dark sections
+                if (scrollY > heroHeight - viewportHeight / 2) {
+                    // Dark section is entering view
+                    const darkProgress = Math.min((scrollY - (heroHeight - viewportHeight / 2)) / viewportHeight, 1.0);
+                    this.scrollProgress = darkProgress;
+                } else {
+                    this.scrollProgress = 0;
+                }
+            } else {
+                // Fallback for other pages
+                this.scrollProgress = Math.min(window.scrollY / window.innerHeight * 0.5, 1.0);
+            }
+        };
+
+        window.addEventListener('scroll', updateScroll);
+        updateScroll(); // Initial call
+    }
+
     resize() {
         const displayWidth = this.canvas.clientWidth;
         const displayHeight = this.canvas.clientHeight;
@@ -239,7 +304,13 @@ class ShaderBackground {
     
     render() {
         if (!this.gl || !this.program) return;
-        
+
+        // Don't render if tab is not visible
+        if (!this.isVisible) {
+            this.animationId = requestAnimationFrame(() => this.render());
+            return;
+        }
+
         const currentTime = (Date.now() - this.startTime) * 0.001; // Convert to seconds
         
         // Clear canvas
@@ -253,6 +324,7 @@ class ShaderBackground {
         this.gl.uniform2f(this.uniforms.resolution, this.canvas.width, this.canvas.height);
         this.gl.uniform1f(this.uniforms.time, currentTime);
         this.gl.uniform1f(this.uniforms.randomSeed, this.randomSeed);
+        this.gl.uniform1f(this.uniforms.scrollProgress, this.scrollProgress);
         
         // Setup position attribute
         this.gl.enableVertexAttribArray(this.positionAttributeLocation);
@@ -285,12 +357,13 @@ class ShaderBackground {
 }
 
 // Initialize shader background when DOM is ready
-document.addEventListener('DOMContentLoaded', function() {
-    // Small delay to ensure page is fully loaded
-    setTimeout(() => {
-        window.shaderBackground = new ShaderBackground();
-    }, 100);
-});
+// DISABLED - Using CSS gradient animation instead
+// document.addEventListener('DOMContentLoaded', function() {
+//     // Small delay to ensure page is fully loaded
+//     setTimeout(() => {
+//         window.shaderBackground = new ShaderBackground();
+//     }, 100);
+// });
 
 // Clean up on page unload
 window.addEventListener('beforeunload', function() {
