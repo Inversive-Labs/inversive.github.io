@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiant - Inversive Labs - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.svg" width="250"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/about/" >About</a></li>
+            <li><a href="/team/" >Team</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Smart Contract Testing</a>
+                    <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
+                    <a href="/services/threat-intelligence/" class="nav-dropdown-link">Threat Intelligence</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/products/" class="active">Products</a>
+                <div class="nav-dropdown">
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                    <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
+                    <a href="/photon/" class="nav-dropdown-link">Photon</a>
+                    <a href="/rewind/" class="nav-dropdown-link">Rewind</a>
+                    <a href="/Aethra/" class="nav-dropdown-link">Aethra</a>
+                    <a href="/pulsar/" class="nav-dropdown-link">Pulsar</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" >Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
+                </div>
+            </li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/contact/" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <!-- Hero Section -->
+<section class="section" style="padding: 12rem 0 4rem;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title" style="font-weight: 200;">Radiant</h2>
+            <p class="section-subtitle" style="font-size: 1.3rem; font-weight: 300; text-align: center; font-family: 'Raleway', sans-serif; color: rgba(219, 219, 219, 0.95); max-width: 900px; margin: 0 auto;">Bytecode-level Concolic execution engine for Solana smart contracts, enabling program analysis through symbolic and concrete execution</p>
+        </div>
+    </div>
+</section>
+
+<!-- Description + Image Section -->
+<section class="section static-analyzer-section" style="padding: 8rem 0 6rem;">
+    <div class="container">
+        <div class="static-analyzer-overview-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div>
+                <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); text-align: justify; font-family: 'Raleway', sans-serif;">Overview</h3>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Radiant combines concrete and symbolic execution to systematically explore program paths in Solana smart contracts, enabling security validation tailored to your protocol's architecture.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Leverages constraint solving to discover edge cases and reveal hidden vulnerabilities in your smart contracts.</p>
+            </div>
+
+            <div style="border-radius: 0; overflow: hidden; border: none;">
+                <img src="/images/products/radiant_logo.png" alt="Radiant Architecture" style="width: 100%; height: auto; display: block;">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Why Radiant Section -->
+<section class="section static-analyzer-section" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="static-analyzer-overview-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div style="border-radius: 0; overflow: hidden; border: none;">
+                <img src="/images/products/radiant.png" alt="Radiant Workflow" style="width: 100%; height: auto; display: block; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" onclick="openImageModal('/images/products/radiant.png')">
+            </div>
+
+            <div>
+                <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); text-align: justify; font-family: 'Raleway', sans-serif;">Why Radiant?</h3>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Smart contracts operate in adversarial environments where traditional testing methods struggle to uncover edge cases that only manifest under specific state conditions. Manual testing and conventional fuzzing can't systematically explore all possible execution paths, leaving critical vulnerabilities hidden until they're exploited in production.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Radiant solves this through concolic execution, combining concrete and symbolic execution to enable enhanced program path exploration. By symbolizing instruction parameters and account fields, solving constraints and generate concrete test inputs, Radiant discovers edge cases and validates invariants across the execution space of your protocol.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 4rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">How It Works</h3>
+        <div class="static-analyzer-how-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">01</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Test Creation</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Create a testcase with selected accounts, transactions and desired blockchain state</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">02</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Symbolize</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Symbolize specific instruction parameters or account fields for desired instructions</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">03</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Deploy</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Deploy pipeline to triage symbolized fields to find concrete values</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">04</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Report</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Found solutions to contraints can be assessed to build enhanced validation capabilities</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Key Features</h3>
+        <div class="static-analyzer-features-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.1);">
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Symbolic Execution</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Exploration of all execution paths derived from symbolic values.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Invariant Testing</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Validates protocol invariants and security properties across diverse execution scenarios.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Custom Test Suites</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Augmented test suites tailored to your contract's logic.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Edge Case Discovery</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Identifies boundary conditions and corner cases that traditional fuzzing can miss.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Closed and Open Source Program Support</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Analyze programs with or without source code through bytecode-level symbolic execution.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">CI/CD Integration</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Derived solutions can be ingested into continuous testing pipelines for ongoing security validation.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Use Cases -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Use Cases</h3>
+        <div class="static-analyzer-specs-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.1);">
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Pre-Deployment Testing</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Invariant analysis and edge case discovery before contract deployment</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Regression Testing</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Automated test suite generation ensuring contract updates don't introduce new issues</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Protocol Validation</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Formal verification of security invariants and protocol-specific correctness properties</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="padding: 6rem 0; text-align: center;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Validate Your Smart Contracts</h3>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 2.5rem; font-weight: 300; font-family: 'Raleway', sans-serif;">Concolic testing methodology tailored to your protocol's architecture</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: stretch;">
+            <a href="/contact/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
+                <span>Request Access</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="/products/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
+                <span>View All Products</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Image Modal -->
+<div id="imageModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);" onclick="closeImageModal()">
+    <span style="position: absolute; top: 2rem; right: 3rem; color: rgba(255, 255, 255, 0.8); font-size: 3rem; font-weight: 200; cursor: pointer; transition: color 0.3s ease; z-index: 10000;" onclick="closeImageModal()" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">&times;</span>
+    <img id="modalImage" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; object-fit: contain; border: 1px solid rgba(255, 255, 255, 0.1);">
+</div>
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('imageModal').style.display = 'block';
+    document.getElementById('modalImage').src = imageSrc;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    document.getElementById('imageModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeImageModal();
+    }
+});
+</script>
+
+    </main>
+
+    
+        <footer>
+    <div class="container">
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>

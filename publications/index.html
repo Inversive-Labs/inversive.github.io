@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publications - Inversive Labs - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.svg" width="250"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/about/" >About</a></li>
+            <li><a href="/team/" >Team</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Smart Contract Testing</a>
+                    <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
+                    <a href="/services/threat-intelligence/" class="nav-dropdown-link">Threat Intelligence</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/products/" >Products</a>
+                <div class="nav-dropdown">
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                    <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
+                    <a href="/photon/" class="nav-dropdown-link">Photon</a>
+                    <a href="/rewind/" class="nav-dropdown-link">Rewind</a>
+                    <a href="/Aethra/" class="nav-dropdown-link">Aethra</a>
+                    <a href="/pulsar/" class="nav-dropdown-link">Pulsar</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" class="active">Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
+                </div>
+            </li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/contact/" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <section class="section" id="cve-advisories">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Advisories</h2>
+            <p class="section-subtitle">Our security research has led to the discovery and responsible disclosure of vulnerabilities in widely-deployed software. Below are our public CVE advisories.</p>
+
+        <div class="cve-grid">
+                <div class="publication-item">
+                    <div class="cve-header">
+                        <h3>CVE-2023-32402</h3>
+                    </div>
+                    <span class="cve-id">WebKit EME</span>
+                    <p class="cve-description">An out-of-bounds read issue was addressed with improved input validation.</p>
+                    <div class="publication-links">
+                        <a href="https://support.apple.com/en-us/102735" target="_blank" class="paper-link">View Advisory →</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="cve-header">
+                        <h3>CVE-2023-32423</h3>
+                    </div>
+                    <span class="cve-id">WebKit EME</span>
+                    <p class="cve-description">A buffer overflow issue in WebKit was addressed with improved memory handling.</p>
+                    <div class="publication-links">
+                        <a href="https://support.apple.com/en-us/102735" target="_blank" class="paper-link">View Advisory →</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="cve-header">
+                        <h3>CVE-2025-31217</h3>
+                    </div>
+                    <span class="cve-id">WebKit WebGL</span>
+                    <p class="cve-description">Processing maliciously crafted web content may lead to an unexpected process crash.</p>
+                    <div class="publication-links">
+                        <a href="https://support.apple.com/en-us/122404" target="_blank" class="paper-link">View Advisory →</a>
+                    </div>
+                </div>
+
+                <div class="publication-item">
+                    <div class="cve-header">
+                        <h3>CVE-2025-43216</h3>
+                    </div>
+                    <span class="cve-id">WebKit WebAudio</span>
+                    <p class="cve-description">A use-after-free issue was addressed with improved memory management.</p>
+                    <div class="publication-links">
+                        <a href="https://support.apple.com/en-us/124147" target="_blank" class="paper-link">View Advisory →</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="research-papers">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">Papers</h2>
+            <p class="section-subtitle">Academic and industry research publications.</p>
+
+        <div class="publications-grid">
+                <div class="publication-item" style="display: flex; flex-direction: column;">
+                    <div class="publication-header">
+                        <h3>Uniswap v4 - A Mathematical Primer</h3>
+                        <span class="publication-date">2024</span>
+                    </div>
+                    <p class="publication-description" style="flex-grow: 1;">LVR & IL Hedge Hook for Concentrated Liquidity Providers, Dynamic Fees & Delta-Gamma Neutrality: Power Perpetuals & Lending Protocols.</p>
+                    <div class="publication-links" style="margin-top: auto;">
+                        <a href="https://github.com/scab24/univ4-risk-neutral-hook/blob/hookathon/UniswapV4_Hookathon_IL_Hedging_MathPrimer.pdf" target="_blank" class="paper-link">Read Paper →</a>
+                    </div>
+                </div>
+
+                <div class="publication-item" style="display: flex; flex-direction: column;">
+                    <div class="publication-header">
+                        <h3>Introducing SHELF Loading</h3>
+                        <span class="publication-date">2020</span>
+                    </div>
+                    <p class="publication-description" style="flex-grow: 1;">Novel technique for loading ELF binaries with enhanced anti-forensic capabilities, demonstrating generation of static PIE files with single loadable segments for shellcode-like execution without ELF headers.</p>
+                    <div class="publication-links" style="margin-top: auto;">
+                        <a href="https://tmpout.sh/1/10/" target="_blank" class="paper-link">Read Paper →</a>
+                    </div>
+                </div>
+                <div class="publication-item" style="display: flex; flex-direction: column;">
+                    <div class="publication-header">
+                        <h3>SHELF encounters of the elements kind</h3>
+                        <span class="publication-date">2022</span>
+                    </div>
+                    <p class="publication-description" style="flex-grow: 1;">Exploitation of V8 vulnerability (CVE-2020-6418) to achieve reflective loading of ELF binaries in Chrome, demonstrating deployment of SHELF payloads within browser renderer processes without execve syscalls.</p>
+                    <div class="publication-links" style="margin-top: auto;">
+                        <a href="https://tmpout.sh/2/5.html" target="_blank" class="paper-link">Read Paper →</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    
+        <footer>
+    <div class="container">
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>
