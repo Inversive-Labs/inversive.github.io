@@ -3963,9 +3963,13 @@ body.menu-open {
 }
 
 .section-minimal {
-    padding: 5rem 0;
+    padding: 4rem 0;
     background: transparent;
     position: relative;
+}
+
+.section-minimal + .section-minimal {
+    padding-top: 2rem;
 }
 
 /* Smooth gradient overlay for sections */
@@ -3986,6 +3990,7 @@ body.menu-open {
 
 .section-minimal.section-first {
     background: transparent;
+    padding-top: 2rem;
 }
 
 .section-minimal:nth-of-type(odd)::before {
