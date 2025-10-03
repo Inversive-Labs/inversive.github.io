@@ -176,7 +176,7 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000;
+    z-index: 1001;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-bottom: none;
     padding-bottom: 2px;
@@ -3041,12 +3041,12 @@ body.menu-open {
 
     .hamburger {
         display: flex;
-        z-index: 1001;
+        z-index: 1002;
     }
     
     .nav-links {
         position: fixed;
-        top: 0;
+        top: 70px;
         left: 0;
         width: 100%;
         height: auto;
@@ -3059,15 +3059,16 @@ body.menu-open {
         justify-content: flex-start;
         gap: 0.5rem;
         padding: 1.5rem 0;
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 1000;
-        transform: translateY(-100%);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 998;
+        max-height: 0;
+        overflow: hidden;
         visibility: hidden;
         opacity: 0;
     }
-    
+
     .nav-links.active {
-        transform: translateY(70px);
+        max-height: 100vh;
         visibility: visible;
         opacity: 1;
     }
