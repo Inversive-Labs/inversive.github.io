@@ -1135,13 +1135,13 @@ main > .section:first-child {
 
 /* Minimalist contact section */
 .contact {
-    background: transparent;
+    background: #000000;
     padding: 4rem 2rem;
     text-align: center;
     max-width: 700px;
     margin: 2rem auto;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
 }
 
 .contact h2 {
@@ -1182,6 +1182,9 @@ main > .section:first-child {
     max-width: 650px;
     margin: 3rem auto 0;
     text-align: left;
+    background: #000000;
+    padding: 2rem;
+    border: none;
 }
 
 .form-group {
