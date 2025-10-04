@@ -3235,8 +3235,8 @@ body.menu-open {
     .contact {
         padding: 3rem 1.5rem 4rem;
         margin: 2rem auto;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #000000;
+        border: none;
         max-width: 90%;
         text-align: center;
     }
