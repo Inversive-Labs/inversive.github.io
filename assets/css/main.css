@@ -1135,13 +1135,13 @@ main > .section:first-child {
 
 /* Minimalist contact section */
 .contact {
-    background: transparent;
+    background: #000000;
     padding: 4rem 2rem;
     text-align: center;
     max-width: 700px;
     margin: 2rem auto;
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
 }
 
 .contact h2 {
@@ -1182,6 +1182,9 @@ main > .section:first-child {
     max-width: 650px;
     margin: 3rem auto 0;
     text-align: left;
+    background: #000000;
+    padding: 2rem;
+    border: none;
 }
 
 .form-group {
@@ -3232,8 +3235,8 @@ body.menu-open {
     .contact {
         padding: 3rem 1.5rem 4rem;
         margin: 2rem auto;
-        background: transparent;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        background: #000000;
+        border: none;
         max-width: 90%;
         text-align: center;
     }
@@ -3387,7 +3390,7 @@ body.menu-open {
 .cta-primary {
     display: inline-block;
     padding: 0.75rem 2rem;
-    background: transparent;
+    background: #000000;
     color: rgba(255, 255, 255, 0.8);
     text-decoration: none;
     font-weight: 300;
@@ -3402,7 +3405,7 @@ body.menu-open {
     transform: translateY(-2px);
     color: rgba(255, 255, 255, 1);
     border-color: rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.9);
 }
 
 .cta-secondary {
@@ -3941,7 +3944,6 @@ body.menu-open {
 .cta-minimal-primary,
 .cta-minimal-secondary {
     padding: 0.75rem 2rem;
-    background: transparent;
     color: rgba(255, 255, 255, 0.8);
     border: 1px solid rgba(255, 255, 255, 0.2);
     text-decoration: none;
@@ -3949,7 +3951,21 @@ body.menu-open {
     transition: all 0.3s ease;
 }
 
-.cta-minimal-primary:hover,
+.cta-minimal-primary {
+    background: #000000;
+}
+
+.cta-minimal-secondary {
+    background: transparent;
+}
+
+.cta-minimal-primary:hover {
+    background: rgba(0, 0, 0, 0.9);
+    color: rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
 .cta-minimal-secondary:hover {
     background: rgba(255, 255, 255, 0.08);
     color: rgba(255, 255, 255, 1);
@@ -4033,20 +4049,17 @@ body.menu-open {
 
 .card-minimal {
     padding: 2rem;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: #000000;
+    border: none;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
     cursor: pointer;
 }
 
 .card-minimal:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.12);
+    background: rgba(0, 0, 0, 0.9);
     transform: translateY(-4px);
-    box-shadow:
-        0 12px 20px rgba(0, 0, 0, 0.15),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
 }
 
 .card-minimal .card-number {
@@ -4135,8 +4148,8 @@ body.menu-open {
 
 .deliverable-item-minimal {
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
-    border-left: 2px solid rgba(255, 255, 255, 0.1);
+    background: #000000;
+    border: none;
     border-radius: 4px;
 }
 
@@ -4415,6 +4428,7 @@ body.menu-open {
     .static-analyzer-specs-grid {
         grid-template-columns: 1fr !important;
         gap: 1.5rem !important;
+        background: transparent !important;
     }
 
     .static-analyzer-specs-grid > div {
