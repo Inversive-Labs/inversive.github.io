@@ -3726,8 +3726,10 @@ body.menu-open {
     font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     letter-spacing: -0.01em;
     line-height: 1.3;
-    min-height: 2.5rem;
+    height: 5rem;
     padding-bottom: 0.5rem;
+    display: flex;
+    align-items: flex-start;
 }
 
 .service-card-sophisticated .service-summary {
@@ -3736,8 +3738,10 @@ body.menu-open {
     color: rgba(255, 255, 255, 0.5);
     line-height: 1.7;
     margin-bottom: 2rem;
-    text-align: justify;
+    text-align: left;
     height: 100px;
+    display: flex;
+    align-items: flex-start;
 }
 
 .service-card-sophisticated .service-features-list {
@@ -3747,7 +3751,8 @@ body.menu-open {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    min-height: 150px;
+    height: 150px;
+    align-items: flex-start;
 }
 
 .service-card-sophisticated .service-features-list li {
@@ -3757,7 +3762,7 @@ body.menu-open {
     padding-left: 1.5rem;
     position: relative;
     line-height: 1.5;
-    text-align: justify;
+    text-align: left;
 }
 
 .service-card-sophisticated .service-features-list li::before {
