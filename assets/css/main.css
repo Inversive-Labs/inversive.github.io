@@ -3722,14 +3722,16 @@ body.menu-open {
     font-size: 1.8rem;
     font-weight: 300 !important;
     color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     letter-spacing: -0.01em;
     line-height: 1.3;
-    height: 5rem;
-    padding-bottom: 0.5rem;
+    height: 3rem;
+    padding-bottom: 0;
     display: flex;
     align-items: flex-start;
+    justify-content: center;
+    text-align: center;
 }
 
 .service-card-sophisticated .service-summary {
@@ -4258,9 +4260,11 @@ body.menu-open {
 
     .service-card-sophisticated .service-title {
         font-size: 1.5rem;
-        min-height: auto;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.5rem;
+        height: 3rem;
+        margin-bottom: 3rem;
+        padding-bottom: 0;
+        text-align: center;
+        justify-content: center;
     }
 
     .service-card-sophisticated .service-summary {
@@ -4350,6 +4354,10 @@ body.menu-open {
 
     .service-card-sophisticated .service-title {
         font-size: 1.3rem;
+        height: 3rem;
+        margin-bottom: 3rem;
+        text-align: center;
+        justify-content: center;
     }
 
     .service-card-sophisticated .service-summary {
