@@ -3000,6 +3000,10 @@ article h1:first-child:not(.section h1), article h2:first-child:not(.section h2)
     grid-column: 2 / 3; /* Center the 4th item if it's the last one */
 }
 
+.cve-grid .publication-item:nth-child(7):last-child {
+    grid-column: 2 / 3; /* Center the 7th item if it's the last one */
+}
+
 /* Prevent body scroll when menu is open */
 body.menu-open {
     overflow: hidden;
