@@ -3194,7 +3194,8 @@ body.menu-open {
         height: 100px;
     }
     
-    .cve-grid .publication-item:nth-child(4):last-child {
+    .cve-grid .publication-item:nth-child(4):last-child,
+    .cve-grid .publication-item:nth-child(7):last-child {
         grid-column: 1; /* Reset on mobile */
     }
 
