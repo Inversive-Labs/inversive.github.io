@@ -40,19 +40,15 @@
                     <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
                     <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Auomated Security Testing</a>
                     <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
-                    <a href="/services/threat-intelligence/" class="nav-dropdown-link">Threat Intelligence</a>
                 </div>
             </li>
             <li class="has-dropdown">
                 <a href="/products/" class="active">Products</a>
                 <div class="nav-dropdown">
                     <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/solaris/" class="nav-dropdown-link">Solaris</a>
                     <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
-                    <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
-                    <a href="/photon/" class="nav-dropdown-link">Photon</a>
-                    <a href="/rewind/" class="nav-dropdown-link">Rewind</a>
-                    <a href="/Aethra/" class="nav-dropdown-link">Aethra</a>
-                    <a href="/pulsar/" class="nav-dropdown-link">Pulsar</a>
+                     <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
                 </div>
             </li>
             <li class="has-dropdown">
@@ -61,6 +57,7 @@
                     <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
                     <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
                     <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/publications/#presentations" class="nav-dropdown-link">Presentations</a>
                 </div>
             </li>
             <li><a href="/blog/" >Blog</a></li>
@@ -77,23 +74,50 @@
             <p class="section-subtitle">Advanced security tooling for Solana and other Non-EVMs</p>
         </div>
 
-        <div class="services-grid sophisticated">
+       <div class="services-grid sophisticated products-grid">
+        <div class="service-card-sophisticated" style="position: relative;">
+                <div style="position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 500; opacity: 0.7; transform: rotate(12deg);">
+                    WIP
+                </div>
+                <div class="service-content">
+                    <div class="product-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                            <path d="M7.5 4.21l4.5 2.6 4.5-2.6m-9 15.58V14.6L3 12m18 0l-4.5 2.6v5.19"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Solaris</h3>
+                    <p class="service-summary">Bytecode-level coverage-guided, structure-aware fuzzer for Solana Programs.<br><br>Discover edge cases and vulnerabilities in your program invariants.</p>
 
+                    <div class="product-tags">
+                        <span class="product-tag">Solana</span>
+                        <span class="product-tag">sBPF</span>
+                        <span class="product-tag">Fuzzing</span>
+                    </div>
+
+                    <a href="/solaris/" class="service-link">
+                        <span>Learn More</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
             <div class="service-card-sophisticated">
                 <div class="service-content">
                     <div class="product-icon">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"/>
+                            <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
                     <h3 class="service-title">Radiant</h3>
-                    <p class="service-summary">Bytecode-level Concolic execution engine for Solana smart contracts. Explore execution paths for satisfiable program inputs, and discover edge cases to uncover vulnerabilities.</p>
+                    <p class="service-summary">Bytecode-level Concolic execution engine for Solana Programs.<br><br>Explore execution paths for satisfiable program inputs, and discover edge cases to uncover vulnerabilities.</p>
 
                     <div class="product-tags">
                         <span class="product-tag">Solana</span>
                         <span class="product-tag">Symbolic Execution</span>
                         <span class="product-tag">Invariant Testing</span>
-                        <span class="product-tag">Hybrid Fuzzing</span>
                     </div>
 
                     <a href="/radiant/" class="service-link">
@@ -114,7 +138,7 @@
                         </svg>
                     </div>
                     <h3 class="service-title">Static Analyzer</h3>
-                    <p class="service-summary">Static analysis for Solana smart contracts. Detect vulnerabilities, security issues, and code quality problems.</p>
+                    <p class="service-summary">Static analysis for Solana Programs.<br><br>Detect vulnerabilities, security issues, and code quality problems.</p>
 
                     <div class="product-tags">
                         <span class="product-tag">Solana</span>
@@ -131,123 +155,6 @@
                     </a>
                 </div>
             </div>
-
-            <div class="service-card-sophisticated" style="position: relative;">
-                <div style="position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 500; opacity: 0.7; transform: rotate(12deg);">
-                    WIP
-                </div>
-                <div class="service-content">
-                    <div class="product-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="service-title">Photon</h3>
-                    <p class="service-summary">Scriptable debugger for Solana programs. Steps through transactions and bytecode instructions, inspect account states, restore memory snapshots to identify issues in real-time.</p>
-
-                    <div class="product-tags">
-                        <span class="product-tag">Solana</span>
-                        <span class="product-tag">Rust</span>
-                        <span class="product-tag">Automation</span>
-                    </div>
-
-                    <a href="/photon/" class="service-link">
-                        <span>Learn More</span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="service-card-sophisticated" style="position: relative;">
-                <div style="position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 500; opacity: 0.7; transform: rotate(12deg);">
-                    WIP
-                </div>
-                <div class="service-content">
-                    <div class="product-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
-                        </svg>
-                    </div>
-                    <h3 class="service-title">Rewind</h3>
-                    <p class="service-summary">LLM-enhanced Decompiler for Solana programs. Understand closed-sourced deployed programs and contract logic.</p>
-
-                    <div class="product-tags">
-                        <span class="product-tag">sBPF</span>
-                        <span class="product-tag">Reverse Engineering</span>
-                        <span class="product-tag">LLM</span>
-                        <span class="product-tag">Rust</span>
-                    </div>
-
-                    <a href="/rewind/" class="service-link">
-                        <span>Learn More</span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="service-card-sophisticated" style="position: relative;">
-                <div style="position: absolute; top: 20px; right: 20px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); padding: 6px 12px; border-radius: 4px; font-size: 0.75em; font-weight: 500; opacity: 0.7; transform: rotate(12deg);">
-                    WIP
-                </div>
-                <div class="service-content">
-                    <div class="product-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
-                        </svg>
-                    </div>
-                    <h3 class="service-title">Aethra</h3>
-                    <p class="service-summary" style="text-align: justify;">Security intelligence platform for Solana programs. LLM-powered vulnerability database with historical sBPF bytecode analysis, execution flow pattern detection, and AI-guided security audits.</p>
-
-                    <div class="product-tags">
-                        <span class="product-tag">Solana</span>
-                        <span class="product-tag">LLM</span>
-                        <span class="product-tag">Infrastructure</span>
-                        <span class="product-tag">Automation</span>
-                    </div>
-
-                    <a href="/Aethra/" class="service-link">
-                        <span>Learn More</span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="service-card-sophisticated">
-                <div class="service-content">
-                    <div class="product-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 1v6m0 6v6m9.66-9.66l-5.2 3M7.54 14.66l-5.2 3m12.32 0l-5.2-3M7.54 9.34l-5.2-3"/>
-                        </svg>
-                    </div>
-                    <h3 class="service-title">Pulsar</h3>
-                    <p class="service-summary">Analysis-focused Taint-guided fuzzer for Solana closed-source programs. Performs instruction and account data inference analysis to discover Solana instruction and account data information.</p>
-
-                    <div class="product-tags">
-                        <span class="product-tag">Rust</span>
-                        <span class="product-tag">Solana</span>
-                        <span class="product-tag">Reverse Engineering</span>
-                    </div>
-
-                    <a href="/pulsar/" class="service-link">
-                        <span>Learn More</span>
-                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>

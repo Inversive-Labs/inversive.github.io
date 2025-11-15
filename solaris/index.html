@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solaris - Inversive Labs - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.svg" width="250"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/about/" >About</a></li>
+            <li><a href="/team/" >Team</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Auomated Security Testing</a>
+                    <a href="/services/security-engineering/" class="nav-dropdown-link">Security Engineering</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/products/" >Products</a>
+                <div class="nav-dropdown">
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/solaris/" class="nav-dropdown-link">Solaris</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                     <a href="/static-analyzer/" class="nav-dropdown-link">Static Analyzer</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" >Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/publications/#presentations" class="nav-dropdown-link">Presentations</a>
+                </div>
+            </li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/contact/" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <!-- Hero Section -->
+<section class="section" style="padding: 12rem 0 4rem;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title" style="font-weight: 200;">Solaris</h2>
+            <p class="section-subtitle" style="font-size: 1.3rem; font-weight: 300; text-align: center; font-family: 'Raleway', sans-serif; color: rgba(219, 219, 219, 0.95); max-width: 900px; margin: 0 auto;">Coverage-guided fuzzer for Solana programs. Automatically generate test inputs to discover edge cases and vulnerabilities through bytecode-level instrumentation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Description + Image Section -->
+<section class="section static-analyzer-section" style="padding: 8rem 0 6rem;">
+    <div class="container">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif; text-align: center;">Overview</h3>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris is a coverage-guided fuzzer that uses Protocol Buffers to model program instruction sequences, enabling structure-aware test generation for Solana programs. By defining instruction schemas in protobuf, it generates semantically valid test cases while instrumenting programs at the bytecode level to track coverage and control flow.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">The fuzzer automatically mutates protobuf messages to explore different instruction sequences and parameters, guided by coverage feedback to discover new execution paths and vulnerabilities in program invariants.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Why Solaris Section -->
+<section class="section static-analyzer-section" style="padding: 6rem 0;">
+    <div class="container">
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif; text-align: center;">Why Solaris?</h3>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Traditional fuzzers generate random inputs that often violate program constraints, wasting computation on invalid test cases. Manual testing misses edge cases that emerge from complex instruction sequences and state transitions.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris uses Protocol Buffers to model valid instruction sequences, ensuring generated test cases are structurally valid while exploring different parameter combinations and execution orders. This structure-aware approach combined with bytecode-level coverage instrumentation enables efficient discovery of bugs in program invariants without wasting time on malformed inputs.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">The result is more thorough testing with less manual effort, helping teams find and fix issues before deployment.</p>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 4rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">How It Works</h3>
+        <div class="static-analyzer-how-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">01</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Define Schema</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Model program instructions and their parameters using Protocol Buffer schemas</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">02</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Write Harness</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Implement fuzzing harness that translates protobuf messages into program instructions</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">03</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Run Fuzzer</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Execute fuzzer with coverage-guided mutations to explore program states</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">04</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Analyze Results</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Review discovered bugs, crashes, and invariant violations with reproducing test cases</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Key Features</h3>
+        <div class="static-analyzer-features-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.1);">
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Bytecode Coverage</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Instrument at the sBPF bytecode level for precise coverage tracking</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">libFuzzer Integration</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Leverage libFuzzer's proven mutation strategies and coverage feedback</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Protobuf Modeling</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Model program instructions using Protocol Buffers for structure-aware test generation</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Edge Coverage</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Track control flow edges to discover new execution paths</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Crash Reporting & Reproduction</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Reproduce bugs with a single protobuf test case for easy debugging</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Invariant Testing</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Discover violations in program invariants through systematic testing</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specs -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Use Cases</h3>
+        <div class="static-analyzer-specs-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Security Testing</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Invariant Discovery</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Edge Case Detection</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Vulnerability Research</span>
+                </div>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Pre-Deployment</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Program Hardening</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Coverage Analysis</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Regression Testing</span>
+                </div>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Continuous Integration</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Automated Fuzzing</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">CI/CD Pipelines</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Quality Assurance</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="padding: 6rem 0; text-align: center;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Intelligent Fuzz Testing for Solana Programs</h3>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 2.5rem; font-weight: 300; font-family: 'Raleway', sans-serif;">Get early access to structue-aware, coverage-guided fuzzing for Solana</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: stretch;">
+            <a href="/contact/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
+                <span>Request Access</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="/products/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
+                <span>View All Products</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    
+        <footer>
+    <div class="container">
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>
