@@ -37,9 +37,9 @@ body::before {
             #000 var(--dot-size)
         ),
         /* Enhanced color gradients like home page */
-        radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.05), transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.05), transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.04), transparent 50%);
+        radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.15), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.15), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.12), transparent 50%);
     background-size:
         var(--dot-space) var(--dot-space),
         200% 200%,
@@ -73,10 +73,15 @@ body::before {
                 transparent var(--dot-size),
                 #000 var(--dot-size)
             ),
-            radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.05), transparent 50%),
-            radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.05), transparent 50%),
-            radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.04), transparent 50%);
+            radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.15), transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.15), transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.12), transparent 50%);
     }
+}
+
+/* Hide CSS grid background on home page (vortex shader handles it) */
+body.home-page::before {
+    display: none;
 }
 
 @keyframes sineWaveMove {
@@ -2033,7 +2038,7 @@ body:has(.shader-canvas) .uiverse-container {
     }
 
     .logo-container img {
-        width: 180px;
+        width: 140px;
         height: auto;
     }
 
@@ -3042,7 +3047,7 @@ body.menu-open {
     }
 
     .logo-container img {
-        width: 150px;
+        width: 120px;
         height: auto;
     }
 

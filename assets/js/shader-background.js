@@ -109,51 +109,55 @@ class ShaderBackground {
             uniform float u_time;
             uniform float u_randomSeed;
             uniform float u_scrollProgress;
-            
-            vec2 position(float z) {
+
+            void main() {
+                vec2 fragCoord = gl_FragCoord.xy;
+
+                ${isHomePage ? `
+                vec2 p = (fragCoord.xy * 3.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
+
                 // Add random offsets to create unique tunnel patterns
                 float offset1 = u_randomSeed * 0.123;
                 float offset2 = u_randomSeed * 0.456;
                 float offset3 = u_randomSeed * 0.789;
-                
-                return vec2(
-                    0.0 + sin((z + offset1) * 0.07) * 0.7 + sin(cos((z + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((z + offset3) * 0.01) * 2.0) * 0.2,
-                    0.0 + cos((z + offset1) * 0.07) * 0.7 + cos(cos((z + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((z + offset3) * 0.01) * 2.0) * 0.2
-                ) * 1.0;
-            }
-            
-            void main() {
-                vec2 fragCoord = gl_FragCoord.xy;
-                vec2 p = (fragCoord.xy * 3.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
-                
+
                 // Unique startup effect - tunnel formation from quantum foam
                 float startupDuration = 3.0;
                 float startupProgress = min(u_time / startupDuration, 1.0);
-                
+
                 float camZ = 0.3 * u_time;
-                vec2 cam = position(camZ);
+                vec2 cam = vec2(
+                    0.0 + sin((camZ + offset1) * 0.07) * 0.7 + sin(cos((camZ + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((camZ + offset3) * 0.01) * 2.0) * 0.2,
+                    0.0 + cos((camZ + offset1) * 0.07) * 0.7 + cos(cos((camZ + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((camZ + offset3) * 0.01) * 2.0) * 0.2
+                ) * 1.0;
 
                 float dt = 1.1;
                 float camZ2 = 0.3 * (u_time + dt);
-                vec2 cam2 = position(camZ2);
+                vec2 cam2 = vec2(
+                    0.0 + sin((camZ2 + offset1) * 0.07) * 0.7 + sin(cos((camZ2 + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((camZ2 + offset3) * 0.01) * 2.0) * 0.2,
+                    0.0 + cos((camZ2 + offset1) * 0.07) * 0.7 + cos(cos((camZ2 + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((camZ2 + offset3) * 0.01) * 2.0) * 0.2
+                ) * 1.0;
                 vec2 dcamdt = (cam2 - cam) / dt;
-                
+
                 vec3 f = vec3(0.0);
                 for(int j = 1; j < 100; j++) {
                     float i = float(j);
                     float realZ = floor(camZ) + i;
                     float screenZ = realZ - camZ;
                     float r = 20.0 / screenZ;
-                    vec2 c = (position(realZ) - cam) * 12.0 / screenZ - dcamdt * 0.1;
-                    // Color based on page
-                    vec3 color;
-                    ${isHomePage ? `
+                    vec2 pos = vec2(
+                        0.0 + sin((realZ + offset1) * 0.07) * 0.7 + sin(cos((realZ + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((realZ + offset3) * 0.01) * 2.0) * 0.2,
+                        0.0 + cos((realZ + offset1) * 0.07) * 0.7 + cos(cos((realZ + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((realZ + offset3) * 0.01) * 2.0) * 0.2
+                    ) * 1.0;
+                    vec2 c = (pos - cam) * 12.0 / screenZ - dcamdt * 0.1;
+
                     // Site color scheme: cyan (#10ebff), purple (#b91aee), pink
                     float progression = realZ * 0.03;
                     vec3 cyan = vec3(0.063, 0.922, 1.0);        // #10ebff
                     vec3 purple = vec3(0.725, 0.102, 0.933);    // #b91aee
                     vec3 pink = vec3(1.0, 0.078, 0.576);        // #ff1493
 
+                    vec3 color;
                     float t = mod(progression, 3.0);
                     if (t < 1.0) {
                         color = mix(cyan, purple, t);
@@ -162,11 +166,7 @@ class ShaderBackground {
                     } else {
                         color = mix(pink, cyan, t - 2.0);
                     }
-                    ` : `
-                    // White for other pages
-                    color = vec3(1.0, 1.0, 1.0);
-                    `}
-                    
+
                     // Apply smooth startup fade-in effect
                     float intensity = 0.02;
                     if (startupProgress < 1.0) {
@@ -175,11 +175,15 @@ class ShaderBackground {
                         float gentleWave = 1.0 + sin(realZ * 2.0 + u_time * 1.0) * 0.15 * (1.0 - startupProgress);
                         intensity *= fadeIn * gentleWave;
                     }
-                    
+
                     f += color * intensity / screenZ / (abs(length(p - c) - r) + 0.01);
                 }
 
                 gl_FragColor = vec4(f, 1.0);
+                ` : `
+                // Just the grid background for non-home pages - no vortex
+                gl_FragColor = vec4(0.0, 0.0, 0.0, 0.0);
+                `}
             }
         `;
         
