@@ -10,6 +10,13 @@ class ShaderBackground {
         this.pausedTime = 0;
         this.lastActiveTime = Date.now();
 
+        // Performance monitoring
+        this.frameCount = 0;
+        this.lastFpsCheck = Date.now();
+        this.avgFps = 60;
+        this.qualityLevel = 1.0; // 1.0 = full quality, 0.5 = half resolution
+        this.performanceChecked = false;
+
         this.init();
         this.setupVisibilityHandling();
     }
@@ -102,9 +109,9 @@ class ShaderBackground {
             }
         `;
 
-        // Fragment shader - adapted from your Shadertoy code
+        // Fragment shader - optimized for performance
         const fragmentShaderSource = `
-            precision mediump float;
+            precision lowp float;
             uniform vec2 u_resolution;
             uniform float u_time;
             uniform float u_randomSeed;
@@ -116,67 +123,95 @@ class ShaderBackground {
                 ${isHomePage ? `
                 vec2 p = (fragCoord.xy * 3.0 - u_resolution.xy) / min(u_resolution.x, u_resolution.y);
 
-                // Add random offsets to create unique tunnel patterns
-                float offset1 = u_randomSeed * 0.123;
-                float offset2 = u_randomSeed * 0.456;
-                float offset3 = u_randomSeed * 0.789;
+                // Pre-calculate constants outside loop
+                const float offset1 = 0.123;
+                const float offset2 = 0.456;
+                const float offset3 = 0.789;
 
-                // Unique startup effect - tunnel formation from quantum foam
-                float startupDuration = 3.0;
-                float startupProgress = min(u_time / startupDuration, 1.0);
+                float o1 = u_randomSeed * offset1;
+                float o2 = u_randomSeed * offset2;
+                float o3 = u_randomSeed * offset3;
 
                 float camZ = 0.3 * u_time;
-                vec2 cam = vec2(
-                    0.0 + sin((camZ + offset1) * 0.07) * 0.7 + sin(cos((camZ + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((camZ + offset3) * 0.01) * 2.0) * 0.2,
-                    0.0 + cos((camZ + offset1) * 0.07) * 0.7 + cos(cos((camZ + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((camZ + offset3) * 0.01) * 2.0) * 0.2
-                ) * 1.0;
 
-                float dt = 1.1;
-                float camZ2 = 0.3 * (u_time + dt);
+                // Camera follows a mostly straight path with subtle curves
+                float spiralAngle = camZ * 0.15;  // Slow spiral
+                float spiralRadius = 1.0;
+
+                // Pre-calculate oscillations
+                float osc1 = sin(cos(camZ * 0.025 + o2) * 3.0);
+                float osc2 = cos(cos(camZ * 0.025 + o2) * 3.0);
+                float osc3 = sin(sin(camZ * 0.01 + o3) * 2.0);
+                float osc4 = cos(sin(camZ * 0.01 + o3) * 2.0);
+
+                vec2 cam = vec2(
+                    cos(spiralAngle) * spiralRadius + osc1 * 0.4 + osc3 * 0.2 - 0.8,
+                    sin(spiralAngle) * spiralRadius + osc2 * 0.4 + osc4 * 0.2
+                );
+
+                // Camera velocity
+                float camZ2 = camZ + 0.33;
+                float spiralAngle2 = camZ2 * 0.15;
+                float osc1_2 = sin(cos(camZ2 * 0.025 + o2) * 3.0);
+                float osc2_2 = cos(cos(camZ2 * 0.025 + o2) * 3.0);
+                float osc3_2 = sin(sin(camZ2 * 0.01 + o3) * 2.0);
+                float osc4_2 = cos(sin(camZ2 * 0.01 + o3) * 2.0);
+
                 vec2 cam2 = vec2(
-                    0.0 + sin((camZ2 + offset1) * 0.07) * 0.7 + sin(cos((camZ2 + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((camZ2 + offset3) * 0.01) * 2.0) * 0.2,
-                    0.0 + cos((camZ2 + offset1) * 0.07) * 0.7 + cos(cos((camZ2 + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((camZ2 + offset3) * 0.01) * 2.0) * 0.2
-                ) * 1.0;
-                vec2 dcamdt = (cam2 - cam) / dt;
+                    cos(spiralAngle2) * spiralRadius + osc1_2 * 0.4 + osc3_2 * 0.2 - 0.8,
+                    sin(spiralAngle2) * spiralRadius + osc2_2 * 0.4 + osc4_2 * 0.2
+                );
+                vec2 dcamdt = (cam2 - cam) * 0.909;
+
+                // Color palette (pre-defined)
+                const vec3 cyan = vec3(0.063, 0.922, 1.0);
+                const vec3 purple = vec3(0.725, 0.102, 0.933);
+                const vec3 pink = vec3(1.0, 0.078, 0.576);
 
                 vec3 f = vec3(0.0);
-                for(int j = 1; j < 100; j++) {
-                    float i = float(j);
-                    float realZ = floor(camZ) + i;
+                float floorCamZ = floor(camZ);
+
+                // Main rendering loop - increased depth
+                for(int j = 1; j < 70; j++) {
+                    float realZ = floorCamZ + float(j);
                     float screenZ = realZ - camZ;
-                    float r = 20.0 / screenZ;
-                    vec2 pos = vec2(
-                        0.0 + sin((realZ + offset1) * 0.07) * 0.7 + sin(cos((realZ + offset2) * 0.025) * 3.0) * 0.4 + sin(sin((realZ + offset3) * 0.01) * 2.0) * 0.2,
-                        0.0 + cos((realZ + offset1) * 0.07) * 0.7 + cos(cos((realZ + offset2) * 0.025) * 3.0) * 0.4 + cos(sin((realZ + offset3) * 0.01) * 2.0) * 0.2
-                    ) * 1.0;
-                    vec2 c = (pos - cam) * 12.0 / screenZ - dcamdt * 0.1;
+                    float invScreenZ = 1.0 / screenZ;
 
-                    // Site color scheme: cyan (#10ebff), purple (#b91aee), pink
-                    float progression = realZ * 0.03;
-                    vec3 cyan = vec3(0.063, 0.922, 1.0);        // #10ebff
-                    vec3 purple = vec3(0.725, 0.102, 0.933);    // #b91aee
-                    vec3 pink = vec3(1.0, 0.078, 0.576);        // #ff1493
+                    // Tunnel centerline follows the same path
+                    float spiralAngleZ = realZ * 0.15;
 
+                    // Pre-calculate oscillations
+                    float oscz1 = sin(cos(realZ * 0.025 + o2) * 3.0);
+                    float oscz2 = cos(cos(realZ * 0.025 + o2) * 3.0);
+                    float oscz3 = sin(sin(realZ * 0.01 + o3) * 2.0);
+                    float oscz4 = cos(sin(realZ * 0.01 + o3) * 2.0);
+
+                    vec2 tunnelCenter = vec2(
+                        cos(spiralAngleZ) * spiralRadius + oscz1 * 0.4 + oscz3 * 0.2,
+                        sin(spiralAngleZ) * spiralRadius + oscz2 * 0.4 + oscz4 * 0.2
+                    );
+
+                    // Project the ring center onto screen
+                    vec2 c = (tunnelCenter - cam) * 12.0 * invScreenZ;
+
+                    // Ring radius (fixed size in world space, shrinks with distance)
+                    float r = 20.0 * invScreenZ;
+
+                    // Optimized color calculation
+                    float t = fract(realZ * 0.01);
                     vec3 color;
-                    float t = mod(progression, 3.0);
-                    if (t < 1.0) {
-                        color = mix(cyan, purple, t);
-                    } else if (t < 2.0) {
-                        color = mix(purple, pink, t - 1.0);
+                    if (t < 0.333) {
+                        color = mix(cyan, purple, t * 3.0);
+                    } else if (t < 0.666) {
+                        color = mix(purple, pink, (t - 0.333) * 3.0);
                     } else {
-                        color = mix(pink, cyan, t - 2.0);
+                        color = mix(pink, cyan, (t - 0.666) * 3.0);
                     }
 
-                    // Apply smooth startup fade-in effect
+                    // Simplified intensity calculation
                     float intensity = 0.02;
-                    if (startupProgress < 1.0) {
-                        // Simple smooth fade-in with gentle wave
-                        float fadeIn = smoothstep(0.0, 1.0, startupProgress);
-                        float gentleWave = 1.0 + sin(realZ * 2.0 + u_time * 1.0) * 0.15 * (1.0 - startupProgress);
-                        intensity *= fadeIn * gentleWave;
-                    }
 
-                    f += color * intensity / screenZ / (abs(length(p - c) - r) + 0.01);
+                    f += color * intensity * invScreenZ / (abs(length(p - c) - r) + 0.01);
                 }
 
                 gl_FragColor = vec4(f, 1.0);
@@ -300,9 +335,41 @@ class ShaderBackground {
         const displayHeight = this.canvas.clientHeight;
 
         if (this.canvas.width !== displayWidth || this.canvas.height !== displayHeight) {
-            this.canvas.width = displayWidth;
-            this.canvas.height = displayHeight;
+            // Apply quality scaling to resolution
+            this.canvas.width = Math.floor(displayWidth * this.qualityLevel);
+            this.canvas.height = Math.floor(displayHeight * this.qualityLevel);
             this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+        }
+    }
+
+    checkPerformance() {
+        this.frameCount++;
+        const now = Date.now();
+        const elapsed = now - this.lastFpsCheck;
+
+        // Check FPS every 2 seconds
+        if (elapsed >= 2000) {
+            this.avgFps = (this.frameCount / elapsed) * 1000;
+            this.frameCount = 0;
+            this.lastFpsCheck = now;
+
+            // Adjust quality based on FPS (only after first check at 3 seconds)
+            if (!this.performanceChecked && now - this.startTime > 3000) {
+                this.performanceChecked = true;
+
+                // If FPS is below 30, reduce quality to 75%
+                if (this.avgFps < 30) {
+                    this.qualityLevel = 0.75;
+                    this.resize();
+                    console.log('Shader: Reduced quality for better performance');
+                }
+                // If FPS is below 20, reduce quality to 50%
+                else if (this.avgFps < 20) {
+                    this.qualityLevel = 0.5;
+                    this.resize();
+                    console.log('Shader: Reduced quality significantly for better performance');
+                }
+            }
         }
     }
     
@@ -315,15 +382,18 @@ class ShaderBackground {
             return;
         }
 
+        // Performance monitoring
+        this.checkPerformance();
+
         const currentTime = (Date.now() - this.startTime) * 0.001; // Convert to seconds
-        
+
         // Clear canvas
         this.gl.clearColor(0, 0, 0, 0);
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        
+
         // Use shader program
         this.gl.useProgram(this.program);
-        
+
         // Set uniforms
         this.gl.uniform2f(this.uniforms.resolution, this.canvas.width, this.canvas.height);
         this.gl.uniform1f(this.uniforms.time, currentTime);
