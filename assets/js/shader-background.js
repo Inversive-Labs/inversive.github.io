@@ -52,9 +52,9 @@ class ShaderBackground {
         this.canvas.style.left = '0';
         this.canvas.style.width = '100vw';
         this.canvas.style.height = '100vh';
-        this.canvas.style.zIndex = '-1';
+        this.canvas.style.zIndex = '1';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.opacity = '0.3';
+        this.canvas.style.opacity = '0.6';
 
         // Insert canvas as first child of body
         document.body.insertBefore(this.canvas, document.body.firstChild);
@@ -130,11 +130,11 @@ class ShaderBackground {
                 float startupDuration = 3.0;
                 float startupProgress = min(u_time / startupDuration, 1.0);
                 
-                float camZ = 0.8 * u_time;
+                float camZ = 0.3 * u_time;
                 vec2 cam = position(camZ);
 
                 float dt = 1.1;
-                float camZ2 = 0.2 * (u_time + dt);
+                float camZ2 = 0.3 * (u_time + dt);
                 vec2 cam2 = position(camZ2);
                 vec2 dcamdt = (cam2 - cam) / dt;
                 
@@ -148,19 +148,19 @@ class ShaderBackground {
                     // Color based on page
                     vec3 color;
                     ${isHomePage ? `
-                    // Higher contrast gradient colors for home page
+                    // Site color scheme: cyan (#10ebff), purple (#b91aee), pink
                     float progression = realZ * 0.03;
-                    vec3 darkCyan = vec3(0.2, 0.9, 1.0);       // Brighter cyan
-                    vec3 darkPurple = vec3(0.8, 0.2, 0.9);     // Brighter purple
-                    vec3 darkPink = vec3(0.9, 0.35, 0.75);     // Brighter pink
+                    vec3 cyan = vec3(0.063, 0.922, 1.0);        // #10ebff
+                    vec3 purple = vec3(0.725, 0.102, 0.933);    // #b91aee
+                    vec3 pink = vec3(1.0, 0.078, 0.576);        // #ff1493
 
                     float t = mod(progression, 3.0);
                     if (t < 1.0) {
-                        color = mix(darkCyan, darkPurple, t);
+                        color = mix(cyan, purple, t);
                     } else if (t < 2.0) {
-                        color = mix(darkPurple, darkPink, t - 1.0);
+                        color = mix(purple, pink, t - 1.0);
                     } else {
-                        color = mix(darkPink, darkCyan, t - 2.0);
+                        color = mix(pink, cyan, t - 2.0);
                     }
                     ` : `
                     // White for other pages
@@ -357,13 +357,12 @@ class ShaderBackground {
 }
 
 // Initialize shader background when DOM is ready
-// DISABLED - Using CSS gradient animation instead
-// document.addEventListener('DOMContentLoaded', function() {
-//     // Small delay to ensure page is fully loaded
-//     setTimeout(() => {
-//         window.shaderBackground = new ShaderBackground();
-//     }, 100);
-// });
+document.addEventListener('DOMContentLoaded', function() {
+    // Small delay to ensure page is fully loaded
+    setTimeout(() => {
+        window.shaderBackground = new ShaderBackground();
+    }, 100);
+});
 
 // Clean up on page unload
 window.addEventListener('beforeunload', function() {

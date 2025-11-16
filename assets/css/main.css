@@ -142,8 +142,8 @@ body:not(.home-page) {
 
 /* Reduce shader visibility on non-index pages */
 body:not(.home-page) .shader-canvas {
-    opacity: 0.25 !important;
-    /* Lower opacity to make shader subtle but still visible */
+    opacity: 0.15 !important;
+    /* Lower opacity to make shader darker and more subtle on non-home pages */
 }
 
 
