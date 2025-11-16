@@ -82,8 +82,9 @@
     <div class="container">
         <div style="max-width: 800px; margin: 0 auto;">
             <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif; text-align: center;">Overview</h3>
-            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris is a coverage-guided fuzzer that uses Protocol Buffers to model program instruction sequences, enabling structure-aware test generation for Solana programs. By defining instruction schemas in protobuf, it generates semantically valid test cases while instrumenting programs at the bytecode level to track coverage and control flow.</p>
-            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">The fuzzer automatically mutates protobuf messages to explore different instruction sequences and parameters, guided by coverage feedback to discover new execution paths and vulnerabilities in program invariants.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris is a coverage-guided fuzzer that enables structure-aware and state-aware test generation for Solana programs. By modeling program instruction sequences with structured schemas, it generates semantically valid test cases while instrumenting programs at the sBPF bytecode level to track edge coverage and control flow.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Unlike traditional fuzzers that operate blindly, Solaris maintains awareness of program state throughout instruction chains by tracking authorities, accounts, and program-specific data structures.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">The fuzzer intelligently mutates inputs to explore different instruction sequences, parameters, and program states, guided by sBPF bytecode-level coverage feedback to discover new execution paths and vulnerabilities in program invariants.</p>
         </div>
     </div>
 </section>
@@ -94,7 +95,7 @@
         <div style="max-width: 800px; margin: 0 auto;">
             <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif; text-align: center;">Why Solaris?</h3>
             <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Traditional fuzzers generate random inputs that often violate program constraints, wasting computation on invalid test cases. Manual testing misses edge cases that emerge from complex instruction sequences and state transitions.</p>
-            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris uses Protocol Buffers to model valid instruction sequences, ensuring generated test cases are structurally valid while exploring different parameter combinations and execution orders. This structure-aware approach combined with bytecode-level coverage instrumentation enables efficient discovery of bugs in program invariants without wasting time on malformed inputs.</p>
+            <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Solaris models valid instruction sequences using structured schemas, ensuring generated test cases are both structurally and semantically valid while exploring different parameter combinations and execution orders. Beyond structure-aware mutation, Solaris is also state-aware, understanding and tracking program state transitions in order to explore the state space and uncover vulnerabilities that only manifest under specific state conditions. This dual approach combined with bytecode-level coverage instrumentation enables efficient discovery of vulnerabilities in program invariants without wasting time on malformed inputs.</p>
             <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">The result is more thorough testing with less manual effort, helping teams find and fix issues before deployment.</p>
         </div>
     </div>
@@ -108,12 +109,12 @@
             <div style="text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">01</div>
                 <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Define Schema</h4>
-                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Model program instructions and their parameters using Protocol Buffer schemas</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Model program instructions and their parameters using structured schemas</p>
             </div>
             <div style="text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">02</div>
                 <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Write Harness</h4>
-                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Implement fuzzing harness that translates protobuf messages into program instructions</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Implement fuzzing harness that translates structured inputs into program instructions</p>
             </div>
             <div style="text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">03</div>
@@ -140,8 +141,8 @@
                         <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
                     </svg>
                 </div>
-                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Bytecode Coverage</h4>
-                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Instrument at the sBPF bytecode level for precise coverage tracking</p>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">sBPF Edge Coverage</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Instrument the Solana BPF interpreter to track control flow edges at the VM level, reporting each edge to libFuzzer for coverage-guided mutations</p>
             </div>
             <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
@@ -158,8 +159,8 @@
                         <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
                     </svg>
                 </div>
-                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Protobuf Modeling</h4>
-                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Model program instructions using Protocol Buffers for structure-aware test generation</p>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Structure & State Aware</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Intelligent mutation that understands both program structure and state transitions</p>
             </div>
             <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
@@ -177,7 +178,7 @@
                     </svg>
                 </div>
                 <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Crash Reporting & Reproduction</h4>
-                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Reproduce bugs with a single protobuf test case for easy debugging</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Reproduce bugs with a single test case for easy debugging and analysis</p>
             </div>
             <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
                 <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
@@ -229,7 +230,7 @@
 <section class="section" style="padding: 6rem 0; text-align: center;">
     <div class="container">
         <h3 style="font-size: 1.8rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Intelligent Fuzz Testing for Solana Programs</h3>
-        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 2.5rem; font-weight: 300; font-family: 'Raleway', sans-serif;">Get early access to structue-aware, coverage-guided fuzzing for Solana</p>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 2.5rem; font-weight: 300; font-family: 'Raleway', sans-serif;">Get early access to Solaris for Solana</p>
         <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: stretch;">
             <a href="/contact/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
                 <span>Request Access</span>
