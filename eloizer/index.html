@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Static Analyzer - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <header>
+    <nav class="container">
+        <div class="logo-container">
+            <a href="/index.html"><img src="/images/logo.svg" width="180"></a>
+        </div>
+        
+        <!-- Hamburger Button for Mobile -->
+        <button class="hamburger" aria-label="Toggle menu">
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+            <span class="hamburger-line"></span>
+        </button>
+        
+        <ul class="nav-links">
+            <li><a href="/about/" >About</a></li>
+            <li><a href="/team/" >Team</a></li>
+            <li class="has-dropdown">
+                <a href="/services/" >Services</a>
+                <div class="nav-dropdown">
+                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
+                    <a href="/services/smart-contract-testing/" class="nav-dropdown-link">Embedded Security</a>
+                    <a href="/services/security-assessment/" class="nav-dropdown-link">Security Assessments</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/products/" >Products</a>
+                <div class="nav-dropdown">
+                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
+                    <a href="/solaris/" class="nav-dropdown-link">Solaris</a>
+                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
+                     <a href="/eloizer/" class="nav-dropdown-link">Eloizer</a>
+                </div>
+            </li>
+            <li class="has-dropdown">
+                <a href="/publications/" >Publications</a>
+                <div class="nav-dropdown">
+                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
+                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
+                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
+                    <a href="/publications/#presentations" class="nav-dropdown-link">Presentations</a>
+                </div>
+            </li>
+            <li><a href="/blog/" >Blog</a></li>
+            <li><a href="/contact/" >Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+    <main>
+        <style>
+@media (max-width: 768px) {
+    .demo-text-section {
+        order: 1 !important;
+    }
+    .demo-gif-section {
+        order: 2 !important;
+    }
+}
+</style>
+
+<!-- Hero Section -->
+<section class="section" style="padding: 12rem 0 4rem;">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title" style="font-weight: 200;">Eloizer</h2>
+            <p class="section-subtitle" style="font-size: 1.3rem; font-weight: 300; text-align: center; font-family: 'Raleway', sans-serif; color: rgba(219, 219, 219, 0.95); max-width: 900px; margin: 0 auto;">Static analysis for Solana smart contracts. Detect vulnerabilities, security issues, and code quality problems.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Description + Image Section -->
+<section class="section static-analyzer-section" style="padding: 8rem 0 6rem;">
+    <div class="container">
+        <div class="static-analyzer-overview-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div>
+                <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); text-align: justify; font-family: 'Raleway', sans-serif;">Overview</h3>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Built in Rust, it leverages abstract syntax tree (AST) analysis and pattern matching to identify common security vulnerabilities and anti-patterns specific to Solana programs.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Integrates seamlessly into CI/CD pipelines, allowing teams to catch critical issues.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">Detect vulnerabilities, code quality and security issues in your Solana/Anchor projects.</p>
+            </div>
+
+            <div style="border-radius: 0; overflow: hidden; border: none;">
+                <img src="/images/products/static_analyzer/architecture_static.png" alt="Static Analyzer Architecture" style="width: 100%; height: auto; display: block; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" onclick="openImageModal('/images/products/static_analyzer/architecture_static.png')">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Demo Section -->
+<section class="section static-analyzer-section" style="padding: 6rem 0;">
+    <div class="container">
+        <div class="static-analyzer-overview-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;">
+            <div class="demo-text-section" style="order: 2;">
+                <h3 style="font-size: 1.8rem; font-weight: 500; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.95); text-align: justify; font-family: 'Raleway', sans-serif;">Demo</h3>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">See the Static Analyzer in action as it scans Solana smart contracts, identifying vulnerabilities and security issues in real-time.</p>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; margin-bottom: 1rem; font-size: 0.95rem; font-weight: 300; text-align: justify; font-family: 'Raleway', sans-serif;">The tool provides instant feedback with detailed reports, severity classifications, and actionable remediation guidance for each detected issue.</p>
+            </div>
+
+            <div class="demo-gif-section" style="border-radius: 0; overflow: hidden; border: none; order: 1;">
+                <img src="/images/products/static_analyzer/gif_static_analyzer.gif" alt="Static Analyzer Demo" style="width: 100%; height: auto; display: block; cursor: pointer; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" onclick="openImageModal('/images/products/static_analyzer/gif_static_analyzer.gif')">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works Section -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 4rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">How It Works</h3>
+        <div class="static-analyzer-how-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; max-width: 1200px; margin: 0 auto;">
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">01</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Parse</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Analyzes Rust/Anchor code and generates AST</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">02</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Detect</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Runs 50+ specialized security detectors</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">03</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Classify</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Assigns severity levels to findings</p>
+            </div>
+            <div style="text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.15); font-size: 3rem; font-weight: 200; font-family: 'Raleway', sans-serif; margin-bottom: 1.5rem;">04</div>
+                <h4 style="font-size: 1.1rem; font-weight: 300; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Report</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: center;">Generates detailed reports with remediation</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Grid -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Key Features</h3>
+        <div class="static-analyzer-features-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: rgba(255, 255, 255, 0.1);">
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Antipattern Detection</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">50+ built-in detectors covering common vulnerabilities, security anti-patterns, and code quality issues.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Lightning Fast</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Written in Rust for maximum performance. Analyze entire codebases in seconds with parallel processing.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Framework Support</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Support for any Solana architecture, ensuring maximum flexibility without framework limitations.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Detailed Reports</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Technical reports with exact locations, severity levels, and remediation suggestions.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Customizable Rules</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Create custom detectors and configure severity levels for your specific needs.</p>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); padding: 3rem; text-align: center;">
+                <div style="color: rgba(255, 255, 255, 0.3); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                    </svg>
+                </div>
+                <h4 style="font-size: 1.3rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">CI/CD Integration</h4>
+                <p style="color: rgba(255, 255, 255, 0.5); line-height: 1.7; font-size: 0.9rem; font-weight: 300; font-family: 'Raleway', sans-serif; text-align: justify;">Easy integration with GitHub Actions, GitLab CI. Automated security checks on every commit.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Technical Specs -->
+<section class="section static-analyzer-section" style="padding-top: 6rem; padding-bottom: 6rem;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; text-align: center; margin-bottom: 3rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Technical Specifications</h3>
+        <div class="static-analyzer-specs-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Supported Languages</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Rust</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Solana Programs</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Anchor Framework</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Native Solana</span>
+                </div>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Detection Categories</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Arithmetic</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Access Control</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Account Validation</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">PDA Derivation</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Reentrancy</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Best Practices</span>
+                </div>
+            </div>
+            <div style="background: rgba(0, 0, 0, 0.95); border: none; padding: 2.5rem;">
+                <h4 style="font-size: 1.2rem; font-weight: 200; margin-bottom: 1.5rem; color: rgba(255, 255, 255, 0.7); font-family: 'Raleway', sans-serif;">Output Formats</h4>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">JSON</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">SARIF</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">HTML Reports</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">Terminal</span>
+                    <span style="font-size: 0.8rem; font-weight: 300; color: rgba(255, 255, 255, 0.5); padding: 0.4rem 0.9rem; border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 2px; font-family: 'Raleway', sans-serif; letter-spacing: 0.02em;">CSV</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="section" style="padding: 6rem 0; text-align: center;">
+    <div class="container">
+        <h3 style="font-size: 1.8rem; font-weight: 200; margin-bottom: 1rem; color: rgba(255, 255, 255, 0.95); font-family: 'Raleway', sans-serif;">Start Securing Your Solana Programs</h3>
+        <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.5); margin-bottom: 2.5rem; font-weight: 300; font-family: 'Raleway', sans-serif;">Open source and ready to use</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: stretch;">
+            <a href="https://github.com/Inversive-Labs/eloizer" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;" target="_blank">
+                <span>View on GitHub</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <a href="/contact/" style="padding: 1rem 2rem; text-decoration: none; font-weight: 300; background: transparent; border: 1px solid rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; font-family: 'Raleway', sans-serif; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; min-width: 180px; transition: all 0.3s ease;">
+                <span>Contact Us</span>
+                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 10H3" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Image Modal -->
+<div id="imageModal" style="display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.95); backdrop-filter: blur(10px);" onclick="closeImageModal()">
+    <span style="position: absolute; top: 2rem; right: 3rem; color: rgba(255, 255, 255, 0.8); font-size: 3rem; font-weight: 200; cursor: pointer; transition: color 0.3s ease; z-index: 10000;" onclick="closeImageModal()" onmouseover="this.style.color='rgba(255, 255, 255, 1)'" onmouseout="this.style.color='rgba(255, 255, 255, 0.8)'">&times;</span>
+    <img id="modalImage" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 90%; max-height: 90%; object-fit: contain; border: 1px solid rgba(255, 255, 255, 0.1);">
+</div>
+
+<script>
+function openImageModal(imageSrc) {
+    document.getElementById('imageModal').style.display = 'block';
+    document.getElementById('modalImage').src = imageSrc;
+    document.body.style.overflow = 'hidden';
+}
+
+function closeImageModal() {
+    document.getElementById('imageModal').style.display = 'none';
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeImageModal();
+    }
+});
+</script>
+
+    </main>
+
+    <footer>
+    <div class="container">
+        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
+        <p>&copy; 2025 Inversive Labs</p>
+    </div>
+</footer>
+
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>

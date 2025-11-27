@@ -79,9 +79,9 @@ body::before {
     }
 }
 
-/* Hide CSS grid background on home page (vortex shader handles it) */
+/* Show dot grid on home page instead of shader */
 body.home-page::before {
-    display: none;
+    display: block;
 }
 
 @keyframes sineWaveMove {
@@ -145,7 +145,11 @@ body:not(.home-page) {
     /* Black background to match the dot grid */
 }
 
-/* Reduce shader visibility on non-index pages */
+/* Hide shader on home page, show on other pages */
+body.home-page .shader-canvas {
+    display: none !important;
+}
+
 body:not(.home-page) .shader-canvas {
     opacity: 0.15 !important;
     /* Lower opacity to make shader darker and more subtle on non-home pages */
