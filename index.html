@@ -2469,27 +2469,27 @@ body.home-page .methodology-section .methodology-title::after {
                         <div class="bytecode-lines">
                             <div class="bytecode-line line-1">
                                 <span class="line-number">0x1000</span>
-                                <span class="line-code">mov r1, r2</span>
+                                <span class="line-code">ldxdw r1, [r10-8]</span>
                                 <span class="execution-marker"></span>
                             </div>
                             <div class="bytecode-line line-2">
                                 <span class="line-number">0x1008</span>
-                                <span class="line-code">add r1, #100</span>
+                                <span class="line-code">add64 r1, r2</span>
                                 <span class="execution-marker"></span>
                             </div>
                             <div class="bytecode-line line-3">
                                 <span class="line-number">0x1010</span>
-                                <span class="line-code">jeq r1, #0, 0x1020</span>
+                                <span class="line-code">jgt r1, 0xFFFFFFFF, 0x1020</span>
                                 <span class="execution-marker"></span>
                             </div>
                             <div class="bytecode-line line-4">
                                 <span class="line-number">0x1018</span>
-                                <span class="line-code">call 0x2000</span>
+                                <span class="line-code">call sol_invoke_signed</span>
                                 <span class="execution-marker"></span>
                             </div>
                             <div class="bytecode-line line-5">
                                 <span class="line-number">0x1020</span>
-                                <span class="line-code">ldxdw r0, [r10]</span>
+                                <span class="line-code">stxdw [r10-16], r0</span>
                                 <span class="execution-marker"></span>
                             </div>
                             <div class="bytecode-line line-6">
