@@ -79,8 +79,13 @@ body::before {
     }
 }
 
-/* Show dot grid on home page instead of shader */
+/* Hide dot grid on home page (vortex shader will show instead) */
 body.home-page::before {
+    display: none;
+}
+
+/* Show dot grid on all other pages */
+body:not(.home-page)::before {
     display: block;
 }
 
@@ -145,14 +150,21 @@ body:not(.home-page) {
     /* Black background to match the dot grid */
 }
 
-/* Hide shader on home page, show on other pages */
+/* Show vortex shader only on home page with fade-in animation */
 body.home-page .shader-canvas {
+    display: block !important;
+    /* Opacity is controlled by JS for smooth fade-in */
+    /* Default target opacity: 0.6 */
+}
+
+/* Hide shader canvas on all other pages (dot grid will show instead) */
+body:not(.home-page) .shader-canvas {
     display: none !important;
 }
 
-body:not(.home-page) .shader-canvas {
-    opacity: 0.15 !important;
-    /* Lower opacity to make shader darker and more subtle on non-home pages */
+/* Ensure smooth transitions for shader canvas */
+.shader-canvas {
+    transition: opacity 1.5s ease-in-out;
 }
 
 

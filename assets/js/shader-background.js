@@ -61,13 +61,19 @@ class ShaderBackground {
         this.canvas.style.height = '100vh';
         this.canvas.style.zIndex = '1';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.opacity = '0.6';
+        this.canvas.style.opacity = '0'; // Start invisible
+        this.canvas.style.transition = 'opacity 1.5s ease-in-out';
 
         // Insert canvas as first child of body
         document.body.insertBefore(this.canvas, document.body.firstChild);
 
         // Add shader-active class for fallback browsers
         document.body.classList.add('shader-active');
+
+        // Trigger fade-in effect after a brief delay
+        setTimeout(() => {
+            this.canvas.style.opacity = '0.6';
+        }, 100);
 
         // Initialize WebGL
         this.gl = this.canvas.getContext('webgl') || this.canvas.getContext('experimental-webgl');
@@ -98,7 +104,7 @@ class ShaderBackground {
     }
     
     setupShaders() {
-        // Check if we're on the home page
+        // Check if we're on the home page - vortex for home, grid for others
         const isHomePage = document.body.classList.contains('home-page');
 
         // Vertex shader
