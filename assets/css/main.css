@@ -4438,10 +4438,10 @@ body.menu-open {
 .deliverables-grid-minimal {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1px;
+    gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
-    background: rgba(255, 255, 255, 0.08);
+    background: transparent;
 }
 
 .deliverable-item-minimal {
