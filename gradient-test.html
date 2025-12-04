@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            background: #000;
+            padding: 100px;
+        }
+
+        @keyframes waveLeftToRight {
+            0% {
+                background: linear-gradient(90deg,
+                    #51d2f6 0%,
+                    #3fc7f4 5%,
+                    #4b5563 10%,
+                    #6b7280 15%,
+                    #9ca3af 20%,
+                    #d1d5db 25%,
+                    #b91aee 27%,
+                    #5c5cab 29%,
+                    #10ebff 31%,
+                    #f3f4f6 33%,
+                    #e5e7eb 35%,
+                    #d1d5db 37%,
+                    #6b7280 40%,
+                    #4b5563 45%,
+                    #374151 50%,
+                    #10ebff 55%,
+                    #9ca3af 60%,
+                    #b91aee 65%,
+                    #5c5cab 70%,
+                    #10ebff 73%,
+                    #ffffff 75%,
+                    #f3f4f6 77%,
+                    #9ca3af 84%,
+                    #b91aee 89%,
+                    #5c5cab 94%,
+                    #10ebff 100%);
+                background-size: 300% 100%;
+                background-position: 100% 0;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+            100% {
+                background: linear-gradient(90deg,
+                    #51d2f6 0%,
+                    #3fc7f4 5%,
+                    #4b5563 10%,
+                    #6b7280 15%,
+                    #9ca3af 20%,
+                    #d1d5db 25%,
+                    #e5e7eb 27%,
+                    #f3f4f6 29%,
+                    #ffffff 31%,
+                    #f3f4f6 33%,
+                    #e5e7eb 35%,
+                    #d1d5db 37%,
+                    #6b7280 40%,
+                    #4b5563 45%,
+                    hsl(217, 19%, 27%) 50%,
+                    #1f2937 55%,
+                    #111827 60%,
+                    #374151 65%,
+                    #1f2937 70%,
+                    #4b5563 73%,
+                    #6b7280 75%,
+                    #d1d5db  77%,
+                    #e5e7eb 79%,
+                    #d1d5db 81%,
+                    #9ca3af 84%,
+                    #b91aee 89%,
+                    #5c5cab 94%,
+                    #10ebff 100%);
+                background-size: 300% 100%;
+                background-position: -200% 0;
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+            }
+        }
+
+        h1 {
+            font-size: 5rem;
+            font-weight: 200;
+            color: #ffffff;
+            background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: waveLeftToRight 45s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <h1>Audits Powered by Advanced Tooling</h1>
+</body>
+</html>

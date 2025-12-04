@@ -6,6 +6,10 @@
     <title>Continuous Security Validation - Inversive Labs</title>
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
@@ -18,53 +22,246 @@
 
     <!-- Background removed -->
 
-    <header>
-    <nav class="container">
-        <div class="logo-container">
-            <a href="/index.html"><img src="/images/logo.svg" width="180"></a>
-        </div>
-        
-        <!-- Hamburger Button for Mobile -->
-        <button class="hamburger" aria-label="Toggle menu">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-        
-        <ul class="nav-links">
-            <li><a href="/about/" >About</a></li>
-            <li><a href="/team/" >Team</a></li>
-            <li class="has-dropdown">
+    <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(16px);
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.8);
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+    .modern-nav-links a:hover,
+    .modern-nav-links a.active {
+        color: #ffffff;
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(23, 23, 23, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Mobile menu button */
+    .mobile-menu-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 0.5rem;
+        backdrop-filter: blur(16px);
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    @media (min-width: 768px) {
+        .mobile-menu-btn {
+            display: none;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.98) 0%,
+            rgba(5, 5, 8, 0.98) 50%,
+            rgba(0, 0, 0, 0.98) 100%) !important;
+        border: 1px solid rgba(16, 235, 255, 0.3) !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 0 1px rgba(16, 235, 255, 0.5),
+            0 0 10px rgba(16, 235, 255, 0.2),
+            0 0 20px rgba(92, 92, 171, 0.15),
+            0 8px 32px rgba(0, 0, 0, 0.6) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 2rem; /* 32px */
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="sm:px-6 lg:px-8 max-w-7xl mx-auto px-4">
+        <nav>
+            <a href="/" class="flex items-center gap-2">
+                <img src="/images/logo.svg" alt="Inversive Labs" class="w-auto h-12">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
                 <a href="/services/" >Services</a>
-                <div class="nav-dropdown">
-                    <a href="/services/" class="nav-dropdown-link nav-dropdown-parent">View All Services</a>
-                    <a href="/services/embedded-security/" class="nav-dropdown-link">Embedded Security</a>
-                    <a href="/services/security-assessment/" class="nav-dropdown-link">Security Assessments</a>
-                </div>
-            </li>
-            <li class="has-dropdown">
                 <a href="/products/" >Products</a>
-                <div class="nav-dropdown">
-                    <a href="/products/" class="nav-dropdown-link nav-dropdown-parent">View All Products</a>
-                    <a href="/solaris/" class="nav-dropdown-link">Solaris</a>
-                    <a href="/radiant/" class="nav-dropdown-link">Radiant</a>
-                     <a href="/eloizer/" class="nav-dropdown-link">Eloizer</a>
-                </div>
-            </li>
-            <li class="has-dropdown">
                 <a href="/publications/" >Publications</a>
-                <div class="nav-dropdown">
-                    <a href="/publications/" class="nav-dropdown-link nav-dropdown-parent">View All Publications</a>
-                    <a href="/publications/#cve-advisories" class="nav-dropdown-link">Advisories</a>
-                    <a href="/publications/#research-papers" class="nav-dropdown-link">Papers</a>
-                    <a href="/publications/#presentations" class="nav-dropdown-link">Presentations</a>
+                <a href="/blog/" >Blog</a>
+
+                <div class="modern-nav-cta">
+                    <a href="/contact/">
+                        <span class="font-geist">Get Started</span>
+                    </a>
                 </div>
-            </li>
-            <li><a href="/blog/" >Blog</a></li>
-            <li><a href="/contact/" >Contact</a></li>
-        </ul>
-    </nav>
+            </div>
+
+            <button class="mobile-menu-btn font-geist" id="mobileMenuToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-5 w-5">
+                    <path d="M4 5h16"></path>
+                    <path d="M4 12h16"></path>
+                    <path d="M4 19h16"></path>
+                </svg>
+                Menu
+            </button>
+        </nav>
+    </div>
 </header>
+
+<script>
+    // Mobile menu functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
 
     <main>
         <section class="service-hero-minimal">
@@ -101,6 +298,11 @@
             <div class="card-minimal">
                 <h3>Lifecycle Integration</h3>
                 <p>Security testing embedded throughout your development process, from architecture design to on-chain deployment.</p>
+            </div>
+
+            <div class="card-minimal">
+                <h3>Protocol-Specific Invariant Testing</h3>
+                <p>Custom invariant definitions and continuous validation tailored to your protocol's unique security requirements.</p>
             </div>
 
             <div class="card-minimal">
@@ -196,10 +398,187 @@
     </main>
 
     
-    <footer>
+    <style>
+    .modern-footer {
+        border-top: 1px solid rgba(16, 235, 255, 0.15);
+        margin-top: 4rem;
+        position: relative;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 14, 20, 0.4) 100%);
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 1.75rem 1.5rem 1.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 2rem 2rem 1.5rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.7;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(16, 235, 255, 0.95);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.12) 0%,
+            rgba(92, 92, 171, 0.1) 50%,
+            rgba(185, 26, 238, 0.12) 100%);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        box-shadow: 0 0 5px rgba(16, 235, 255, 0.15);
+    }
+
+    .footer-contact-btn:hover {
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.18) 0%,
+            rgba(92, 92, 171, 0.15) 50%,
+            rgba(185, 26, 238, 0.18) 100%);
+        border-color: rgba(16, 235, 255, 0.5);
+        box-shadow: 0 0 10px rgba(16, 235, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(16, 235, 255, 0.1);
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Geist', sans-serif;
+        margin: 0;
+    }
+</style>
+
+<footer class="modern-footer">
     <div class="container">
-        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
-        <p>&copy; 2025 Inversive Labs</p>
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/team/">Team</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/products/">Products</a></li>
+                    </ul>
+                </div>
+                <a href="/contact/" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Inversive Labs. All rights reserved.</p>
+        </div>
     </div>
 </footer>
 

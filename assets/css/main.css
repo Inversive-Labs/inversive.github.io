@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-family: 'Inter', 'Geist', 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
     line-height: 1.6;
     color: #e5e7eb;
     background: #000000;
@@ -666,13 +666,13 @@ main > .section:first-child {
 }
 
 .section h1 {
-    font-size: 4.5rem;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
     align-content: center;
     margin-bottom: 1rem;
     color: #ffffff;
-    font-weight: 200;
+    font-weight: 400;
     letter-spacing: -0.025em;
-    font-family: 'Enclave', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -680,13 +680,13 @@ main > .section:first-child {
 }
 
 .section h2 {
-    font-size: 2.5rem;
+    font-size: clamp(1.75rem, 4.5vw, 3rem);
     text-align: center;
     margin-bottom: 1rem;
     color: #ffffff;
-    font-weight: 200;
+    font-weight: 400;
     letter-spacing: -0.025em;
-    font-family: 'Enclave', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
     background-clip: text;
     -webkit-background-clip: text;
@@ -800,18 +800,43 @@ main > .section:first-child {
 }
 
 .team-member {
-    background: rgba(0, 0, 0, 0.3);
-    border: none;
-    border-radius: 8px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     padding: 2rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     position: relative;
     display: block;
     width: 100%;
+    backdrop-filter: blur(20px);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.team-member::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(16, 235, 255, 0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .team-member:hover {
-    background: rgba(0, 0, 0, 0.4);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    border-color: rgba(16, 235, 255, 0.4);
+    transform: translateY(-6px);
+    box-shadow:
+        0 16px 48px rgba(16, 235, 255, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.team-member:hover::before {
+    opacity: 1;
 }
 
 .member-photo {
@@ -883,7 +908,7 @@ main > .section:first-child {
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
     font-weight: 600;
-    font-family: 'Raleway', system-ui, sans-serif;
+    font-family: 'Geist', 'Inter', 'Raleway', system-ui, sans-serif;
     letter-spacing: -0.01em;
     text-align: center;
 }
@@ -1690,38 +1715,55 @@ body:has(.shader-canvas) .uiverse-container {
 }
 
 .publication-item {
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(5px);
-    padding: 3rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(20px);
+    padding: 2.5rem;
     position: relative;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     height: 100%;
     cursor: pointer;
-    border: 1px solid transparent;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.publication-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        transparent 0%,
+        rgba(16, 235, 255, 0.03) 50%,
+        rgba(185, 26, 238, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .publication-item::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
-        transparent 40%,
-        rgba(16, 235, 255, 0.02) 70%,
-        rgba(185, 26, 238, 0.02) 100%);
+    background: radial-gradient(circle at top right, rgba(16, 235, 255, 0.1) 0%, transparent 50%);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
 .publication-item:hover {
-    background: rgba(0, 0, 0, 0.97);
-    transform: translateY(-6px) scale(1.02);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    transform: translateY(-6px);
     box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.03);
+        0 16px 48px rgba(16, 235, 255, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(16, 235, 255, 0.4);
 }
 
+.publication-item:hover::before,
 .publication-item:hover::after {
     opacity: 1;
 }
@@ -2186,7 +2228,8 @@ body:has(.shader-canvas) .uiverse-container {
     }
     
     .publication-item {
-        padding: 1.5rem;
+        padding: 1.75rem;
+        border-radius: 16px;
     }
     
     .publication-header {
@@ -3178,7 +3221,7 @@ body.menu-open {
     }
 
     .section h1 {
-        font-size: 3rem;
+        font-size: clamp(2.25rem, 9vw, 3rem);
     }
 
     .services-grid,
@@ -3190,7 +3233,8 @@ body.menu-open {
     }
     
     .team-member {
-        padding: 1.5rem;
+        padding: 1.75rem;
+        border-radius: 16px;
     }
 
     .member-photo {
@@ -3602,12 +3646,12 @@ body.menu-open {
 #about .section-title,
 .blog-posts ~ .section-header .section-title,
 .section-header .section-title {
-    font-size: 4rem;
-    font-weight: 100;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.95);
     letter-spacing: -0.02em;
     margin-bottom: 1rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 /* Mobile responsive titles */
@@ -3617,7 +3661,7 @@ body.menu-open {
     #about .section-title,
     .blog-posts ~ .section-header .section-title,
     .section-header .section-title {
-        font-size: 2.5rem;
+        font-size: clamp(2.25rem, 9vw, 3rem);
     }
 }
 
@@ -3627,7 +3671,7 @@ body.menu-open {
     #about .section-title,
     .blog-posts ~ .section-header .section-title,
     .section-header .section-title {
-        font-size: 2rem;
+        font-size: 3rem;
     }
 }
 
@@ -3637,10 +3681,11 @@ body.menu-open {
 .section-header .section-subtitle {
     font-size: 1.1rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
+    font-family: 'Inter', 'Geist', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 /* Services Grid - Proper 2 Column Layout */
@@ -3659,38 +3704,55 @@ body.menu-open {
 }
 
 .service-card-sophisticated {
-    background: rgba(0, 0, 0, 0.95);
-    backdrop-filter: blur(5px);
-    padding: 3rem;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(20px);
+    padding: 2.5rem;
     position: relative;
     transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
     height: 100%;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.service-card-sophisticated::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,
+        transparent 0%,
+        rgba(16, 235, 255, 0.03) 50%,
+        rgba(185, 26, 238, 0.03) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
 }
 
 .service-card-sophisticated::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg,
-        transparent 40%,
-        rgba(16, 235, 255, 0.02) 70%,
-        rgba(185, 26, 238, 0.02) 100%);
+    background: radial-gradient(circle at top right, rgba(16, 235, 255, 0.1) 0%, transparent 50%);
     opacity: 0;
     transition: opacity 0.4s ease;
     pointer-events: none;
 }
 
 .service-card-sophisticated:hover {
-    background: rgba(0, 0, 0, 0.97);
-    transform: translateY(-6px) scale(1.02);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+    transform: translateY(-6px);
     box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.03);
+        0 16px 48px rgba(16, 235, 255, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    border-color: rgba(16, 235, 255, 0.4);
 }
 
+.service-card-sophisticated:hover::before,
 .service-card-sophisticated:hover::after {
     opacity: 1;
 }
@@ -3729,21 +3791,23 @@ body.menu-open {
 }
 
 .service-card-sophisticated .service-number {
-    font-size: 0.8rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(16, 235, 255, 0.5);
     line-height: 1;
     margin-bottom: 2rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    letter-spacing: 0.1em;
+    font-family: 'Geist', 'Inter', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-shadow: 0 0 8px rgba(16, 235, 255, 0.3);
 }
 
 .service-card-sophisticated .service-title {
-    font-size: 1.8rem;
-    font-weight: 300 !important;
+    font-size: clamp(1.35rem, 2.75vw, 2rem);
+    font-weight: 500 !important;
     color: rgba(255, 255, 255, 0.95);
     margin-bottom: 3rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     letter-spacing: -0.01em;
     line-height: 1.3;
     height: 3rem;
@@ -3764,6 +3828,7 @@ body.menu-open {
     height: 100px;
     display: block;
     align-items: flex-start;
+    font-family: 'Inter', 'Geist', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .service-card-sophisticated .service-features-list {
@@ -3778,20 +3843,21 @@ body.menu-open {
 }
 
 .service-card-sophisticated .service-features-list li {
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 0.9rem;
     font-weight: 300;
     padding-left: 1.5rem;
     position: relative;
     line-height: 1.5;
     text-align: left;
+    font-family: 'Inter', 'Geist', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 .service-card-sophisticated .service-features-list li::before {
     content: "•";
     position: absolute;
     left: 0;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(16, 235, 255, 0.5);
 }
 
 .service-card-sophisticated .service-content {
@@ -3839,14 +3905,17 @@ body.menu-open {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(16, 235, 255, 0.8);
     text-decoration: none;
     margin-top: auto;
-    font-size: 0.9rem;
-    font-weight: 300;
+    font-size: 0.875rem;
+    font-weight: 500;
     transition: all 0.3s ease;
     padding: 2.5rem 0 0 0;
     margin-top: 0;
+    font-family: 'Geist', 'Inter', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    position: relative;
+    text-shadow: 0 0 12px rgba(16, 235, 255, 0.3);
 }
 
 .service-card-sophisticated:hover .service-title {
@@ -3858,8 +3927,9 @@ body.menu-open {
 }
 
 .service-card-sophisticated .service-link:hover {
-    color: rgba(16, 235, 255, 0.9);
-    gap: 1rem;
+    color: rgba(16, 235, 255, 1);
+    gap: 0.75rem;
+    text-shadow: 0 0 16px rgba(16, 235, 255, 0.5);
 }
 
 .service-card-sophisticated .service-link svg {
@@ -3872,13 +3942,23 @@ body.menu-open {
 
 /* Product Icon Styles */
 .product-icon {
-    color: rgba(255, 255, 255, 0.3);
+    color: rgba(16, 235, 255, 0.4);
     margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
+    transition: all 0.4s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    filter: drop-shadow(0 0 8px rgba(16, 235, 255, 0.2));
+}
+
+.product-icon svg {
+    display: block;
 }
 
 .service-card-sophisticated:hover .product-icon {
-    color: rgba(16, 235, 255, 0.6);
+    color: rgba(16, 235, 255, 0.8);
+    filter: drop-shadow(0 0 12px rgba(16, 235, 255, 0.4));
+    transform: translateY(-2px);
 }
 
 /* Product Tags Styles */
@@ -3893,25 +3973,56 @@ body.menu-open {
 .product-tag {
     font-size: 0.75rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.6);
     padding: 0.25rem 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    font-family: 'Geist', 'Inter', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     letter-spacing: 0.02em;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .service-card-sophisticated:hover .product-tag {
-    color: rgba(255, 255, 255, 0.5);
-    border-color: rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.8);
+    border-color: rgba(16, 235, 255, 0.3);
+    background: rgba(16, 235, 255, 0.05);
 }
 
 /* Service Landing Page Minimal Styles */
 .service-hero-minimal {
-    padding: 10rem 0 6rem;
+    padding: 12rem 0 8rem;
     background: transparent;
     position: relative;
+    overflow: hidden;
+}
+
+.service-hero-minimal::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 800px;
+    background: radial-gradient(circle,
+        rgba(16, 235, 255, 0.08) 0%,
+        rgba(92, 92, 171, 0.05) 30%,
+        transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: pulse 8s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.5;
+    }
 }
 
 .service-hero-minimal::after {
@@ -3920,12 +4031,12 @@ body.menu-open {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 200px;
+    height: 300px;
     background: linear-gradient(180deg,
         rgba(0, 0, 0, 0) 0%,
-        rgba(0, 0, 0, 0.05) 100%);
+        rgba(0, 0, 0, 0.3) 100%);
     pointer-events: none;
-    z-index: -1;
+    z-index: 0;
 }
 
 /* Animated gradient for service page titles */
@@ -3941,70 +4052,100 @@ body.menu-open {
 }
 
 .hero-content-minimal {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    text-align: center;
 }
 
 .hero-title-minimal {
-    font-size: 4rem;
-    font-weight: 100;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    color: #ffffff;
     line-height: 1.1;
     margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    letter-spacing: -0.025em;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: waveLeftToRight 45s linear infinite;
+    text-shadow: 0 0 40px rgba(16, 235, 255, 0.15);
 }
 
 .hero-description-minimal {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.7;
     margin-bottom: 3rem;
+    font-family: 'Geist', sans-serif;
 }
 
 .hero-actions-minimal {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .cta-minimal-primary,
 .cta-minimal-secondary {
-    display: inline-block;
-    padding: 0.75rem 1.25rem;
-    color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.875rem 1.75rem;
+    color: #ffffff;
     text-decoration: none;
-    font-weight: 300;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    font-family: 'Geist', sans-serif;
+    font-size: 0.9375rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
+    border-radius: 9999px;
+    position: relative;
+    cursor: pointer;
 }
 
 .cta-minimal-primary {
-    background: #000000;
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.15) 0%,
+        rgba(92, 92, 171, 0.12) 50%,
+        rgba(185, 26, 238, 0.15) 100%);
+    border: 1px solid rgba(16, 235, 255, 0.4);
+    box-shadow: 0 0 10px rgba(16, 235, 255, 0.2);
 }
 
 .cta-minimal-secondary {
     background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.85);
 }
 
 .cta-minimal-primary:hover {
-    background: rgba(0, 0, 0, 0.9);
-    color: rgba(255, 255, 255, 1);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.22) 0%,
+        rgba(92, 92, 171, 0.18) 50%,
+        rgba(185, 26, 238, 0.22) 100%);
+    border-color: rgba(16, 235, 255, 0.6);
+    box-shadow: 0 0 20px rgba(16, 235, 255, 0.35);
     transform: translateY(-2px);
 }
 
 .cta-minimal-secondary:hover {
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(255, 255, 255, 1);
-    border-color: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.35);
     transform: translateY(-2px);
 }
 
-.cta-minimal-secondary {
-    color: rgba(255, 255, 255, 0.5);
-    border: none;
+.cta-minimal-primary:active {
+    transform: translateY(0);
+}
+
+.cta-minimal-secondary:active {
+    transform: translateY(0);
 }
 
 .section-minimal {
@@ -4053,38 +4194,56 @@ body.menu-open {
 }
 
 .section-title-minimal {
-    font-size: 2.5rem;
-    font-weight: 100;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 400;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 1rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: waveLeftToRight 45s linear infinite;
 }
 
 .section-subtitle-minimal {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.55);
     text-align: center;
     margin-bottom: 4rem;
+    font-family: 'Geist', sans-serif;
 }
 
 .grid-minimal {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
     margin-top: 4rem;
-    background: rgba(255, 255, 255, 0.08);
     padding: 0;
 }
 
+@media (max-width: 768px) {
+    .grid-minimal {
+        grid-template-columns: 1fr;
+    }
+}
+
 .card-minimal {
-    padding: 3rem 2.5rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.97) 0%, rgba(10, 10, 15, 0.95) 100%);
-    border: none;
-    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    padding: 2.5rem 2rem;
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.03) 0%,
+        rgba(92, 92, 171, 0.03) 50%,
+        rgba(185, 26, 238, 0.03) 100%);
+    border: 1px solid rgba(16, 235, 255, 0.2);
+    border-radius: 16px;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     position: relative;
     overflow: hidden;
+    box-shadow:
+        0 0 1px rgba(16, 235, 255, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card-minimal::before {
@@ -4092,41 +4251,46 @@ body.menu-open {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(16, 235, 255, 0.5) 50%,
-        transparent 100%);
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(16, 235, 255, 0.08),
+        rgba(185, 26, 238, 0.05) 30%,
+        transparent 50%);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 1;
 }
 
 .card-minimal::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at top left,
-        rgba(16, 235, 255, 0.02) 0%,
+    background: radial-gradient(circle at top right,
+        rgba(185, 26, 238, 0.03) 0%,
         transparent 60%);
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    opacity: 1;
     pointer-events: none;
+    z-index: 0;
 }
 
 .card-minimal:hover {
-    background: linear-gradient(135deg, rgba(5, 5, 12, 0.98) 0%, rgba(12, 12, 18, 0.96) 100%);
-    transform: translateY(-2px);
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.08) 0%,
+        rgba(92, 92, 171, 0.06) 50%,
+        rgba(185, 26, 238, 0.08) 100%);
+    border-color: rgba(16, 235, 255, 0.5);
+    transform: translateY(-4px);
     box-shadow:
-        0 20px 40px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        0 0 2px rgba(16, 235, 255, 0.6),
+        0 0 10px rgba(16, 235, 255, 0.3),
+        0 0 20px rgba(16, 235, 255, 0.2),
+        0 8px 24px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(16, 235, 255, 0.2);
 }
 
 .card-minimal:hover::before {
-    opacity: 1;
-}
-
-.card-minimal:hover::after {
     opacity: 1;
 }
 
@@ -4139,33 +4303,34 @@ body.menu-open {
 }
 
 .card-minimal h3 {
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.95);
-    margin-bottom: 1.25rem;
-    font-family: 'Raleway', sans-serif;
-    letter-spacing: -0.01em;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: 'Space Grotesk', 'Geist', sans-serif;
+    letter-spacing: -0.015em;
     position: relative;
-    z-index: 1;
-    transition: color 0.3s ease;
+    z-index: 2;
+    transition: all 0.3s ease;
 }
 
 .card-minimal:hover h3 {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(16, 235, 255, 0.95);
 }
 
 .card-minimal p {
-    font-size: 0.95rem;
+    font-size: 0.975rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     line-height: 1.7;
     position: relative;
-    z-index: 1;
+    z-index: 2;
     transition: color 0.3s ease;
+    font-family: 'Geist', sans-serif;
 }
 
 .card-minimal:hover p {
-    color: rgba(255, 255, 255, 0.65);
+    color: rgba(255, 255, 255, 0.75);
 }
 
 .timeline-minimal {
@@ -4202,26 +4367,35 @@ body.menu-open {
 
 .timeline-number {
     position: absolute;
-    left: -3.25rem;
+    left: -3.5rem;
     top: 0;
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    font-weight: 200;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.4);
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.08) 0%,
+        rgba(92, 92, 171, 0.06) 100%);
+    border: 1px solid rgba(16, 235, 255, 0.3);
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: 1rem;
+    color: rgba(16, 235, 255, 0.8);
+    font-family: 'Space Grotesk', sans-serif;
     transition: all 0.3s ease;
     z-index: 2;
+    box-shadow: 0 0 8px rgba(16, 235, 255, 0.15);
 }
 
 .timeline-item-minimal:hover .timeline-number {
-    border-color: rgba(16, 235, 255, 0.5);
-    color: rgba(16, 235, 255, 0.9);
-    box-shadow: 0 0 15px rgba(16, 235, 255, 0.2);
+    border-color: rgba(16, 235, 255, 0.6);
+    color: rgba(16, 235, 255, 1);
+    background: linear-gradient(135deg,
+        rgba(16, 235, 255, 0.15) 0%,
+        rgba(92, 92, 171, 0.12) 100%);
+    box-shadow: 0 0 20px rgba(16, 235, 255, 0.3);
+    transform: scale(1.05);
 }
 
 .timeline-content-minimal {
@@ -4229,25 +4403,26 @@ body.menu-open {
 }
 
 .timeline-content-minimal h3 {
-    font-size: 1.4rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #ffffff;
     margin-bottom: 0.75rem;
-    font-family: 'Raleway', sans-serif;
-    letter-spacing: -0.01em;
+    font-family: 'Space Grotesk', 'Geist', sans-serif;
+    letter-spacing: -0.015em;
     transition: color 0.3s ease;
 }
 
 .timeline-item-minimal:hover .timeline-content-minimal h3 {
-    color: rgba(255, 255, 255, 1);
+    color: rgba(16, 235, 255, 0.95);
 }
 
 .timeline-content-minimal p {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.6);
     line-height: 1.7;
     margin-bottom: 0.5rem;
+    font-family: 'Geist', sans-serif;
     transition: color 0.3s ease;
 }
 
@@ -4406,28 +4581,31 @@ body.menu-open {
     }
 
     #services {
-        padding: 4rem 0;
+        padding: 5rem 0 4rem;
     }
 
     #services .section-title {
-        font-size: 2.5rem;
+        font-size: clamp(2rem, 7vw, 2.5rem);
+        margin-bottom: 1rem;
     }
 
     #services .section-subtitle {
-        font-size: 1rem;
-        padding: 0 1rem;
+        font-size: clamp(0.95rem, 4vw, 1.1rem);
+        padding: 0 1.5rem;
+        line-height: 1.6;
     }
 
     .services-grid.sophisticated,
     .services-grid.sophisticated.products-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
         margin: 2rem 1rem;
         background: transparent;
     }
 
     .service-card-sophisticated {
-        padding: 2rem;
+        padding: 1.75rem;
+        border-radius: 16px;
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
@@ -4437,7 +4615,7 @@ body.menu-open {
     }
 
     .service-card-sophisticated .service-title {
-        font-size: 1.5rem;
+        font-size: clamp(1.25rem, 4vw, 1.75rem);
         height: 3rem;
         margin-bottom: 3rem;
         padding-bottom: 0;
@@ -4533,7 +4711,7 @@ body.menu-open {
     }
 
     .service-card-sophisticated .service-title {
-        font-size: 1.3rem;
+        font-size: clamp(1.1rem, 5vw, 1.5rem);
         height: 3rem;
         margin-bottom: 3rem;
         text-align: center;
