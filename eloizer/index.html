@@ -71,11 +71,11 @@
     .modern-nav-links {
         display: none;
         gap: 0.5rem;
-        background: rgba(255, 255, 255, 0.05);
+        background: rgba(0, 0, 0, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 9999px;
         padding: 0.25rem;
-        backdrop-filter: blur(16px);
+        backdrop-filter: blur(8px);
         align-items: center;
     }
 
@@ -115,7 +115,7 @@
         font-size: 0.75rem;
         font-weight: 500;
         color: #ffffff;
-        background: rgba(23, 23, 23, 0.6);
+        background: rgba(0, 0, 0, 0.03);
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 9999px;
         cursor: pointer;
@@ -187,9 +187,11 @@
         padding: 1.5rem !important;
         gap: 0.5rem !important;
         background: linear-gradient(135deg,
-            rgba(0, 0, 0, 0.98) 0%,
-            rgba(5, 5, 8, 0.98) 50%,
-            rgba(0, 0, 0, 0.98) 100%) !important;
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
         border: 1px solid rgba(16, 235, 255, 0.3) !important;
         border-radius: 20px !important;
         box-shadow:
