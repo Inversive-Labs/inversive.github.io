@@ -186,14 +186,9 @@ body:not(.home-page) .shader-canvas {
 
 /* Enhanced header with morphing background */
 header {
-    background: linear-gradient(180deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.7) 25%,
-        rgba(0, 0, 0, 0.2) 50%,
-        rgba(0, 0, 0, 0) 65%,
-        transparent 100%);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
     position: fixed;
     width: 100%;
     top: 0;
@@ -204,14 +199,9 @@ header {
 }
 
 header.scrolled {
-    background: linear-gradient(180deg,
-        rgba(0, 0, 0, 1) 0%,
-        rgba(0, 0, 0, 0.75) 25%,
-        rgba(0, 0, 0, 0.3) 50%,
-        rgba(0, 0, 0, 0) 65%,
-        transparent 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 nav {
