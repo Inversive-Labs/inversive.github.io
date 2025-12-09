@@ -115,7 +115,7 @@
     .nav-indicator {
         position: absolute;
         border-radius: 9999px;
-        padding: 1.5px;
+        padding: 2px;
         background: linear-gradient(90deg,
             #10ebff 0%,
             #3ac9e6 12.5%,
@@ -135,6 +135,7 @@
         transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         pointer-events: none;
         opacity: 0;
+        box-sizing: border-box;
     }
 
     @keyframes gradientRotate {
@@ -342,10 +343,12 @@
             const activeLink = document.querySelector('.modern-nav-links > a.active');
             if (activeLink && indicator && window.innerWidth >= 768) {
                 // Calculate position using offsetLeft and offsetTop
-                const left = activeLink.offsetLeft;
-                const top = activeLink.offsetTop;
-                const width = activeLink.offsetWidth;
-                const height = activeLink.offsetHeight;
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
 
                 indicator.style.left = left + 'px';
                 indicator.style.top = top + 'px';
