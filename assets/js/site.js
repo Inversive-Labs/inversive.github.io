@@ -370,11 +370,33 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 post.classList.add('reveal');
             }, 800 + (index * 150));
-            
+
             // Also observe for scroll-based animation
             observer.observe(post);
         });
     }
+
+    // Make service/product cards clickable
+    const cards = document.querySelectorAll('.service-card-sophisticated');
+    cards.forEach(card => {
+        const link = card.querySelector('.service-link');
+        if (link) {
+            card.addEventListener('click', function(e) {
+                // Don't trigger if clicking directly on the link or product-tag link
+                if (e.target.closest('.service-link') || e.target.closest('a.product-tag')) {
+                    return;
+                }
+                // Navigate to the link's href
+                const href = link.getAttribute('href');
+                if (href) {
+                    window.location.href = href;
+                }
+            });
+
+            // Add pointer cursor to indicate clickability
+            card.style.cursor = 'pointer';
+        }
+    });
 });
 
 // Event listeners

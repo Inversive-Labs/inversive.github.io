@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - Inversive Labs - Inversive Labs</title>
+    <title>Portfolio - Inversive Labs</title>
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
 </head>
@@ -18,1141 +18,1036 @@
 
     <!-- Background removed -->
 
-    <header>
-    <nav class="container">
-        <div class="logo-container">
-            <a href="/index.html"><img src="/images/logo.svg" width="250"></a>
-        </div>
-        
-        <!-- Hamburger Button for Mobile -->
-        <button class="hamburger" aria-label="Toggle menu">
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-            <span class="hamburger-line"></span>
-        </button>
-        
-        <ul class="nav-links">
-            <li><a href="/about/" >About</a></li>
-            <li><a href="/team/" >Team</a></li>
-            <li>
+    <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+        width: 100%;
+    }
+
+    .modern-nav .nav-container {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-nav .nav-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-nav .nav-container {
+            padding: 0 2rem;
+        }
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+        width: auto;
+        height: 3rem; /* 48px - equivalent to h-12 */
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(8px);
+        align-items: center;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+    }
+
+    .modern-nav-links a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .modern-nav-links a.home-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .modern-nav-links a.home-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .nav-indicator {
+        position: absolute;
+        border-radius: 9999px;
+        padding: 2px;
+        background: linear-gradient(90deg,
+            #10ebff 0%,
+            #3ac9e6 12.5%,
+            #65a8cd 25%,
+            #8f86b4 37.5%,
+            #b91aee 50%,
+            #8f86b4 62.5%,
+            #65a8cd 75%,
+            #3ac9e6 87.5%,
+            #10ebff 100%);
+        background-size: 400% 100%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: gradientRotate 15s linear infinite;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        box-sizing: border-box;
+    }
+
+    @keyframes gradientRotate {
+        0% {
+            background-position: 0% 0;
+        }
+        100% {
+            background-position: 400% 0;
+        }
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Hamburger menu button */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        gap: 5px;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 1px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+
+    .hamburger:hover .hamburger-line {
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid #000 !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 2rem; /* 32px */
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="nav-container">
+        <nav>
+            <a href="/">
+                <img src="/images/logo.svg" alt="Inversive Labs">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <div class="nav-indicator"></div>
+                <a href="/" >Home</a>
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
                 <a href="/services/" >Services</a>
-            </li>
-            <li class="has-dropdown">
+                <a href="/tooling/" >Tooling</a>
                 <a href="/portfolio/" class="active">Portfolio</a>
-                <div class="nav-dropdown">
-                    <a href="/portfolio/#smart-contract-audits" class="nav-dropdown-link">Audits</a>
-                    <a href="/portfolio/#Testing-Campaign" class="nav-dropdown-link">Testing</a>
-                    <a href="/portfolio/#smart-contract-development" class="nav-dropdown-link">Development</a>
-                    <a href="/portfolio/#tooling-development" class="nav-dropdown-link">Tooling</a>
-                    <a href="/portfolio/#cve-advisories" class="nav-dropdown-link">Advisories</a>
-                    <a href="/portfolio/#research-papers" class="nav-dropdown-link">Papers</a>
-                    <a href="/portfolio/#grants-funding" class="nav-dropdown-link">Grants</a>
-                </div>
-            </li>
-            <li><a href="/blog/" >Blog</a></li>
-            <li><a href="/contact/" >Contact</a></li>
-        </ul>
-    </nav>
+                <a href="/blog/" >Blog</a>
+                <a href="/contact/" >Contact</a>
+            </div>
+
+            <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </div>
 </header>
 
+<script>
+    // Mobile menu functionality and nav indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+        const indicator = document.querySelector('.nav-indicator');
+        const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
+
+        // Position indicator on active link
+        function updateIndicator() {
+            const activeLink = document.querySelector('.modern-nav-links > a.active');
+            if (activeLink && indicator && window.innerWidth >= 768) {
+                // Calculate position using offsetLeft and offsetTop
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
+
+                indicator.style.left = left + 'px';
+                indicator.style.top = top + 'px';
+                indicator.style.width = width + 'px';
+                indicator.style.height = height + 'px';
+                indicator.style.opacity = '1';
+            } else if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }
+
+        // Initial positioning
+        updateIndicator();
+
+        // Update on window resize
+        window.addEventListener('resize', updateIndicator);
+
+        // Mobile menu toggle
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                mobileBtn.classList.toggle('active');
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    mobileBtn.classList.remove('active');
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
+
     <main>
-        <section class="section portfolio-section" id="smart-contract-audits">
-    <div class="container">
-        <h2>A u d i t s</h2>
-        <div class="publications-content">
-            <p class="lead">Professional smart contract security audits for DeFi protocols, NFT projects, and blockchain applications.</p>
-            
-            <div class="publications-grid">
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Matchain - Liquid Staking</h3>
-                            <span class="publication-date">July 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Matchain.png" alt="Matchain Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Matchain's liquid staking protocol focusing on validator management and reward distribution mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Immunefi</span>
-                            <span class="tag">Liquid Staking</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">DeFi</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">6 High</span>
-                            <span class="tag medium">5 Medium</span>
-                            <span class="tag low">8 Low</span>
-                        </div>
-                    </div>
-                </div>
+        <style>
+.portfolio-section {
+    padding: 3rem 0;
+    max-width: 1100px;
+    margin: 0 auto;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Matchain - NFT Staking</h3>
-                            <span class="publication-date">July 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Matchain.png" alt="Matchain Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security assessment of Matchain's NFT staking system with focus on reward calculations and access control mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Immunefi</span>
-                            <span class="tag">NFT Staking</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">NFT</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag critical">1 Critical</span>
-                            <span class="tag high">3 High</span>
-                            <span class="tag medium">3 Medium</span>
-                            <span class="tag low">9 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-section:first-child {
+    padding-top: 8rem;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Paragon - Solana Programs</h3>
-                            <span class="publication-date">January 2025 - June 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Paragon.png" alt="Paragon Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Paragon's Solana ecosystem including DEX staking, indexer, and bot integrations.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solana</span>
-                            <span class="tag">Rust</span>
-                            <span class="tag">DEX Staking</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag critical">1 Critical</span>
-                            <span class="tag high">6 High</span>
-                            <span class="tag medium">2 Medium</span>
-                            <span class="tag low">3 Low</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>LIDO Finance</h3>
-                            <span class="publication-date">July 2024</span>
-                        </div>
-                        <img src="/images/testimonials/Lido.png" alt="LIDO Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security assessment of LIDO's staking module and staking router focusing on validator management and reward distribution.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Staking</span>
-                            <span class="tag">Solidity</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag low">2 Low</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Neptun Finance</h3>
-                            <span class="publication-date">May 2024</span>
-                        </div>
-                        <img src="/images/testimonials/Neptun.png" alt="Neptun Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security review of Neptun Finance's Liquidity Bootstrapping Pool (LBP) launchpad on Solana examining price discovery mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solana</span>
-                            <span class="tag">Rust</span>
-                            <span class="tag">LBP</span>
-                            <span class="tag">Launchpad</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">1 High</span>
-                            <span class="tag low">2 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Ipal Network</h3>
-                            <span class="publication-date">May 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Ipal.png" alt="Ipal Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Ipal Network's NFT-gated access system examining authentication mechanisms and permission controls.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">NFT-gated</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Access Control</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag critical">1 Critical</span>
-                            <span class="tag high">3 High</span>
-                            <span class="tag medium">3 Medium</span>
-                            <span class="tag low">9 Low</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Beanstalk Part 1 Contest</h3>
-                            <span class="publication-date">February 2024</span>
-                        </div>
-                        <img src="/images/testimonials/beanstalk.png" alt="Beanstalk Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Public contest participation in Beanstalk protocol audit with $8,000 reward, focusing on algorithmic stablecoin mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Public Contest</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Stablecoin</span>
-                            <span class="tag">CodeHawks</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag medium">1 Medium</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-title {
+    font-size: 1.6rem;
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 0.5rem;
+    font-family: 'Raleway', sans-serif;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Ample Protocol</h3>
-                            <span class="publication-date">May 2025</span>
-                        </div>
-                        <img src="/images/testimonials/ample.png" alt="Ample Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security review of Ample Protocol's staking module with focus on reward distribution and slashing mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Staking</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">DeFi</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">2 High</span>
-                            <span class="tag medium">1 Medium</span>
-                            <span class="tag low">3 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-subtitle {
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Raleway', sans-serif;
+    margin-bottom: 2rem;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Paymatic</h3>
-                            <span class="publication-date">May 2025</span>
-                        </div>
-                        <img src="/images/testimonials/paymatic.png" alt="Paymatic Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Paymatic's payment gateway system focusing on transaction processing and fee management.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Payment Gateway</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Payments</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">1 High</span>
-                            <span class="tag medium">3 Medium</span>
-                            <span class="tag low">2 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Raleway', sans-serif;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Badger DAO</h3>
-                            <span class="publication-date">October 2024</span>
-                        </div>
-                        <img src="/images/testimonials/badgerDao.png" alt="Badger DAO Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Badger DAO's staking vault examining yield strategies and vault management mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Staking Vault</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Yield</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag medium">1 Medium</span>
-                            <span class="tag low">3 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table thead {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Monadex</h3>
-                            <span class="publication-date">September 2024</span>
-                        </div>
-                        <img src="/images/testimonials/monodex.jpg" alt="Monadex Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Monadex DEX with integrated raffle system examining trading mechanisms and randomness generation.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">DEX</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Raffle</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag critical">2 Critical</span>
-                            <span class="tag high">2 High</span>
-                            <span class="tag low">6 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table th {
+    padding: 1rem;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Ribbon</h3>
-                            <span class="publication-date">June 2024</span>
-                        </div>
-                        <img src="/images/testimonials/ribbon.jpg" alt="Ribbon Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Ribbon's Web3 HealthFi operating system examining health data management and privacy mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">HealthFi</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Privacy</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag medium">3 Medium</span>
-                            <span class="tag low">4 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Aurora</h3>
-                            <span class="publication-date">April 2024</span>
-                        </div>
-                        <img src="/images/testimonials/Aurora.png" alt="Aurora Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">ERC-20/NEP-141 connector for Rainbow Bridge</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">NEAR</span>
-                            <span class="tag">Rainbow Bridge</span>
-                            <span class="tag">NEP-141</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag medium">1 Medium</span>
-                            <span class="tag low">4 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table tbody tr:hover {
+    background: rgba(16, 235, 255, 0.03);
+    border-bottom-color: rgba(16, 235, 255, 0.2);
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Wedefin</h3>
-                            <span class="publication-date">May 2024</span>
-                        </div>
-                        <img src="/images/testimonials/wefdin.jpg" alt="Wedefin Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Wedefin's decentralized index fund examining portfolio management and rebalancing mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Index Fund</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">DeFi</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">3 High</span>
-                            <span class="tag low">8 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.7);
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>RXT World</h3>
-                            <span class="publication-date">October 2023</span>
-                        </div>
-                        <img src="/images/protocols/rxt.svg" alt="RXT Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security review of RXT World's token contract focusing on tokenomics and transfer mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Token</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">ERC-20</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">4 High</span>
-                            <span class="tag medium">2 Medium</span>
-                            <span class="tag low">3 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table td:first-child {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.9);
+    width: 25%;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Bastion Wallet</h3>
-                            <span class="publication-date">March 2024</span>
-                        </div>
-                        <img src="/images/testimonials/BastionWallet.png" alt="Bastion Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security assessment of Bastion Wallet's ERC-4337 Account Abstraction SDK examining wallet security and user operations.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Account Abstraction</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">ERC-4337</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag high">2 High</span>
-                            <span class="tag medium">3 Medium</span>
-                            <span class="tag low">5 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table td:nth-child(2) {
+    width: 15%;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+}
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Glif</h3>
-                            <span class="publication-date">June 2024</span>
-                        </div>
-                        <img src="/images/testimonials/glif.jpg" alt="Glif Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Security audit of Glif's liquidity mining protocol on Filecoin examining reward distribution and staking mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Liquidity Mining</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Filecoin</span>
-                        </div>
-                        <div class="severity-tags">
-                            <span class="tag medium">2 Medium</span>
-                            <span class="tag low">2 Low</span>
-                        </div>
-                    </div>
-                </div>
+.portfolio-table td:nth-child(3) {
+    width: 45%;
+}
 
-            </div>
-        </div>
+.portfolio-table td:last-child {
+    width: 15%;
+    text-align: right;
+}
+
+.table-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgba(16, 235, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.table-link:hover {
+    color: rgba(16, 235, 255, 1);
+    gap: 0.6rem;
+}
+
+.table-link svg {
+    width: 12px;
+    height: 12px;
+    transition: transform 0.3s ease;
+}
+
+.table-link:hover svg {
+    transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+    .portfolio-section {
+        padding: 2rem 1rem;
+    }
+
+    .portfolio-section:first-child {
+        padding-top: 6rem;
+    }
+
+    .portfolio-title {
+        font-size: 1.4rem;
+    }
+
+    .portfolio-subtitle {
+        font-size: 0.85rem;
+    }
+
+    /* Better mobile table layout - keep scrollable */
+    .portfolio-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+    }
+
+    .portfolio-table thead th {
+        font-size: 0.7rem;
+        padding: 0.75rem 0.5rem;
+        white-space: nowrap;
+    }
+
+    .portfolio-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+    }
+
+    .portfolio-table td:first-child {
+        font-size: 0.9rem;
+        min-width: 140px;
+    }
+
+    .portfolio-table td:nth-child(2) {
+        font-size: 0.75rem;
+        min-width: 100px;
+    }
+
+    .portfolio-table td:nth-child(3) {
+        font-size: 0.8rem;
+        min-width: 200px;
+    }
+
+    .portfolio-table td:last-child {
+        min-width: 80px;
+    }
+
+    .table-link {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.75rem;
+        background: rgba(16, 235, 255, 0.1);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 6px;
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+    }
+
+    .table-link svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .portfolio-table td:last-child {
+        min-width: 100px;
+        padding: 1rem 0.5rem;
+    }
+}
+</style>
+
+<!-- Web2 Security Advisories -->
+<section class="portfolio-section">
+    <div class="portfolio-header">
+        <h2 class="portfolio-title">Web2 Security Advisories</h2>
+        <p class="portfolio-subtitle">Responsible disclosure of vulnerabilities</p>
     </div>
+
+    <table class="portfolio-table">
+        <thead>
+            <tr>
+                <th>Advisory</th>
+                <th>Component</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CVE-2023-32402</td>
+                <td>WebKit EME</td>
+                <td>An out-of-bounds read issue was addressed with improved input validation</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/102735" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>CVE-2023-32423</td>
+                <td>WebKit EME</td>
+                <td>A buffer overflow issue in WebKit was addressed with improved memory handling</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/102735" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>CVE-2025-31217</td>
+                <td>WebKit WebGL</td>
+                <td>Processing maliciously crafted web content may lead to an unexpected process crash</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/122404" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>CVE-2025-43216</td>
+                <td>WebKit WebAudio</td>
+                <td>A use-after-free issue was addressed with improved memory management</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/124147" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>CVE-2025-43368</td>
+                <td>WebKit WebGL</td>
+                <td>A use-after-free issue was addressed with improved memory management</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/125108" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>CVE-2025-43419</td>
+                <td>WebKit ANGLE</td>
+                <td>A use-after-free issue was addressed with improved memory management</td>
+                <td>
+                    <a href="https://support.apple.com/en-us/125113" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Issue 435683799</td>
+                <td>Chromium ANGLE</td>
+                <td>Memory corruption in a highly privileged process (GPU)</td>
+                <td>
+                    <a href="https://issues.chromium.org/issues/435683799" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
-<section class="section portfolio-section" id="Testing-Campaign">
-    <div class="container">
-        <h2>T E S T I N G</h2>
-        <div class="publications-content">
-            <p class="lead">Advanced testing campaigns combining fuzzing, invariant testing, and formal verification for smart contract security validation using tools like Foundry, Ityfuzz, Halmos, Kontrol, Echidna and Medusa</p>
-            
-            <div class="publications-grid">
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Glif - Liquidity Mining</h3>
-                            <span class="publication-date">June 2024</span>
-                        </div>
-                        <img src="/images/testimonials/glif.jpg" alt="Glif Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description"> Testing campaign for liquidity mining mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Liquidity Mining</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">85 Tests</span>
-                            <span class="tag fuzzing">40 Fuzzing</span>
-                            <span class="tag invariant-testing">14 Invariant</span>
-                            <span class="tag formal-verification">39 Formal Verification</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Neptun Finance - LBP Launchpad</h3>
-                            <span class="publication-date">May 2024</span>
-                        </div>
-                        <img src="/images/testimonials/Neptun.png" alt="Neptun Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for Liquidity Bootstrapping Pool launchpad mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Solana</span>
-                            <span class="tag">Rust</span>
-                            <span class="tag">LBP</span>
-                            <span class="tag">Launchpad</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">84 Tests</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Revert - AMM Liquidity Providers</h3>
-                            <span class="publication-date">June 2024</span>
-                        </div>
-                        <img src="/images/testimonials/revert.png" alt="Revert Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for AMM liquidity provider mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">AMM</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">49 Tests</span>
-                            <span class="tag fuzzing">49 Fuzzing</span>
-                            <span class="tag formal-verification">49 Formal Verification</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Wedefin - Decentralized Index Fund</h3>
-                            <span class="publication-date">May 2024</span>
-                        </div>
-                        <img src="/images/testimonials/wefdin.jpg" alt="Wedefin Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for decentralized index fund protocols.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Index Fund</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">48 Tests</span>
-                            <span class="tag fuzzing">28 Fuzzing</span>
-                            <span class="tag invariant-testing">20 Invariant</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Possum Labs - Yield-bearing Assets</h3>
-                            <span class="publication-date">March 2024</span>
-                        </div>
-                        <img src="/images/testimonials/PossumLabs.png" alt="Possum Labs Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for yield-bearing asset staking.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Staking</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">82 Tests</span>
-                            <span class="tag fuzzing">34 Fuzzing</span>
-                            <span class="tag invariant-testing">36 Invariant</span>
-                            <span class="tag formal-verification">12 Formal Verification</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Bastion Wallet - ERC-4337</h3>
-                            <span class="publication-date">January 2024</span>
-                        </div>
-                        <img src="/images/testimonials/BastionWallet.png" alt="Bastion Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for Account Abstraction SDK.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">ERC-4337</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">55 Tests</span>
-                            <span class="tag fuzzing">17 Fuzzing</span>
-                            <span class="tag invariant-testing">22 Invariant</span>
-                            <span class="tag formal-verification">16 Formal Verification</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Glif - DeFi primitive of Filecoin</h3>
-                            <span class="publication-date">July 2024</span>
-                        </div>
-                        <img src="/images/testimonials/glif.jpg" alt="Glif Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Testing campaign for Glif's DeFi primitive on Filecoin with 60 invariant tests focusing on protocol invariants and edge cases.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Filecoin</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag test-count">60 Tests</span>
-                            <span class="tag invariant-testing">60 Invariant</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Math Master Contest</h3>
-                            <span class="publication-date">February 2024</span>
-                        </div>
-                        <img src="/images/testimonials/mathFlight.png" alt="Math Master Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Public contest testing campaign focusing on mathematical operations and precision in smart contracts using formal verification techniques.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Public Contest</span>
-                            <span class="tag">Solidity</span>
-                            <span class="tag">CodeHawks</span>
-                            <span class="tag">Math</span>
-                        </div>
-                        <div class="testing-tags">
-                            <span class="tag formal-verification">Formal Verification</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<!-- Presentations -->
+<section class="portfolio-section">
+    <div class="portfolio-header">
+        <h2 class="portfolio-title">Presentations</h2>
+        <p class="portfolio-subtitle">Conference talks and technical presentations</p>
     </div>
+
+    <table class="portfolio-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Supporting Solana Program Analysis in Radare2</td>
+                <td>2025</td>
+                <td>Exploring Solana's runtime model, sBPF ISA, and demonstrating new radare2 plug-ins developed for sBPF disassembly and analysis</td>
+                <td>
+                    <a href="https://www.youtube.com/watch?v=IAt-HgKPN88" target="_blank" class="table-link">
+                        Watch
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
-<section class="section portfolio-section" id="smart-contract-development">
-    <div class="container">
-        <h2>D E V E L O P M E N T</h2>
-        <div class="publications-content">
-            <p class="lead">Smart contract development projects including DeFi protocols, hooks, payment processors, and innovative blockchain solutions.</p>
-            
-            <div class="publications-grid">
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Mangrove - Risk Neutral Kandel</h3>
-                            <span class="publication-date">September 2025</span>
-                        </div>
-                        <img src="/images/testimonials/mangrove.png" alt="Mangrove Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of risk-neutral Kandel strategy for Mangrove protocol, implementing advanced market making algorithms with delta-neutral positioning.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Mangrove</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Market Making</span>
-                            <span class="tag">Risk Neutral</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Paragon - Solana Indexer & Bots</h3>
-                            <span class="publication-date">January 2025 - June 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Paragon.png" alt="Paragon Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of Solana ecosystem including indexer, Telegram bot, DEX integration, and raiding bot functionality.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solana</span>
-                            <span class="tag">Paragon</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Indexer</span>
-                            <span class="tag">Telegram Bot</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Paragon - DEX Protocol</h3>
-                            <span class="publication-date">January 2025</span>
-                        </div>
-                        <img src="/images/testimonials/Paragon.png" alt="Paragon Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of decentralized exchange protocol for Paragon ecosystem on Solana blockchain.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solana</span>
-                            <span class="tag">Paragon</span>
-                            <span class="tag">Rust</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">DEX</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Uniswap V4 - Risk Neutral Hook</h3>
-                            <span class="publication-date">September 2024</span>
-                        </div>
-                        <img src="/images/testimonials/uniswap.png" alt="Uniswap Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of risk-neutral hook for Uniswap V4, implementing advanced hedging strategies for liquidity providers.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Uniswap V4</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Hooks</span>
-                            <span class="tag">Risk Neutral</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Inverter - Payment Processor</h3>
-                            <span class="publication-date">December 2024</span>
-                        </div>
-                        <img src="/images/testimonials/inverter.png" alt="Inverter Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of payment processor and price feed management system for Inverter Network, enabling seamless transaction processing.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Inverter</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Payment Processor</span>
-                            <span class="tag">Price Feeds</span>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Side.xyz - Staking Protocol</h3>
-                            <span class="publication-date">March 2024</span>
-                        </div>
-                        <img src="/images/testimonials/side.png" alt="Side.xyz Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of staking protocol for Side.xyz platform, implementing reward distribution and governance mechanisms.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solidity</span>
-                            <span class="tag">Side.xyz</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Staking</span>
-                            <span class="tag">Governance</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Solana ONFT</h3>
-                            <span class="publication-date">September 2024</span>
-                        </div>
-                        <img src="/images/protocols/solana.svg" alt="Solana Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of Omnichain Non-Fungible Token (ONFT) implementation on Solana, enabling cross-chain NFT transfers.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solana</span>
-                            <span class="tag">Rust</span>
-                            <span class="tag">LayerZero</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">NFT</span>
-                            <span class="tag">Cross-chain</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <div>
-                            <h3>Side.xyz - Rewards System</h3>
-                            <span class="publication-date">April 2024</span>
-                        </div>
-                        <img src="/images/testimonials/side.png" alt="Side.xyz Logo" class="protocol-logo">
-                    </div>
-                    <p class="publication-description">Development of rewards distribution system for Side.xyz platform on Solana, managing staking rewards and incentives.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Solana</span>
-                            <span class="tag">Rust</span>
-                            <span class="tag">Side.xyz</span>
-                        </div>
-                        <div class="project-tags">
-                            <span class="tag">Rewards</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+<!-- Open Source Contributions -->
+<section class="portfolio-section">
+    <div class="portfolio-header">
+        <h2 class="portfolio-title">Open Source Contributions</h2>
+        <p class="portfolio-subtitle">Contributions to security and blockchain tooling projects</p>
     </div>
+
+    <table class="portfolio-table">
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Category</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Radare2 sBPF Architecture Support</td>
+                <td>Solana</td>
+                <td>Initial sBPF architecture support for Solana's sBPF v0, v1, v2 and v3 including disassembly, and Rust string aggregation capabilities for Solana programs</td>
+                <td>
+                    <a href="https://github.com/radareorg/radare2" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>r55</td>
+                <td>RISC-V ETH</td>
+                <td>r55 an experimental RISCV Ethereum Execution Environment.</td>
+                <td>
+                    <a href="https://github.com/r55-eth/r55" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Aderyn</td>
+                <td>EVM</td>
+                <td>Hackathon winner contribution to Cyfrin's Aderyn static analyzer for Solidity.</td>
+                <td>
+                    <a href="https://github.com/Cyfrin/aderyn/pull/388" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Eburger</td>
+                <td>EVM</td>
+                <td>Contributions to Eburger, a static analysis tool for Solidity</td>
+                <td>
+                    <a href="https://github.com/forefy/eburger" target="_blank" class="table-link">
+                        View
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
-<section class="section portfolio-section" id="tooling-development">
-    <div class="container">
-        <h2>T O O L I N G</h2>
-        <div class="publications-content">
-            <p class="lead">Development of security tools, static analyzers, and blockchain infrastructure including contributions to open-source projects and custom tooling solutions.</p>
-            
-            <div class="publications-grid">
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Solana Static Analyzer</h3>
-                        <span class="publication-date">August 2025</span>
-                    </div>
-                    <p class="publication-description">Static analyzer tool for Solana smart contracts written in Rust. Detect vulnerabilities, security issues, and code quality problems in your Solana/Anchor projects.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solana</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Static Analysis</span>
-                            <span class="tag">Security Tool</span>
-                            <span class="tag">Own Project</span>
-                        </div>
-                    </div>
-                </div>
- <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Pulsar</h3>
-                        <span class="publication-date">January 2024</span>
-                    </div>
-                    <p class="publication-description">Reverse Engineering Tool for Solana closed-source Programs. Performs Instruction and Account data inference analysis</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solana</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Reverse Engineering</span>
-                            <span class="tag">Smart Contracts</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Solana Indexer</h3>
-                        <span class="publication-date">2024-2025</span>
-                    </div>
-                    <p class="publication-description">Custom-built Solana blockchain indexer for efficient data extraction and analysis, enabling real-time monitoring, vulnerabilities inspection and historical data queries.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solana</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Indexer</span>
-                            <span class="tag">Blockchain Infrastructure</span>
-                            <span class="tag">Own Project</span>
-                        </div>
-                    </div>
-                </div>
-                 <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>ELFLocker</h3>
-                        <span class="publication-date">January 2024</span>
-                    </div>
-                    <p class="publication-description">ELF binary protector</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">C/C++</span>
-                            <span class="tag">Solana</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Security Protector</span>
-                            <span class="tag">Smart Contracts</span>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>r55 - RISC-V ETH</h3>
-                        <span class="publication-date">December 2024</span>
-                    </div>
-                    <p class="publication-description">Collaboration on r55 project, contributing to RISC-V based Ethereum implementation and architecture improvements.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">RISC-V</span>
-                            <span class="tag">Ethereum</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Architecture</span>
-                            <span class="tag">Collaboration</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Aderyn - Static Analyzer</h3>
-                        <span class="publication-date">May 2024</span>
-                    </div>
-                    <p class="publication-description">Hackathon winner project where I developed new security detectors for Aderyn static analyzer, enhancing its capability to identify smart contract vulnerabilities.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solidity</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Static Analysis</span>
-                            <span class="tag">Security Detectors</span>
-                            <span class="tag">Hackathon Winner</span>
-                            <span class="tag">Collaboration</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Eburger - Static Analyzer</h3>
-                        <span class="publication-date">January 2024</span>
-                    </div>
-                    <p class="publication-description">Contributed new security detectors to Eburger static analyzer, expanding its detection capabilities for smart contract security analysis.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Rust</span>
-                            <span class="tag">Solidity</span>
-                        </div>
-                        <div class="tool-tags">
-                            <span class="tag">Static Analysis</span>
-                            <span class="tag">Security Detectors</span>
-                            <span class="tag">Smart Contracts</span>
-                            <span class="tag">Collaboration</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Research Papers -->
+<section class="portfolio-section">
+    <div class="portfolio-header">
+        <h2 class="portfolio-title">Papers</h2>
+        <p class="portfolio-subtitle">Academic and industry research publications</p>
     </div>
+
+    <table class="portfolio-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Year</th>
+                <th>Description</th>
+                <th>Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Uniswap v4 - A Mathematical Primer</td>
+                <td>2024</td>
+                <td>LVR & IL Hedge Hook for Concentrated Liquidity Providers, Dynamic Fees & Delta-Gamma Neutrality: Power Perpetuals & Lending Protocols</td>
+                <td>
+                    <a href="https://github.com/scab24/univ4-risk-neutral-hook/blob/hookathon/UniswapV4_Hookathon_IL_Hedging_MathPrimer.pdf" target="_blank" class="table-link">
+                        Read
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>Introducing SHELF Loading</td>
+                <td>2020</td>
+                <td>Novel technique for loading ELF binaries with enhanced anti-forensic capabilities, demonstrating generation of static PIE files with single loadable segments</td>
+                <td>
+                    <a href="https://tmpout.sh/1/10/" target="_blank" class="table-link">
+                        Read
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>SHELF encounters of the elements kind</td>
+                <td>2022</td>
+                <td>Exploitation of V8 vulnerability (CVE-2020-6418) to achieve reflective loading of ELF binaries in Chrome, demonstrating deployment of SHELF payloads</td>
+                <td>
+                    <a href="https://tmpout.sh/2/5.html" target="_blank" class="table-link">
+                        Read
+                        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </section>
 
-<section class="section portfolio-section" id="cve-advisories">
-    <div class="container">
-        <h2>A d v i s o r i e s</h2>
-        <div class="cve-content">
-            <p class="lead">Our security research has led to the discovery and responsible disclosure of vulnerabilities in widely-deployed software. Below are our public CVE advisories.</p>
-            <br />
-            <br />
-            <div class="cve-grid">
-                <div class="service-card">
-                    <div class="cve-header">
-                        <h3>CVE-2023-32402</h3>
-                    </div>
-                    <span class="cve-id">WebKit EME</span>
-                    <p class="cve-description">An out-of-bounds read issue was addressed with improved input validation.</p>
-                    <div class="cve-details">   
-                        <a href="https://support.apple.com/en-us/102735" class="cta-button">View Advisory</a>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="cve-header">
-                        <h3>CVE-2023-32423</h3>
-                    </div>
-                    <span class="cve-id">WebKit EME</span>
-                    <p class="cve-description">A buffer overflow issue in WebKit was addressed with improved memory handling.       
-                            <br/>
-                    </p>
-                    <div class="cve-details">
-                        <a href="https://support.apple.com/en-us/102735" class="cta-button">View Advisory</a>
-                    </div>
-                </div>
-
-                <div class="service-card">
-                    <div class="cve-header">
-                         <h3>CVE-2025-31217</h3>
-                    </div>
-                    <span class="cve-id">WebKit WebGL</span>
-                    <p class="cve-description">Processing maliciously crafted web content may lead to an unexpected process crash</p>
-                    <div class="cve-details">
-                        <a href="https://support.apple.com/en-us/122404" class="cta-button">View Advisory</a>
-                    </div>
-                </div>
-                 <div class="service-card">
-                    <div class="cve-header">
-                         <h3>CVE-2025-43216</h3>
-                    </div>
-                    <span class="cve-id">WebKit WebAudio</span>
-                    <p class="cve-description">A use-after-free issue was addressed with improved memory management</p>
-                    <div class="cve-details">
-                        <a href="https://support.apple.com/en-us/124147" class="cta-button">View Advisory</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section portfolio-section" id="research-papers">
-    <div class="container">
-        <h2>P a p e r s</h2>
-        <div class="publications-content">
-            <p class="lead">Academic and industry research publications on advanced security topics, vulnerability analysis, and emerging threats.</p>
-            
-            <div class="publications-grid">
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Uniswap v4 - A Mathematical Primer</h3>
-                        <span class="publication-date">2024</span>
-                    </div>
-                    <p class="publication-description">LVR & IL Hedge Hook for Concentrated Liquidity Providers, Dynamic Fees & Delta-Gamma Neutrality: Power Perpetuals & Lending Protocols.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Uniswap V4</span>
-                        </div>
-                        <div class="paper-tags">
-                            <span class="tag">Hackathon</span>
-                            <span class="tag">Mathematical Primer</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Mangrove - Delta-Neutral Hedging Engine</h3>
-                        <span class="publication-date">In Progress</span>
-                    </div>
-                    <p class="publication-description">Gas & Restake-aware Delta-Neutral On-Chain Market Making via Money Markets.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Mangrove</span>
-                            <span class="tag">Solidity</span>
-                        </div>
-                        <div class="paper-tags">
-                            <span class="tag">Delta-Neutral Hedging</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Introducing SHELF Loading: The Nexus between Static and Position Independent Code</h3>
-                        <span class="publication-date">2020</span>
-                    </div>
-                    <p class="publication-description">Novel technique for loading ELF binaries with enhanced anti-forensic capabilities, demonstrating generation of static PIE files with single loadable segments for shellcode-like execution without ELF headers.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">ELF</span>
-                            <span class="tag">Binary Analysis</span>
-                            <span class="tag">Anti-Forensics</span>
-                        </div>
-                        <div class="paper-tags">
-                            <span class="tag">tmpout</span>
-                            <span class="tag">SHELF Loading</span>
-                            <span class="tag">PIE</span>
-                        </div>
-                    </div>
-                    <div class="publication-links">
-                        <a href="https://tmpout.sh/1/10/" target="_blank" class="paper-link">Read Paper →</a>
-                    </div>
-                </div>
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>SHELF encounters of the elements kind: Enabling SHELF Loading in Chrome</h3>
-                        <span class="publication-date">2022</span>
-                    </div>
-                    <p class="publication-description">Exploitation of V8 vulnerability (CVE-2020-6418) to achieve reflective loading of ELF binaries in Chrome, demonstrating deployment of SHELF payloads within browser renderer processes without execve syscalls.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">V8</span>
-                            <span class="tag">Chrome</span>
-                            <span class="tag">Browser Exploitation</span>
-                        </div>
-                        <div class="paper-tags">
-                            <span class="tag">tmpout</span>
-                            <span class="tag">SHELF Loading</span>
-                            <span class="tag">CVE-2020-6418</span>
-                        </div>
-                    </div>
-                    <div class="publication-links">
-                        <a href="https://tmpout.sh/2/5.html" target="_blank" class="paper-link">Read Paper →</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="section portfolio-section" id="grants-funding">
-    <div class="container">
-        <h2>G r a n t s</h2>
-        <div class="publications-content">
-            <p class="lead">Research grants and funded projects advancing the state of cybersecurity research and education.</p>
-            
-            <div class="publications-grid">
-                <div class="publication-item">
-                    <div class="publication-header">
-                        <h3>Mangrove - Delta-Neutral Hedging Engine</h3>
-                        <span class="publication-date">In Progress</span>
-                    </div>
-                    <p class="publication-description">Gas & Restake-aware Delta-Neutral On-Chain Market Making via Money Markets.</p>
-                    <div class="publication-tags">
-                        <div class="general-tags">
-                            <span class="tag">Mangrove</span>
-                            <span class="tag">Solidity</span>
-                        </div>
-                        <div class="grant-tags">
-                            <span class="tag">Delta-Neutral Hedging</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
     </main>
 
-    <footer>
+    
+    <style>
+    .modern-footer {
+        border-top: 1px solid rgba(16, 235, 255, 0.15);
+        margin-top: 4rem;
+        position: relative;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 14, 20, 0.4) 100%);
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 1.75rem 1.5rem 1.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 2rem 2rem 1.5rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.7;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(16, 235, 255, 0.95);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.12) 0%,
+            rgba(92, 92, 171, 0.1) 50%,
+            rgba(185, 26, 238, 0.12) 100%);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        box-shadow: 0 0 5px rgba(16, 235, 255, 0.15);
+    }
+
+    .footer-contact-btn:hover {
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.18) 0%,
+            rgba(92, 92, 171, 0.15) 50%,
+            rgba(185, 26, 238, 0.18) 100%);
+        border-color: rgba(16, 235, 255, 0.5);
+        box-shadow: 0 0 10px rgba(16, 235, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(16, 235, 255, 0.1);
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Geist', sans-serif;
+        margin: 0;
+    }
+</style>
+
+<footer class="modern-footer">
     <div class="container">
-        <img src="/images/logo.svg" width="350" alt="Inversive Labs Logo" />
-        <p>&copy; 2025 Inversive Labs</p>
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/team/">Team</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/tooling/">Products</a></li>
+                    </ul>
+                </div>
+                <a href="/contact/" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Inversive Labs. All rights reserved.</p>
+        </div>
     </div>
 </footer>
+
+    
 
     <script src="/assets/js/shader-background.js"></script>
     <script src="/assets/js/site.js"></script>
 </body>
-</html>
