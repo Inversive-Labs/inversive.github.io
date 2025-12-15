@@ -240,12 +240,9 @@
             rgba(0, 0, 0, 0.3) 100%) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(16, 235, 255, 0.3) !important;
+        border: 1px solid #000 !important;
         border-radius: 20px !important;
         box-shadow:
-            0 0 1px rgba(16, 235, 255, 0.5),
-            0 0 10px rgba(16, 235, 255, 0.2),
-            0 0 20px rgba(92, 92, 171, 0.15),
             0 8px 32px rgba(0, 0, 0, 0.6) !important;
         animation: slideDown 0.3s ease-out !important;
         z-index: 1000 !important;
@@ -315,8 +312,8 @@
                 <a href="/about/" >About</a>
                 <a href="/team/" >Team</a>
                 <a href="/services/" >Services</a>
-                <a href="/products/" >Products</a>
-                <a href="/publications/" >Publications</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
                 <a href="/blog/" >Blog</a>
                 <a href="/contact/" class="active">Contact</a>
             </div>
@@ -415,8 +412,10 @@
                     <label for="subject">Subject</label>
                     <select id="subject" name="subject" required>
                         <option value="">Select a topic</option>
-                        <option value="protocol-security">Security Assessment</option>
-                        <option value="security-engineering">Embedded Security</option>
+                        <option value="security-assessment">Security Assessment</option>
+                        <option value="infrastructure-security">Infrastructure Security</option>
+                        <option value="web2-security">Web2 Security</option>
+                        <option value="tooling">Security Tooling</option>
                         <option value="general">General Inquiry</option>
                     </select>
                 </div>
@@ -601,7 +600,7 @@
                         <li><a href="/about/">About</a></li>
                         <li><a href="/team/">Team</a></li>
                         <li><a href="/services/">Services</a></li>
-                        <li><a href="/products/">Products</a></li>
+                        <li><a href="/tooling/">Products</a></li>
                     </ul>
                 </div>
                 <a href="/contact/" class="footer-contact-btn">Contact</a>

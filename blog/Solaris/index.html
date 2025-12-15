@@ -1,0 +1,2469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solaris: Stateful, Structure-Aware, sBPF Bytecode Coverage-Guided Fuzzing - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+        width: 100%;
+    }
+
+    .modern-nav .nav-container {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-nav .nav-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-nav .nav-container {
+            padding: 0 2rem;
+        }
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+        width: auto;
+        height: 3rem; /* 48px - equivalent to h-12 */
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(8px);
+        align-items: center;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+    }
+
+    .modern-nav-links a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .modern-nav-links a.home-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .modern-nav-links a.home-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .nav-indicator {
+        position: absolute;
+        border-radius: 9999px;
+        padding: 2px;
+        background: linear-gradient(90deg,
+            #10ebff 0%,
+            #3ac9e6 12.5%,
+            #65a8cd 25%,
+            #8f86b4 37.5%,
+            #b91aee 50%,
+            #8f86b4 62.5%,
+            #65a8cd 75%,
+            #3ac9e6 87.5%,
+            #10ebff 100%);
+        background-size: 400% 100%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: gradientRotate 15s linear infinite;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        box-sizing: border-box;
+    }
+
+    @keyframes gradientRotate {
+        0% {
+            background-position: 0% 0;
+        }
+        100% {
+            background-position: 400% 0;
+        }
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Hamburger menu button */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        gap: 5px;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 1px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+
+    .hamburger:hover .hamburger-line {
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid #000 !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 2rem; /* 32px */
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="nav-container">
+        <nav>
+            <a href="/">
+                <img src="/images/logo.svg" alt="Inversive Labs">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <div class="nav-indicator"></div>
+                <a href="/" >Home</a>
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
+                <a href="/services/" >Services</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
+                <a href="/blog/" class="active">Blog</a>
+                <a href="/contact/" >Contact</a>
+            </div>
+
+            <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<script>
+    // Mobile menu functionality and nav indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+        const indicator = document.querySelector('.nav-indicator');
+        const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
+
+        // Position indicator on active link
+        function updateIndicator() {
+            const activeLink = document.querySelector('.modern-nav-links > a.active');
+            if (activeLink && indicator && window.innerWidth >= 768) {
+                // Calculate position using offsetLeft and offsetTop
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
+
+                indicator.style.left = left + 'px';
+                indicator.style.top = top + 'px';
+                indicator.style.width = width + 'px';
+                indicator.style.height = height + 'px';
+                indicator.style.opacity = '1';
+            } else if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }
+
+        // Initial positioning
+        updateIndicator();
+
+        // Update on window resize
+        window.addEventListener('resize', updateIndicator);
+
+        // Mobile menu toggle
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                mobileBtn.classList.toggle('active');
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    mobileBtn.classList.remove('active');
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
+
+    <main>
+        <div class="container">
+    <article style="max-width: 900px; margin: 0 auto; padding: 5rem 2rem; position: relative; z-index: auto;">
+        <!-- Enhanced title with gradient effect -->
+        <h1 style="
+            background: linear-gradient(90deg, #ffffff 0%, #10ebff 50%, #ffffff 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmerTitle 3s ease-in-out infinite;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 2rem;
+        ">Solaris: Stateful, Structure-Aware, sBPF Bytecode Coverage-Guided Fuzzing</h1>
+
+        <!-- Enhanced post meta -->
+        <div style="
+            color: #35e4f4;
+            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        ">
+            December 15, 2025
+             • inversive
+            <div style="
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #35e4f4, transparent);
+                border-radius: 1px;
+            "></div>
+        </div>
+
+        <!-- Enhanced content area -->
+        <div style="
+            color: #d1d5db;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            text-align: left;
+        ">
+            <p>This article introduces <strong>Solaris</strong>, a stateful, structure-aware, sBPF bytecode coverage-guided fuzzer designed for Solana programs. By tracking execution state across transaction sequences, understanding program structure, and using bytecode-level coverage feedback, Solaris systematically explores a target program state space.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#cli-and-key-features">CLI and Key Features</a></li>
+  <li><a href="#architecture">Architecture</a></li>
+  <li><a href="#modeling-decision-trees-with-protocol-buffers">Modeling Decision Trees with Protocol Buffers</a></li>
+  <li><a href="#program-scoped-sbpf-edge-tracking">Program-Scoped sBPF Edge Tracking</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Solaris is a stateful, structure-aware, sBPF bytecode coverage-guided fuzzer for Solana programs.
+It maintains execution context across transaction sequences and uses sBPF bytecode coverage feedback to systematically explore the program’s state space. This enables discovery of vulnerabilities that require specific state conditions and instruction orderings.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>Solana programs follow a stateless architecture and don’t maintain state between transactions. Each instruction operates on accounts passed to it, and any state changes must be explicitly saved to those accounts. However, to properly test these programs, we need to fuzz them in a stateful manner, executing sequences of instructions that build up program state over time.</p>
+
+<p>The fundamental challenge is discovering the specific state conditions and instruction sequences required to reach deep program logic. A naive fuzzer faces three key obstacles:</p>
+
+<ol>
+  <li><strong>Structural Validity</strong>: Most random transactions fail basic validation (wrong account types, malformed instruction data)</li>
+  <li><strong>State Dependencies</strong>: Reaching interesting program states requires executing specific instruction sequences that establish particular conditions across multiple transactions</li>
+  <li><strong>Blind Exploration</strong>: Without coverage feedback at the bytecode level, the fuzzer cannot tell which inputs are exploring new execution paths</li>
+</ol>
+
+<style>
+.canvas-visualization {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 600px;
+    background: transparent;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 40px auto;
+}
+
+@media (max-width: 768px) {
+    .canvas-visualization {
+        height: 450px;
+    }
+}
+
+@media (max-width: 480px) {
+    .canvas-visualization {
+        height: 400px;
+    }
+}
+
+.canvas-visualization canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+</style>
+
+<div class="canvas-visualization">
+  <canvas id="fuzzer-canvas"></canvas>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+<script>
+// Canvas Animation for Program Analysis & State Space Exploration
+window.addEventListener('DOMContentLoaded', function() {
+    const canvas = document.getElementById('fuzzer-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+
+    let width, height;
+    let isMobile = false;
+    let isSmallMobile = false;
+
+    // State
+    const STATE = {
+        phase: 0,
+        paths: 0,
+        coverage: 0,
+        objects: [],
+        particles: [],
+        activeAnimations: 0,
+        maxConcurrentAnimations: 0  // Will be set based on screen size
+    };
+
+    // Colors
+    const C = {
+        bg: '#000000',
+        white: '#FFFFFF',
+        grey: '#333333',
+        purple: '#A855F7',
+        purpleGlow: 'rgba(168, 85, 247, 0.6)',
+        blue: '#3b82f6'
+    };
+
+    function resize() {
+        const container = canvas.parentElement;
+        width = container.clientWidth;
+        height = container.clientHeight;
+
+        // Detect mobile screens
+        isMobile = window.innerWidth <= 768;
+        isSmallMobile = window.innerWidth <= 480;
+
+        // Set max concurrent animations based on screen size - more aggressive
+        STATE.maxConcurrentAnimations = isSmallMobile ? 2 : (isMobile ? 3 : 4);
+
+        canvas.width = width * dpr;
+        canvas.height = height * dpr;
+        ctx.scale(dpr, dpr);
+
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // --- PARTICLES ---
+    class Particle {
+        constructor(x, y, color, speed, life) {
+            this.x = x;
+            this.y = y;
+            this.color = color;
+            const angle = Math.random() * Math.PI * 2;
+            this.vx = Math.cos(angle) * speed * Math.random();
+            this.vy = Math.sin(angle) * speed * Math.random();
+            this.life = life;
+            this.maxLife = life;
+            this.size = Math.random() * 2 + 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life -= 0.02;
+            this.vx *= 0.95;
+            this.vy *= 0.95;
+        }
+        draw(ctx) {
+            ctx.globalAlpha = Math.max(0, this.life / this.maxLife);
+            ctx.fillStyle = this.color;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    function spawnExplosion(x, y, color, count = 20) {
+        for (let i = 0; i < count; i++) {
+            STATE.particles.push(new Particle(x, y, color, 6, 1.0));
+        }
+    }
+
+    // --- OBJECTS ---
+
+    class Card {
+        constructor(x, y, w, h, text, type = 'program') {
+            this.x = x;
+            this.y = y;
+            this.w = w;
+            this.h = h;
+            this.text = text;
+            this.type = type;
+            this.alpha = 0;
+            this.scale = 0;
+            this.borderAlpha = 0;
+            this.glowStrength = 0;
+            this.textAlpha = 1;
+        }
+
+        draw(ctx) {
+            if (this.alpha <= 0.01) return;
+
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.scale(this.scale, this.scale);
+            ctx.globalAlpha = this.alpha;
+
+            // Glow
+            if (this.type === 'program' || this.glowStrength > 0) {
+                const strength = this.type === 'program' ? 40 : 30 * this.glowStrength;
+                const color = this.type === 'program' ? 'rgba(255, 255, 255, 0.1)' : C.purpleGlow;
+                ctx.shadowBlur = strength;
+                ctx.shadowColor = color;
+            }
+
+            // Border
+            ctx.strokeStyle = this.type === 'program' ? C.white : C.grey;
+            if (this.glowStrength > 0) {
+                ctx.strokeStyle = `rgba(168, 85, 247, ${this.glowStrength})`;
+            }
+
+            ctx.lineWidth = 1;
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+
+            const r = 4;
+            const hw = this.w / 2;
+            const hh = this.h / 2;
+
+            ctx.beginPath();
+            if (this.w < 10) {
+                ctx.arc(0, 0, this.w, 0, Math.PI * 2);
+            } else {
+                ctx.roundRect(-hw, -hh, this.w, this.h, r);
+            }
+            ctx.fill();
+            ctx.stroke();
+
+            // Text
+            if (this.textAlpha > 0.01 && this.w > 20) {
+                ctx.shadowBlur = 0;
+                ctx.globalAlpha = this.alpha * this.textAlpha;
+                ctx.fillStyle = C.white;
+                const programFontSize = isSmallMobile ? 12 : (isMobile ? 14 : 16);
+                const instructionFontSize = isSmallMobile ? 10 : (isMobile ? 11 : 13);
+                ctx.font = this.type === 'program'
+                    ? `600 ${programFontSize}px Inter`
+                    : `400 ${instructionFontSize}px "JetBrains Mono"`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.text, 0, 0);
+            }
+
+            ctx.restore();
+        }
+    }
+
+    class Node {
+        constructor(x, y, type = 'minor', label = '') {
+            this.x = x;
+            this.y = y;
+            this.type = type;
+            this.label = label;
+            // Responsive sizing - smaller for mobile
+            this.w = isSmallMobile ? 60 : (isMobile ? 75 : 100);
+            this.h = isSmallMobile ? 24 : (isMobile ? 28 : 35);
+            this.alpha = 0;
+            this.scale = 0;
+            this.visited = false;
+            this.pulse = 0;
+
+            // For Bloom animation
+            this.targetX = x;
+            this.targetY = y;
+        }
+
+        draw(ctx) {
+            if (this.alpha <= 0) return;
+
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.scale(this.scale, this.scale);
+
+            // Rectangle background
+            ctx.globalAlpha = this.alpha;
+            ctx.fillStyle = this.visited ? 'rgba(168, 85, 247, 0.3)' : 'rgba(0, 0, 0, 0.3)';
+            const hw = this.w / 2;
+            const hh = this.h / 2;
+            ctx.beginPath();
+            ctx.roundRect(-hw, -hh, this.w, this.h, 6);
+            ctx.fill();
+
+            // Border
+            ctx.strokeStyle = this.visited ? C.purple : '#555';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // Label text
+            if (this.label) {
+                ctx.globalAlpha = this.alpha;
+                ctx.fillStyle = C.white;
+                const fontSize = isSmallMobile ? 7 : (isMobile ? 9 : 11);
+                ctx.font = `400 ${fontSize}px Inter`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(this.label, 0, 0);
+            }
+
+            // Pulse effect
+            if (this.pulse > 0) {
+                ctx.strokeStyle = C.purple;
+                ctx.lineWidth = 2;
+                ctx.globalAlpha = this.pulse;
+                const expand = (1 - this.pulse) * 10;
+                ctx.beginPath();
+                ctx.roundRect(-hw - expand, -hh - expand, this.w + expand * 2, this.h + expand * 2, 6);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+    }
+
+    class Edge {
+        constructor(n1, n2) {
+            this.n1 = n1;
+            this.n2 = n2;
+            this.alpha = 0;
+            this.active = false;
+            this.progress = 0;
+        }
+
+        draw(ctx) {
+            if (this.alpha <= 0) return;
+
+            ctx.globalAlpha = this.alpha * 0.6;
+            ctx.strokeStyle = '#444';
+            ctx.lineWidth = 1.5;
+
+            ctx.beginPath();
+            // Smooth horizontal curve
+            const midX = (this.n1.x + this.n2.x) / 2;
+            ctx.moveTo(this.n1.x, this.n1.y);
+            ctx.bezierCurveTo(midX, this.n1.y, midX, this.n2.y, this.n2.x, this.n2.y);
+            ctx.stroke();
+
+            if (this.active) {
+                const t = this.progress;
+                const cx = Math.pow(1 - t, 3) * this.n1.x + 3 * Math.pow(1 - t, 2) * t * midX + 3 * (1 - t) * Math.pow(t, 2) * midX + Math.pow(t, 3) * this.n2.x;
+                const cy = Math.pow(1 - t, 3) * this.n1.y + 3 * Math.pow(1 - t, 2) * t * this.n1.y + 3 * (1 - t) * Math.pow(t, 2) * this.n2.y + Math.pow(t, 3) * this.n2.y;
+
+                ctx.shadowBlur = 15;
+                ctx.shadowColor = C.purple;
+                ctx.fillStyle = C.purple;
+                ctx.globalAlpha = 1;
+                ctx.beginPath();
+                ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+            ctx.globalAlpha = 1;
+        }
+    }
+
+    // --- SCENE MANAGEMENT ---
+
+    let programCard;
+    let instructionCards = [];
+    let treeNodes = [];
+    let treeEdges = [];
+
+    function init() {
+        // Skip directly to Phase 3 (tree visualization)
+        initPhase3();
+    }
+
+    function initPhase3() {
+        // Create root position directly - adjusted for mobile
+        const rootX = isSmallMobile ? 40 : (isMobile ? 60 : 100);
+        const rootY = height / 2;
+
+        // --- HORIZONTAL 2D TREE WITH LOGICAL STRUCTURE ---
+
+        // Define tree structure manually for logical relationships
+        const treeStructure = isSmallMobile ? {
+            label: "Initialize",
+            children: [
+                {
+                    label: "CreateVault",
+                    children: [
+                        { label: "Deposit" },
+                        { label: "Withdraw" }
+                    ]
+                },
+                {
+                    label: "CreateNFT",
+                    children: [
+                        { label: "Transfer" },
+                        { label: "Burn" }
+                    ]
+                }
+            ]
+        } : (isMobile ? {
+            label: "Initialize",
+            children: [
+                {
+                    label: "CreateVault",
+                    children: [
+                        { label: "Deposit" },
+                        { label: "Withdraw" }
+                    ]
+                },
+                {
+                    label: "CreateNFT",
+                    children: [
+                        { label: "Transfer" },
+                        { label: "Burn" }
+                    ]
+                },
+                {
+                    label: "Stake",
+                    children: [
+                        { label: "Claim" },
+                        { label: "Unstake" }
+                    ]
+                }
+            ]
+        } : {
+            label: "Initialize",
+            children: [
+                {
+                    label: "CreateVault",
+                    children: [
+                        { label: "Deposit" },
+                        { label: "Withdraw" },
+                        { label: "Close" }
+                    ]
+                },
+                {
+                    label: "CreateNFT",
+                    children: [
+                        { label: "Transfer" },
+                        { label: "Burn" },
+                        { label: "Update" }
+                    ]
+                },
+                {
+                    label: "Stake",
+                    children: [
+                        { label: "Claim" },
+                        { label: "Unstake" },
+                        { label: "Restake" }
+                    ]
+                }
+            ]
+        });
+
+        // Calculate tree depth to determine horizontal spacing
+        function getTreeDepth(structure, depth = 0) {
+            if (!structure.children || structure.children.length === 0) {
+                return depth;
+            }
+            return Math.max(...structure.children.map(child => getTreeDepth(child, depth + 1)));
+        }
+
+        const treeDepth = getTreeDepth(treeStructure);
+        const rightPadding = isSmallMobile ? 60 : (isMobile ? 80 : 100);
+        const availableWidth = width - rootX - rightPadding;
+        const levelSpacing = availableWidth / treeDepth;
+
+        // Calculate layout positions
+        function calculateTreeLayout(structure, x, yMin, yMax, level = 0) {
+            const node = new Node(x, (yMin + yMax) / 2, level === 0 ? 'major' : 'minor', structure.label);
+            treeNodes.push(node);
+
+            if (structure.children && structure.children.length > 0) {
+                const nextX = x + levelSpacing;
+                const childHeight = (yMax - yMin) / structure.children.length;
+
+                node.children = [];
+                structure.children.forEach((childStructure, idx) => {
+                    const childYMin = yMin + idx * childHeight;
+                    const childYMax = yMin + (idx + 1) * childHeight;
+                    const childNode = calculateTreeLayout(childStructure, nextX, childYMin, childYMax, level + 1);
+
+                    // Create edge
+                    const edge = new Edge(node, childNode);
+                    treeEdges.push(edge);
+                    node.children.push({ edge, node: childNode });
+                });
+            }
+
+            return node;
+        }
+
+        // Build tree
+        const topMargin = isSmallMobile ? 40 : (isMobile ? 60 : 80);
+        const bottomMargin = isSmallMobile ? 40 : (isMobile ? 60 : 80);
+        calculateTreeLayout(treeStructure, rootX, topMargin, height - bottomMargin);
+
+        treeEdges.forEach(e => STATE.objects.push(e));
+        treeNodes.forEach(n => STATE.objects.push(n));
+
+        // Show tree immediately
+        treeNodes.forEach(n => {
+            n.scale = 1;
+            n.alpha = 1;
+        });
+
+        treeEdges.forEach(e => {
+            e.alpha = 1;
+        });
+
+        // Start exploration immediately
+        setTimeout(startFloodFill, 500);
+    }
+
+    function startFloodFill() {
+        STATE.phase = 3;
+        // Start multiple paths with faster staggered delays
+        for (let i = 0; i < STATE.maxConcurrentAnimations; i++) {
+            setTimeout(() => scheduleNextPath(), i * 200);
+        }
+    }
+
+    function scheduleNextPath() {
+        if (STATE.activeAnimations < STATE.maxConcurrentAnimations) {
+            animatePath();
+        }
+        // Schedule next attempt - faster for aggressive fuzzing feel
+        setTimeout(scheduleNextPath, 300 + Math.random() * 400);
+    }
+
+    function animatePath() {
+        if (STATE.activeAnimations >= STATE.maxConcurrentAnimations) {
+            return;
+        }
+
+        STATE.activeAnimations++;
+
+        // Pick a random path from root to a leaf
+        const path = [];
+        let currentNode = treeNodes[0];
+        path.push(currentNode);
+
+        // Build random path to a leaf
+        while (currentNode.children && currentNode.children.length > 0) {
+            const randomChild = currentNode.children[Math.floor(Math.random() * currentNode.children.length)];
+            currentNode = randomChild.node;
+            path.push({ node: currentNode, edge: randomChild.edge });
+        }
+
+        // Animate this path sequentially
+        animatePathSequence(path, 0);
+    }
+
+    function animatePathSequence(path, index) {
+        if (index >= path.length) {
+            // Path complete
+            STATE.activeAnimations--;
+            STATE.paths++;
+            return;
+        }
+
+        const item = path[index];
+        const node = item.node || item;
+
+        // Pulse node faster
+        node.visited = true;
+        node.pulse = 1;
+        gsap.to(node, { pulse: 0, duration: 0.3, ease: "power2.out" });
+
+        // Add particle burst more frequently for fuzzing feel
+        if (index > 0 && Math.random() < 0.5) {
+            spawnExplosion(node.x, node.y, C.purple, 5);
+        }
+
+        // Animate edge if it exists - faster
+        if (item.edge) {
+            const edge = item.edge;
+            edge.active = true;
+            edge.progress = 0;
+
+            gsap.to(edge, {
+                progress: 1,
+                duration: 0.2,
+                ease: "power1.inOut",
+                onComplete: () => {
+                    edge.active = false;
+                    edge.progress = 0;
+                    // Continue to next node faster
+                    setTimeout(() => animatePathSequence(path, index + 1), 30);
+                }
+            });
+        } else {
+            // First node (root), continue faster
+            setTimeout(() => animatePathSequence(path, index + 1), 50);
+        }
+    }
+
+    // --- RENDER LOOP ---
+    let lastFrameTime = 0;
+    const targetFPS = 60;
+    const frameInterval = 1000 / targetFPS;
+
+    function loop(currentTime) {
+        // Throttle to target FPS
+        const elapsed = currentTime - lastFrameTime;
+
+        if (elapsed > frameInterval) {
+            lastFrameTime = currentTime - (elapsed % frameInterval);
+
+            ctx.clearRect(0, 0, width, height);
+
+            // Update and draw particles
+            STATE.particles = STATE.particles.filter(p => p.life > 0);
+            for (let i = 0; i < STATE.particles.length; i++) {
+                STATE.particles[i].update();
+                STATE.particles[i].draw(ctx);
+            }
+
+            // Draw objects
+            for (let i = 0; i < STATE.objects.length; i++) {
+                STATE.objects[i].draw(ctx);
+            }
+        }
+
+        requestAnimationFrame(loop);
+    }
+
+    // Use Intersection Observer to start animation when visible
+    let isAnimating = false;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !isAnimating) {
+                isAnimating = true;
+                init();
+                requestAnimationFrame(loop);
+            }
+        });
+    }, { threshold: 0.2 });
+
+    observer.observe(canvas);
+});
+</script>
+
+<p>Solaris addresses these challenges through:</p>
+
+<ol>
+  <li><strong>Structure-Aware Mutation</strong>: Understanding transaction requirements, account relationships, and instruction formats to generate semantically valid inputs</li>
+  <li><strong>Stateful Execution</strong>: Maintaining program state across transaction sequences</li>
+  <li><strong>sBPF Bytecode Coverage Tracking</strong>: Instrumenting the Solana Virtual Machine to track executed instructions and branches at the bytecode level</li>
+  <li><strong>Coverage-Guided Exploration</strong>: Using bytecode coverage feedback to prioritize test cases that discover new execution paths</li>
+</ol>
+
+<p>This approach enables Solaris to efficiently fuzz Solana programs by combining valid input generation with stateful execution and relevant coverage feedback, rather than wasting cycles on malformed transactions or redundant execution paths.</p>
+
+<h2 id="cli-and-key-features">CLI and Key Features</h2>
+
+<p>Solaris provides a command-line interface for configuring and running fuzzing campaigns:</p>
+
+<p><img src="/images/blog/Solaris/1.png" style="display: block; width: 100%; max-width: 500px; height: auto; margin: 14px auto;" /></p>
+
+<p>Key features include:</p>
+
+<ul>
+  <li>
+    <p><strong>Corpus Management</strong>: Solaris maintains a corpus of interesting test cases that trigger new coverage or exhibit unique behavior. The corpus automatically grows as the fuzzer discovers inputs that reach new code paths. The corpus manager is also in charge to minimize the corpora in intervals along the fuzzing campaign.</p>
+  </li>
+  <li><strong>Scheduling Algorithms</strong>: Multiple scheduling strategies determine which test cases to mutate next:
+    <ul>
+      <li><strong>Coverage-based scheduling</strong>: Prioritizes test cases that reached recent coverage gains</li>
+      <li><strong>Power scheduling</strong>: Assigns energy to test cases based on their potential to discover new paths</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>Multi-Worker Support</strong>: Solaris can spawn multiple fuzzing workers that share a corpus and coverage map, enabling parallel exploration of the state space. Workers coordinate to avoid redundant work while maximizing throughput.</p>
+  </li>
+  <li><strong>Test Case Reproducibility</strong>: Every crash or invariant violation includes the sequence of instructions required to reproduce it. Test cases are serialized in a JSON format, making it straightforward to replay failures during debugging or integrate findings into regression test suites.</li>
+</ul>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>The Solaris architecture orchestrates multiple components to generate, mutate, execute, and evaluate test cases:</p>
+
+<p><img src="/images/blog/Solaris/2.png" style="display: block; width: 100%; max-width: 900px; height: auto; margin: 14px auto;" /></p>
+
+<h3 id="test-case-representation">Test Case Representation</h3>
+
+<p>Test cases are defined using <strong>Google Protocol Buffers</strong> (protobuf), a language-neutral, platform-neutral serialization format developed by Google. Unlike treating inputs as raw byte arrays, protobuf provides a structured, schema-driven representation where data is organized into typed fields (integers, strings, nested messages) defined in <code class="language-plaintext highlighter-rouge">.proto</code> files. This structured format offers two key advantages for fuzzing:</p>
+
+<ol>
+  <li><strong>Type Safety</strong>: Each field has a defined type and semantic meaning (e.g., a <code class="language-plaintext highlighter-rouge">u64</code> representing a lamport amount, a <code class="language-plaintext highlighter-rouge">bytes</code> field for some data parameter, … etc), preventing nonsensical mutations like treating some data field as an integer</li>
+  <li><strong>Structure-Aware Mutation</strong>: The fuzzer can navigate the message hierarchy to mutate specific fields intelligently rather than blindly flipping random bits</li>
+</ol>
+
+<p>In Solaris, protobuf schemas capture the complete structure of Solana transaction sequences. This enables the mutator to generate semantically valid test cases that respect transaction requirements while still exploring the input space.</p>
+
+<h3 id="corpus-manager">Corpus Manager</h3>
+
+<p>The <strong>Corpus Manager</strong> maintains the pool of interesting test cases discovered during fuzzing. It tracks which inputs reached new coverage, minimizes the corpus set in intervals, and provides test case selection for the scheduler.</p>
+
+<h3 id="scheduler">Scheduler</h3>
+
+<p>The <strong>Scheduler</strong> intelligently selects test cases from the corpus for mutation. Different strategies include:</p>
+<ul>
+  <li><strong>Coverage-based</strong>: Favors recently-discovered test cases that expanded coverage</li>
+  <li><strong>Power-based</strong>: Assigns mutation energy based on augmented statistics gathered on runtime, such as program input accesses, testcase length, and other statistics that can be assessed in conjunction for exploration potential</li>
+</ul>
+
+<h3 id="mutator">Mutator</h3>
+
+<p>The <strong>Mutator</strong> component applies transformations to selected test cases. It operates at two levels:</p>
+
+<ol>
+  <li><strong>Generic Mutations</strong>: Standard fuzzing operations (bit flips, arithmetic mutations, message field swapping/insertion/deletion) applied to protobuf fields.</li>
+  <li><strong>Custom Mutations</strong>: Domain-specific generation logic that leverages constraints defined via <code class="language-plaintext highlighter-rouge">Arbitrary</code> trait implementations in target-specific <code class="language-plaintext highlighter-rouge">arbitrary.rs</code> files. These mutations understand Solana semantics. e.g., generating valid account types, producing realistic instruction parameter ranges within expected bounds, … etc.</li>
+</ol>
+
+<p>This dual approach enables both broad exploration through generic mutations and semantically-guided generation through custom logic. The mutator tracks which strategies successfully discover new coverage and adaptively weights future mutation selection accordingly.</p>
+
+<h3 id="fuzzer-orchestrator">Fuzzer Orchestrator</h3>
+
+<p>The <strong>Fuzzer Orchestrator</strong> coordinates the main fuzzing loop. Delegates corpus entry selection to the Scheduler, applying mutations to the Mutator, executing test cases through Executors, and processing feedback through the Feedback Manager. In multi-worker mode, multiple fuzzer instances run in parallel, each with its own Executor, while sharing coverage information through a shared memory map to coordinate their exploration efforts.</p>
+
+<h3 id="executor-and-harness">Executor and Harness</h3>
+
+<p>The <strong>Executor</strong> manages the harness lifecycle and orchestrates test case execution. For each test case, the following takes place:</p>
+<ol>
+  <li>Reset the harness to a clean initial state</li>
+  <li>Clear coverage feedback from the previous execution</li>
+  <li>Execute the mutated protobuf message through the harness</li>
+  <li>Collect coverage feedback and timing information from instrumentation hooks in the SVM</li>
+</ol>
+
+<p>The <strong>Harness</strong> is the program-specific component that translates protobuf messages into actual Solana transactions. In addition, it manages program state, and checks security invariants to detect violations.</p>
+
+<p>Harnesses can define custom invariants specific to the intruction being executed, and program being tested (e.g., “total token supply should never exceed cap” or “only authorized accounts can withdraw”).</p>
+
+<h3 id="instrumented-sbpf-vm">Instrumented sBPF VM</h3>
+
+<p>Test cases execute in an <strong>instrumented sBPF virtual machine</strong> that tracks execution at the bytecode level. Solaris uses a modified version of <code class="language-plaintext highlighter-rouge">solana-sbpf</code> where the interpreter calls instrumentation hooks on every instruction execution. These hooks capture:</p>
+
+<ul>
+  <li><strong>Edge coverage</strong>: Control flow transitions between basic blocks</li>
+  <li><strong>PC tracking</strong>: Individual bytecode instruction addresses that have been executed</li>
+  <li><strong>Per-program coverage</strong>: Separate edge tracking for each program involved in execution, including CPI calls</li>
+  <li><strong>Features</strong>: Generates synthetic coverage edges on a variety of operations on successful transaction chains to augment coverage feedback</li>
+</ul>
+
+<p>This bytecode-level feedback enables the fuzzer to distinguish between test cases that exercise different code paths versus those that follow the same execution trace.</p>
+
+<h3 id="feedback-manager">Feedback Manager</h3>
+
+<p>The <strong>Feedback Manager</strong> receives execution results from the instrumented VM and evaluates how “interesting” each test case was.</p>
+
+<p>When new edges are found, the test case is added to the corpus along with its coverage and assigned an energy score based on the number of new edges, execution success and other metrics.</p>
+
+<p>The feedback manager also tracks mutation effectiveness. Essentially which strategies successfully discover new coverage, allowing the mutator to adaptively weight future mutation selection.</p>
+
+<h2 id="modeling-decision-trees-with-protocol-buffers">Modeling Decision Trees with Protocol Buffers</h2>
+
+<p>A key challenge in fuzzing stateful programs is modeling the decision tree of possible instruction sequences in a way that’s structured enough to generate valid inputs, yet flexible enough to let the fuzzer discover the correct ordering organically through coverage feedback. Solaris solves this using Protocol Buffers’ hierarchical message structure.</p>
+
+<h3 id="solaris-target-directory-structure">Solaris Target Directory Structure</h3>
+<p>The diagram below shows a typical solaris working filesystem:</p>
+
+<p><img src="/images/blog/Solaris/3.png" style="display: block; width: 100%; max-width: 600px; height: auto; margin: 14px auto;" /></p>
+
+<p>A Solaris fuzz target implementation usually contains the following:</p>
+
+<ul>
+  <li><strong>artifacts/</strong>: Compiled program binaries for testing</li>
+  <li>
+    <p><strong>handlers/</strong>: Instruction execution functions that translate protobuf messages into Solana transactions.</p>
+  </li>
+  <li><strong>invariants/</strong>: Security property checkers that validate state integrity (e.g., <code class="language-plaintext highlighter-rouge">mint.rs</code> verifies token supply invariants, <code class="language-plaintext highlighter-rouge">state_machine.rs</code> checks state transition validity, <code class="language-plaintext highlighter-rouge">withdraw.rs</code> validates balance constraints)</li>
+  <li><strong>proto/</strong>: Protobuf schema definitions (<code class="language-plaintext highlighter-rouge">.proto</code> files) and generated Rust code</li>
+  <li><strong>arbitrary.rs</strong>: Custom <code class="language-plaintext highlighter-rouge">Arbitrary</code> trait implementations for domain-specific mutations</li>
+  <li><strong>harness.rs</strong>: Main fuzzing harness that orchestrates execution and delegates to handlers</li>
+  <li><strong>state.rs</strong>: Persistent state tracking across transactions (e.g., created accounts, keypairs, PDAs, … etc)</li>
+</ul>
+
+<p>Each handler builds the appropriate instruction accounts, encodes instruction data, constructs signed transactions, and executes them on the SVM.</p>
+
+<p>Handlers include both <strong>target program instructions</strong> and <strong>external program instructions</strong> (e.g., SPL Token operations).</p>
+
+<p>This separation is critical for discovering vulnerabilities that arise when external programs modify state that the target program assumes it controls exclusively. These scenarios can be easily integrated into Solaris.</p>
+
+<p>This modular structure separates concerns. The protobuf schema to defines the input space, handlers execute instructions, invariants check correctness, and the harness acts as the main coordinator.</p>
+
+<h3 id="example-vault-program-with-access-control">Example: Vault Program with Access Control</h3>
+
+<p>To illustrate how Solaris models stateful programs, consider a simple Solana vault program with three instructions that must be executed in a specific sequence to achieve its correct operation:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+</pre></td><td class="rouge-code"><pre><span class="nd">#[program]</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">example2</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">Initialize</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">initial_balance</span><span class="p">:</span> <span class="nb">u64</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">vault</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">ctx</span><span class="py">.accounts.vault</span><span class="p">;</span>
+        <span class="n">vault</span><span class="py">.owner</span> <span class="o">=</span> <span class="n">ctx</span><span class="py">.accounts.authority</span><span class="nf">.key</span><span class="p">();</span>
+        <span class="n">vault</span><span class="py">.balance</span> <span class="o">=</span> <span class="n">initial_balance</span><span class="p">;</span>
+        <span class="n">vault</span><span class="py">.access_code</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">set_access_code</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">UpdateVault</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">code</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">vault</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">ctx</span><span class="py">.accounts.vault</span><span class="p">;</span>
+        <span class="nd">require!</span><span class="p">(</span>
+            <span class="n">vault</span><span class="py">.owner</span> <span class="o">==</span> <span class="n">ctx</span><span class="py">.accounts.authority</span><span class="nf">.key</span><span class="p">(),</span>
+            <span class="nn">ErrorCode</span><span class="p">::</span><span class="n">Unauthorized</span>
+        <span class="p">);</span>
+        <span class="n">vault</span><span class="py">.access_code</span> <span class="o">=</span> <span class="n">code</span><span class="p">;</span>
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">withdraw</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">UpdateVault</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">u64</span><span class="p">,</span> <span class="n">provided_code</span><span class="p">:</span> <span class="nb">u32</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">vault</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">ctx</span><span class="py">.accounts.vault</span><span class="p">;</span>
+
+        <span class="nd">require!</span><span class="p">(</span><span class="n">vault</span><span class="py">.access_code</span> <span class="o">==</span> <span class="n">provided_code</span><span class="p">,</span> <span class="nn">ErrorCode</span><span class="p">::</span><span class="n">InvalidAccessCode</span><span class="p">);</span>
+        <span class="nd">require!</span><span class="p">(</span><span class="n">amount</span> <span class="o">&lt;=</span> <span class="n">vault</span><span class="py">.balance</span><span class="p">,</span> <span class="nn">ErrorCode</span><span class="p">::</span><span class="n">InsufficientFunds</span><span class="p">);</span>
+
+        <span class="k">let</span> <span class="n">max_withdrawal</span> <span class="o">=</span> <span class="n">vault</span><span class="py">.balance</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+        <span class="nd">require!</span><span class="p">(</span><span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">100</span> <span class="o">&amp;&amp;</span> <span class="n">amount</span> <span class="o">&lt;=</span> <span class="n">max_withdrawal</span><span class="p">,</span> <span class="nn">ErrorCode</span><span class="p">::</span><span class="n">InvalidAmount</span><span class="p">);</span>
+
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;</span> <span class="mi">500</span> <span class="o">&amp;&amp;</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">600</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nf">Err</span><span class="p">(</span><span class="nn">ErrorCode</span><span class="p">::</span><span class="n">ForbiddenAmount</span><span class="nf">.into</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="n">vault</span><span class="py">.balance</span> <span class="o">=</span> <span class="n">vault</span><span class="py">.balance</span><span class="nf">.checked_sub</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Accounts)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">Initialize</span><span class="o">&lt;</span><span class="nv">'info</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">#[account(mut)]</span>
+    <span class="k">pub</span> <span class="n">authority</span><span class="p">:</span> <span class="n">Signer</span><span class="o">&lt;</span><span class="nv">'info</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nd">#[account(</span>
+        <span class="nd">init,</span>
+        <span class="nd">payer</span> <span class="nd">=</span> <span class="nd">authority,</span>
+        <span class="nd">space</span> <span class="nd">=</span> <span class="mi">8</span> <span class="err">+</span> <span class="mi">32</span> <span class="err">+</span> <span class="mi">8</span> <span class="err">+</span> <span class="mi">4</span><span class="nd">,</span> 
+        <span class="nd">seeds</span> <span class="nd">=</span> <span class="err">[</span><span class="s">b"vault"</span><span class="nd">,</span> <span class="nd">authority</span><span class="err">.</span><span class="nd">key()</span><span class="err">.</span><span class="nd">as_ref()]</span><span class="p">,</span>
+        <span class="n">bump</span>
+    <span class="p">)]</span>
+    <span class="k">pub</span> <span class="n">vault</span><span class="p">:</span> <span class="n">Account</span><span class="o">&lt;</span><span class="nv">'info</span><span class="p">,</span> <span class="n">Vault</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="k">pub</span> <span class="n">system_program</span><span class="p">:</span> <span class="n">Program</span><span class="o">&lt;</span><span class="nv">'info</span><span class="p">,</span> <span class="n">System</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">#[derive(Accounts)]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">UpdateVault</span><span class="o">&lt;</span><span class="nv">'info</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">#[account(mut)]</span>
+    <span class="k">pub</span> <span class="n">authority</span><span class="p">:</span> <span class="n">Signer</span><span class="o">&lt;</span><span class="nv">'info</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nd">#[account(</span>
+        <span class="nd">mut,</span>
+        <span class="nd">seeds</span> <span class="nd">=</span> <span class="err">[</span><span class="s">b"vault"</span><span class="nd">,</span> <span class="nd">authority</span><span class="err">.</span><span class="nd">key()</span><span class="err">.</span><span class="nd">as_ref()]</span><span class="p">,</span>
+        <span class="n">bump</span>
+    <span class="p">)]</span>
+    <span class="k">pub</span> <span class="n">vault</span><span class="p">:</span> <span class="n">Account</span><span class="o">&lt;</span><span class="nv">'info</span><span class="p">,</span> <span class="n">Vault</span><span class="o">&gt;</span><span class="p">,</span>
+<span class="p">}</span>
+
+<span class="nd">#[account]</span>
+<span class="k">pub</span> <span class="k">struct</span> <span class="n">Vault</span> <span class="p">{</span>
+    <span class="k">pub</span> <span class="n">owner</span><span class="p">:</span> <span class="n">Pubkey</span><span class="p">,</span>      
+    <span class="k">pub</span> <span class="n">balance</span><span class="p">:</span> <span class="nb">u64</span><span class="p">,</span>       
+    <span class="k">pub</span> <span class="n">access_code</span><span class="p">:</span> <span class="nb">u32</span><span class="p">,</span>
+<span class="p">}</span>
+
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The diagram below shows the three program instructions on the left, alongside their corresponding protobuf message definitions on the right:</p>
+
+<p><img src="/images/blog/Solaris/4.png" style="display: block; width: 100%; max-width: 900px; height: auto; margin: 14px auto;" /></p>
+
+<p><strong>State Dependencies:</strong></p>
+
+<p>The program exhibits state dependencies that makes fuzzing non trivial:</p>
+
+<ul>
+  <li><strong>initialize</strong>: Creates a vault with an owner and initial balance, sets <code class="language-plaintext highlighter-rouge">access_code</code> to 0</li>
+  <li><strong>set_access_code</strong>: Sets a numeric access code
+    <ul>
+      <li>only owner can call, requires vault to exist</li>
+    </ul>
+  </li>
+  <li><strong>withdraw</strong>: Withdraws funds
+    <ul>
+      <li>requires correct access code, sufficient balance, and satisfies amount constraints:</li>
+      <li><code class="language-plaintext highlighter-rouge">amount &gt; 100</code>, <code class="language-plaintext highlighter-rouge">amount &lt;= balance/2</code>, and not in forbidden range [500, 600]</li>
+    </ul>
+  </li>
+</ul>
+
+<p>A naive fuzzer would struggle due to the following reasons:</p>
+<ul>
+  <li>Instruction ordering matters (must initialize before set_access_code before withdraw)</li>
+  <li>Parameter relationships are non-obvious (access codes must match, amount constraints are interdependent)</li>
+</ul>
+
+<h3 id="protobuf-schema-modelling">Protobuf Schema Modelling</h3>
+
+<p>To fuzz this program, we define a protobuf schema that captures the instruction sequence structure. The schema is organized into three hierarchical levels:</p>
+
+<h4 id="level-1-top-level-instruction-chain-structure">Level 1: Top-Level Instruction Chain Structure</h4>
+
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2Chain</span> <span class="p">{</span>
+    <span class="n">Example2InitializationMessages</span> <span class="na">init_messages</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="k">repeated</span> <span class="n">Example2AuxiliaryMessages</span> <span class="na">auxiliary_messages</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This top-level message represents a complete test case. It enforces that every execution begins with initialization, followed by a variable-length sequence of auxiliary operations. We can define this hierarchy at our convenience on a case-by-case basis depending the target program being fuzzed.</p>
+
+<h4 id="level-2-initialization-and-auxiliary-message-wrappers">Level 2: Initialization and Auxiliary Message Wrappers</h4>
+
+<p><strong>Initialization phase (always executes first):</strong></p>
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2InitializationMessages</span> <span class="p">{</span>
+    <span class="n">Example2Initialize</span> <span class="na">initialize</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This ensures initialization happens exactly once at the start of each test case.</p>
+
+<p><strong>Auxiliary phase (fuzzer-controlled sequence):</strong></p>
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2AuxiliaryMessages</span> <span class="p">{</span>
+    <span class="k">oneof</span> <span class="kd">message</span> <span class="p">{</span>
+        <span class="n">Example2SetAccessCode</span> <span class="na">set_access_code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">Example2Withdraw</span> <span class="na">withdraw</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">oneof</code> keyword creates a choice point: each auxiliary message can be either <code class="language-plaintext highlighter-rouge">SetAccessCode</code> or <code class="language-plaintext highlighter-rouge">Withdraw</code>. The <code class="language-plaintext highlighter-rouge">repeated</code> modifier in the chain structure allows any number of these choices, enabling the fuzzer to generate sequences like <code class="language-plaintext highlighter-rouge">[SetAccessCode, Withdraw, SetAccessCode, Withdraw, ...]</code>.</p>
+
+<h4 id="level-3-concrete-instruction-messages">Level 3: Concrete Instruction Messages</h4>
+
+<p><strong>Initialize instruction:</strong></p>
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2Initialize</span> <span class="p">{</span>
+    <span class="kt">uint64</span> <span class="na">initial_balance</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">authority_index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>SetAccessCode instruction:</strong></p>
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2SetAccessCode</span> <span class="p">{</span>
+    <span class="kt">uint32</span> <span class="na">access_code</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">authority_index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">vault_index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p><strong>Withdraw instruction:</strong></p>
+<div class="language-protobuf highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+</pre></td><td class="rouge-code"><pre><span class="kd">message</span> <span class="nc">Example2Withdraw</span> <span class="p">{</span>
+    <span class="kt">uint64</span> <span class="na">amount</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">provided_code</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">authority_index</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="kt">uint32</span> <span class="na">vault_index</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Each instruction message contains typed fields that map directly to the Rust function parameters, providing structure-aware mutation targets for the fuzzer.</p>
+
+<h4 id="design-properties">Design Properties</h4>
+
+<p>This three-level hierarchy provides critical properties for effective fuzzing:</p>
+
+<ol>
+  <li><strong>Required Initialization</strong>: <code class="language-plaintext highlighter-rouge">init_messages</code> always executes first, ensuring the vault exists before any operations</li>
+  <li><strong>Flexible Auxiliary Sequence</strong>: <code class="language-plaintext highlighter-rouge">repeated auxiliary_messages</code> allows any number of <code class="language-plaintext highlighter-rouge">set_access_code</code> and <code class="language-plaintext highlighter-rouge">withdraw</code> instructions in any order</li>
+  <li><strong>Type-Safe Parameters</strong>: Each message defines typed fields (e.g., <code class="language-plaintext highlighter-rouge">uint64 initial_balance</code>, <code class="language-plaintext highlighter-rouge">uint32 access_code</code>) that prevent nonsensical mutations</li>
+</ol>
+
+<p>Is important to note that, this schema is not meant to hardcode the “correct” sequence of instructions. It only ensures structural validity. The fuzzer must still discover through coverage feedback that:</p>
+<ul>
+  <li>Setting an access code enables more withdraw code paths</li>
+  <li>Certain amount values trigger different branches</li>
+</ul>
+
+<h3 id="visualizing-the-decision-tree">Visualizing the Decision Tree</h3>
+
+<p>The protobuf schema implicitly defines a decision tree of possible instruction sequences. The diagram below shows how the schema creates a branching structure, with the <code class="language-plaintext highlighter-rouge">initialize</code> instruction always executing first, followed by a variable-length sequence of auxiliary messages:</p>
+
+<p><img src="/images/blog/Solaris/7.png" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>The tree structure its as follows:</p>
+
+<ol>
+  <li><strong>Initialize</strong> (always executes first, 2 parameters: initial_balance, authority_index)</li>
+  <li><strong>1:N Auxiliary Messages</strong> (variable count and ordering determined by fuzzer)
+    <ul>
+      <li><strong>SetAccessCode</strong> (3 parameters: access_code, authority_index, vault_index)</li>
+      <li><strong>Withdraw</strong> (4 parameters: amount, provided_code, authority_index, vault_index)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>The <code class="language-plaintext highlighter-rouge">oneof</code> construct creates branches at each step in the auxiliary sequence, allowing the fuzzer to choose which instruction type to execute. The <code class="language-plaintext highlighter-rouge">repeated</code> keyword permits unlimited repetitions, enabling the fuzzer to discover that multiple auxiliary messages are necessary to reach deeper program states.</p>
+
+<p>This design is permissive enough to allow invalid sequences, yet structured enough to ensure all generated sequences are syntactically valid Solana transactions. The fuzzer learns valid instruction orderings through coverage feedback rather than hardcoded rules.</p>
+
+<h3 id="test-case-evolution">Test Case Evolution</h3>
+
+<p>As fuzzing progresses, the corpus evolves organically to discover deeper program states. The diagram below shows four actual test cases from different stages of fuzzing, illustrating how the fuzzer learns to build more complex instruction sequences over time:</p>
+
+<p><img src="/images/blog/Solaris/8.png" style="display: block; width: 100%; max-width: 1200px; height: auto; margin: 14px auto;" /></p>
+
+<p>Reading from left to right, each panel shows a JSON-serialized protobuf test case at a different stage of the fuzzing campaign. The red-boxed messages in early panels and green-boxed messages in later panels highlight the key mutations that drove coverage gains.</p>
+
+<ul>
+  <li>
+    <p><strong>Panel 1 - Early Stage:</strong> The corpus starts simple with only a <code class="language-plaintext highlighter-rouge">Withdraw</code> message in the auxiliary array, achieving minimal coverage.</p>
+  </li>
+  <li>
+    <p><strong>Panel 2 - Growing Complexity:</strong> The mutator inserts a second auxiliary message. The corpus now contains both <code class="language-plaintext highlighter-rouge">Withdraw</code> and <code class="language-plaintext highlighter-rouge">SetAccessCode</code>, but in the wrong order. The withdraw still fails, but the presence of <code class="language-plaintext highlighter-rouge">SetAccessCode</code> increases coverage by exploring the set_access_code instruction path.</p>
+  </li>
+  <li>
+    <p><strong>Panel 3 - Discovering Ordering:</strong> The fuzzer discovers the correct sequence: <code class="language-plaintext highlighter-rouge">SetAccessCode</code> followed by <code class="language-plaintext highlighter-rouge">Withdraw</code>. Notice both messages are now green-boxed. The correct ordering unlocks new branches in the withdraw function where it checks balance and amount constraints.</p>
+  </li>
+  <li>
+    <p><strong>Panel 4 - Richer Test Cases:</strong> As fuzzing continues, the corpus evolves toward more complex test cases that conform to the correct instruction ordering. Multiple <code class="language-plaintext highlighter-rouge">SetAccessCode</code> and <code class="language-plaintext highlighter-rouge">Withdraw</code> messages now appear in proper sequence, demonstrating that the fuzzer has learned to consistently generate valid instruction chains that maximize coverage.</p>
+  </li>
+</ul>
+
+<p>Notice how the fuzzer progresses from Panel 2 (wrong order) to Panel 3 (correct sequence). This evolution is only possible because the harness implements intelligent state tracking for the access code constraint.</p>
+
+<p>While the <code class="language-plaintext highlighter-rouge">Withdraw</code> protobuf message includes a <code class="language-plaintext highlighter-rouge">provided_code</code> field, the harness doesn’t actually use it. Instead, when executing a withdraw instruction, it retrieves the access code that was previously set via <code class="language-plaintext highlighter-rouge">SetAccessCode</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="n">access_code</span> <span class="o">=</span> <span class="k">if</span> <span class="k">let</span> <span class="nf">Some</span><span class="p">(</span><span class="n">stored_code</span><span class="p">)</span> <span class="o">=</span> <span class="n">example2_state</span><span class="py">.vault_access_codes</span><span class="nf">.get</span><span class="p">(</span><span class="o">&amp;</span><span class="n">vault_pda</span><span class="nf">.to_string</span><span class="p">())</span> <span class="p">{</span>
+    <span class="o">*</span><span class="n">stored_code</span> <span class="k">as</span> <span class="nb">u32</span>  <span class="c1">// Use the actual code from state</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">msg</span><span class="py">.provided_code</span>     <span class="c1">// Fall back to protobuf field if no code was set</span>
+<span class="p">};</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This means once the fuzzer discovers the <code class="language-plaintext highlighter-rouge">SetAccessCode</code> → <code class="language-plaintext highlighter-rouge">Withdraw</code> sequence (Panel 3), subsequent mutations automatically use the correct access code from state. Without this, the fuzzer would waste cycles randomly mutating <code class="language-plaintext highlighter-rouge">provided_code</code> trying to guess the right value, never reaching the deeper withdraw logic.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">provided_code</code> field is technically unnecessary. It’s only included in this example to demonstrate how Solaris handles stateful constraints. In practice, you’d typically omit such fields and rely on state tracking for the most part. Further state tracking will be showcased in the Harness section below.</p>
+
+<p>In conclusion, the testcase evolution demonstrates how coverage-guided feedback drives automatic discovery of:</p>
+<ul>
+  <li><strong>Sequence length</strong>: More messages enable reaching deeper program states</li>
+  <li><strong>Instruction ordering</strong>: Correct sequencing unlocks dependent code paths</li>
+  <li><strong>Constraint boundaries</strong>: Specific ranges trigger different branches</li>
+  <li><strong>State dependencies</strong>: The harness bridges protobuf fields with runtime state to enable semantic fuzzing</li>
+</ul>
+
+<p>This entire progression happens without manually specifying instruction orderings or parameter constraints. The fuzzer learns at runtime through bytecode coverage feedback and intelligent harness design.</p>
+
+<h3 id="the-harness">The Harness</h3>
+
+<p>The harness bridges protobuf messages and Solana transactions, translating test cases into program transactions. This translation layer demonstrates how protobuf field mutations create cascading effects through account derivation and state management.</p>
+
+<p><img src="/images/blog/Solaris/9.png" style="display: block; width: 100%; max-width: 1200px; height: auto; margin: 14px auto;" /></p>
+
+<p>The diagram above shows the <code class="language-plaintext highlighter-rouge">initialize</code> instruction harness (highlighted in green boxes on the left) alongside the protobuf message definition (red box, top right). Two protobuf fields drive the entire execution:</p>
+
+<h4 id="protobuf-field-ingestion">Protobuf Field Ingestion</h4>
+
+<p><strong>1. <code class="language-plaintext highlighter-rouge">authority_index</code> field:</strong></p>
+
+<p>The harness retrieves an authority keypair from a state-managed pool using the protobuf field as an index:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="n">authority</span> <span class="o">=</span> <span class="k">self</span><span class="py">.state.get_or_insert_extension</span><span class="p">::</span><span class="o">&lt;</span><span class="n">Example2State</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="nf">.get_or_create_authority</span><span class="p">(</span><span class="n">msg</span><span class="py">.authority_index</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">);</span>
+<span class="k">let</span> <span class="n">authority_pubkey</span> <span class="o">=</span> <span class="n">authority</span><span class="nf">.pubkey</span><span class="p">();</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This single field mutation causes a domino effect:</p>
+<ul>
+  <li>Different <code class="language-plaintext highlighter-rouge">authority_index</code> derives different authority keypair</li>
+  <li>Different authority derives different derived PDA (vault address)</li>
+  <li>Different vault PDA derives different account storage location</li>
+</ul>
+
+<p>The vault PDA is derived deterministically based on <code class="language-plaintext highlighter-rouge">authority_pubkey</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="p">(</span><span class="n">vault_pda</span><span class="p">,</span> <span class="n">_bump</span><span class="p">)</span> <span class="o">=</span> <span class="nn">Pubkey</span><span class="p">::</span><span class="nf">find_program_address</span><span class="p">(</span>
+    <span class="o">&amp;</span><span class="p">[</span><span class="s">b"vault"</span><span class="p">,</span> <span class="n">authority_pubkey</span><span class="nf">.as_ref</span><span class="p">()],</span>
+    <span class="o">&amp;</span><span class="k">self</span><span class="py">.program_id</span><span class="p">,</span>
+<span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>By mutating just <code class="language-plaintext highlighter-rouge">authority_index</code>, the fuzzer explores different account states, producing scenarios relevant to account ownership, PDA collisions, and cross-account interactions.</p>
+
+<p><strong>2. <code class="language-plaintext highlighter-rouge">initial_balance</code> field:</strong></p>
+
+<p>The balance is encoded directly into the instruction data:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="k">mut</span> <span class="n">instruction_data</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">175</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">152</span><span class="p">,</span> <span class="mi">155</span><span class="p">,</span> <span class="mi">237</span><span class="p">];</span> <span class="c1">// discriminator</span>
+<span class="n">instruction_data</span><span class="nf">.extend_from_slice</span><span class="p">(</span><span class="o">&amp;</span><span class="n">msg</span><span class="py">.initial_balance</span><span class="nf">.to_le_bytes</span><span class="p">());</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Mutating <code class="language-plaintext highlighter-rouge">initial_balance</code> explores different value ranges, triggering constraints in subsequent <code class="language-plaintext highlighter-rouge">withdraw</code> instructions.</p>
+
+<h4 id="stateful-execution-preserving-context-across-instructions">Stateful Execution: Preserving Context Across Instructions</h4>
+
+<p>After successful transaction execution, the harness saves the vault-authority pair to internal state (highlighted in cyan box at bottom):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="c1">// Store vault info in state only after transaction succeeds</span>
+<span class="k">self</span><span class="py">.state.get_or_insert_extension</span><span class="p">::</span><span class="o">&lt;</span><span class="n">Example2State</span><span class="o">&gt;</span><span class="p">()</span>
+    <span class="nf">.add_vault</span><span class="p">(</span><span class="n">vault_pda</span><span class="p">,</span> <span class="n">authority_pubkey</span><span class="p">);</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This state persistence enables subsequent instructions to reference the same vault. As an exmaple, the <code class="language-plaintext highlighter-rouge">set_access_code</code> harness (shown in cyan box, bottom right) retrieves the vault from internal state using the protobuf <code class="language-plaintext highlighter-rouge">vault_index</code>:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+</pre></td><td class="rouge-code"><pre><span class="k">let</span> <span class="n">example2_state</span> <span class="o">=</span> <span class="k">self</span><span class="py">.state.get_or_insert_extension</span><span class="p">::</span><span class="o">&lt;</span><span class="n">Example2State</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="k">let</span> <span class="n">authority</span> <span class="o">=</span> <span class="n">example2_state</span><span class="nf">.get_authority</span><span class="p">(</span><span class="n">msg</span><span class="py">.authority_index</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+<span class="k">let</span> <span class="n">vault_pda</span> <span class="o">=</span> <span class="n">example2_state</span><span class="nf">.get_vault</span><span class="p">(</span><span class="n">msg</span><span class="py">.vault_index</span> <span class="k">as</span> <span class="nb">usize</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>This state-aware selection ensures the fuzzer can:</p>
+<ul>
+  <li>Build valid instruction chains referencing the same vault</li>
+  <li>Explore multi-vault scenarios by varying <code class="language-plaintext highlighter-rouge">vault_index</code></li>
+  <li>Test authority mismatches by using different <code class="language-plaintext highlighter-rouge">authority_index</code> values</li>
+</ul>
+
+<p>This harness architecture showcases how protobuf’s structured representation enables intelligent exploration. Field mutations propagate through account derivation, instruction encoding, and cross-instruction state references, allowing the fuzzer to systematically explore the program’s state space.</p>
+
+<h2 id="program-scoped-sbpf-edge-tracking">Program-Scoped sBPF Edge Tracking</h2>
+
+<p>Coverage feedback is fundamental to effective fuzzing. By tracking which code paths have been executed, the fuzzer can identify test cases that explore new program behavior and prioritize them for further mutation. However, obtaining accurate coverage in Solana’s execution environment presents unique challenges due to how the SVM maps programs to its address space.</p>
+
+<h3 id="the-collision-problem-in-sbpf-coverage">The Collision Problem in sBPF Coverage</h3>
+
+<p>The SVM maps sBPF programs to the same base address:</p>
+<ul>
+  <li><strong>sBPF v0-v2</strong>: Programs are mapped at <code class="language-plaintext highlighter-rouge">0x100000000</code></li>
+  <li><strong>sBPF v3+</strong>: Programs are linked on compile-time and use zero-based addressing, mapped at <code class="language-plaintext highlighter-rouge">0x0</code></li>
+</ul>
+
+<p>This creates a fundamental problem for traditional edge coverage tracking. Edge coverage uses program counter (PC) values to identify control flow transitions. The standard edge calculation is:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre><span class="n">edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">previous_pc</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="n">current_pc</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>When multiple programs share the same virtual address space, identical control flow transitions (same <code class="language-plaintext highlighter-rouge">previous_pc</code> and <code class="language-plaintext highlighter-rouge">current_pc</code> values) in different programs produce the same edge ID, even though they represent completely different code executing in different programs.</p>
+
+<p>For example, a transition from 0x100000080 → 0x100000100 in the target program has the same edge ID as the identical transition in a dependency program, despite executing entirely different instructions at those addresses. This causes edge coverage pollution where the fuzzer cannot distinguish which program generated which coverage, leading to:</p>
+
+<ol>
+  <li>False coverage attribution</li>
+  <li>Missed coverage gaps</li>
+  <li>Ineffective corpus prioritization</li>
+</ol>
+
+<h3 id="program-scoped-edge-tracking">Program-Scoped Edge Tracking</h3>
+
+<p>Solaris addresses this with a custom hash implementation that incorporates program IDs into edge calculation, mitigating collisions across different programs. The following diagram illustrates this:</p>
+
+<div style="text-align: center; margin: 40px 0;">
+  <img src="/images/blog/Solaris/11.png" alt="Program-scoped edge hash algorithm" style="max-width: 400px; width: 100%;" />
+</div>
+
+<p>The algorithm operates in two parallel paths that are combined at the end:</p>
+
+<p><strong>Left Path (Edge Calculation)</strong>:</p>
+<ol>
+  <li>Take the previous PC value (<code class="language-plaintext highlighter-rouge">0x100000000</code>)</li>
+  <li>Shift right by 1 bit, producing <code class="language-plaintext highlighter-rouge">0x080000000</code></li>
+  <li>XOR with current PC (<code class="language-plaintext highlighter-rouge">0x100000100</code>)</li>
+  <li>Result: base edge ID <code class="language-plaintext highlighter-rouge">0x180000100</code></li>
+</ol>
+
+<p><strong>Right Path (Program ID Aggregation)</strong>:</p>
+<ol>
+  <li>Take the full program ID (Base58 encoded public key, e.g., <code class="language-plaintext highlighter-rouge">7oRegZsrEfNzmiUY0s43tHjFkkhb236YfZb1UZrCMuXH</code>)</li>
+  <li>Apply polynomial rolling hash to compress the 32-byte program ID into a 64-bit value</li>
+  <li>Result: program hash <code class="language-plaintext highlighter-rouge">0xA1B2C3D4E5F67890</code></li>
+</ol>
+
+<p><strong>Combination</strong>:</p>
+<ol>
+  <li>Multiply the base edge by a large prime (<code class="language-plaintext highlighter-rouge">× 31</code>)</li>
+  <li>XOR with the program hash</li>
+  <li>Result: program-scoped edge ID <code class="language-plaintext highlighter-rouge">0xEA3223D4E6036890</code></li>
+</ol>
+
+<p>This approach scopes edge IDs to their originating program by incorporating the program ID into the hash. When two programs have identical control flow at the same virtual addresses, the program hash ensures their edges map to different IDs. While collisions remain theoretically possible, particularly with many programs executing simultaneously, we haven’t observed significant edge pollution in practice across typical Solana programs and their dependencies during fuzzing campaigns following this approach.</p>
+
+<h3 id="cross-cpi-coverage-tracking">Cross-CPI Coverage Tracking</h3>
+
+<p>Solana programs frequently invoke other programs through Cross-Program Invocation (CPI). 
+When the target program calls a dependency, both programs generate coverage. Solaris 
+maintains per-program coverage tracking alongside global coverage, enabling the fuzzer 
+to identify new edges while also providing detailed per-program statistics in coverage 
+reports.</p>
+
+<p>The coverage report interface provides detailed per-program statistics and CFG inspection for coverage visualization:</p>
+
+<div style="text-align: center; margin: 40px 0;">
+  <img src="/images/blog/Solaris/12.png" alt="Solaris coverage report showing per-program statistics" style="max-width: 100%; width: 100%;" />
+</div>
+
+<p>Solaris coverage report displays:</p>
+
+<p><strong>Fuzzing Statistics</strong>:</p>
+<ul>
+  <li><strong>Total Executions</strong>: Number of test cases executed</li>
+  <li><strong>Corpus Entries</strong>: Test cases saved for mutation</li>
+  <li><strong>Total Edges</strong>: Unique edges discovered across all programs</li>
+  <li><strong>Crashes Found</strong>: Bugs discovered</li>
+  <li><strong>Runtime</strong>: Elapsed fuzzing time</li>
+  <li><strong>Programs Tracked</strong>: Number of distinct programs with coverage</li>
+</ul>
+
+<p><strong>Programs Coverage Summary</strong>:
+Each row represents a different program (identified by its Base58 program ID):</p>
+<ul>
+  <li><strong>Total PCs</strong>: Number of distinct program counter values in the program’s bytecode</li>
+  <li><strong>Instruction Coverage</strong>: Percentage of instructions executed</li>
+  <li><strong>Block Coverage</strong>: Percentage of basic blocks executed</li>
+</ul>
+
+<p><strong>Detailed CFG Inspection</strong>:
+Beyond aggregate statistics, Solaris provides detailed Control Flow Graph (CFG) visualization for all functions across all engaged programs.</p>
+
+<p>Each basic block in the CFG is color-coded based on execution status: executed blocks are highlighted in green to show covered code paths while unexecuted blocks are highlighted in red, providing immediate visual feedback on which branches have been explored.</p>
+
+<p>This per-function CFG visualization enables developers to precisely identify coverage gaps at the basic block level or IL level, making it straightforward to see exactly which branches, error handlers, or edge cases have not been reached by the current corpus.</p>
+
+<p>This granular visibility enables developers to:</p>
+<ol>
+  <li>Understand how test cases exercise both the target and its dependencies</li>
+  <li>Track coverage growth separately for each program in the dependency graph</li>
+  <li>Inspect color-coded CFGs to pinpoint exactly which basic blocks in which functions remain unexplored</li>
+</ol>
+
+<h3 id="real-time-coverage-visualization">Real-Time Coverage Visualization</h3>
+
+<p>Solaris provides both a TUI (Terminal User Interface) and Web UI dashboard for monitoring fuzzing campaigns in real time.</p>
+
+<p>The interface displays live coverage metrics, execution statistics, and allows inspection of assembly and intermediate representation (IL) views, much like the static coverage reports covered earlier.</p>
+
+<p>This enables developers to observe which basic blocks and instructions are being reached as the fuzzer explores the program.</p>
+
+<div style="text-align: center; margin: 40px 0;">
+  <img src="/images/blog/Solaris/13.gif" alt="Real-time TUI and Web UI dashboard" style="max-width: 100%; width: 100%;" />
+  <p style="font-size: 0.9em; color: #666; margin-top: 10px;">Real-time TUI and Web UI dashboard showing live coverage tracking, execution statistics, and bytecode inspection</p>
+</div>
+
+<p>As with coverage reports, this visualization helps identify coverage plateaus and guides decisions about when to adjust fuzzing strategies or introduce manual guidance through hybrid fuzzing techniques.</p>
+
+<h3 id="hybrid-fuzzing-with-radiant">Hybrid Fuzzing with Radiant</h3>
+
+<p>While coverage-guided fuzzing effectively explores reachable code paths, some program states require specific constraints that random mutation struggles to satisfy.</p>
+
+<p>Solaris is planned for open-source release and will integrate with <strong>Radiant</strong>, our concolic execution engine for Solana programs.</p>
+
+<p>This hybrid approach combines:</p>
+<ol>
+  <li><strong>Coverage-guided fuzzing</strong> to rapidly explore broad program behavior</li>
+  <li><strong>Concolic execution</strong> to solve constraints and reach code paths blocked by complex checks in an agile manner</li>
+  <li><strong>Manual guidance</strong> to direct Solaris toward specific unexplored blocks</li>
+</ol>
+
+<p>The idea is that when Solaris encounters a coverage plateau, developers can use Radiant to symbolically analyze the path constraints preventing progress, generate concrete inputs that satisfy those constraints, and aggregate them into Solaris’s corpus.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Solaris addresses the core challenges of stateful fuzzing Solana programs through structure-aware test case generation using Protocol Buffers, stateful execution tracking across transaction sequences, and collision-resistant bytecode coverage feedback that accurately attributes edges across CPI boundaries.</p>
+
+<p>The Protocol Buffer-based approach allows Solaris to generate syntactically valid transactions while still exploring the full input space.</p>
+
+<p>The collision-resistant hash algorithm solves the edge attribution problem caused by SVM’s memory model.</p>
+
+<p>Together, these techniques enable systematic exploration of program state space without hardcoding specific instruction sequences or constraints.</p>
+
+<p>Solaris is planned for open-source release and will integrate with Radiant for manually-guided hybrid fuzzing to handle constraint-heavy code paths that pure fuzzing struggles to reach.</p>
+
+
+        </div>
+
+        <style>
+        /* Text formatting and indentation */
+        .container article p {
+            margin-bottom: 1.5rem !important;
+            text-indent: 0 !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+        }
+
+        .container article blockquote {
+            border-left: 4px solid #10ebff !important;
+            padding-left: 1.5rem !important;
+            margin: 1.5rem 0 !important;
+            font-style: italic !important;
+            opacity: 0.9 !important;
+        }
+
+        .container article ul {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+
+        .container article ol {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+
+        .container article ol li {
+            padding-left: 0.5rem !important;
+        }
+
+        .container article ul li {
+            padding-left: 0.5rem !important;
+        }
+
+        .container article li {
+            margin-bottom: 0.5rem !important;
+            line-height: 1.6 !important;
+        }
+
+        .container article h2, .container article h3, .container article h4 {
+            margin-top: 2.5rem !important;
+            margin-bottom: 1rem !important;
+            color: #10ebff !important;
+        }
+
+        /* Better hyperlink colors for blog content */
+        .container article a {
+            color: #10ebff !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+            border-bottom: 1px solid rgba(16, 235, 255, 0.3) !important;
+        }
+
+        .container article a:hover {
+            color: #35e4f4 !important;
+            border-bottom-color: rgba(53, 228, 244, 0.8) !important;
+            text-shadow: 0 0 8px rgba(16, 235, 255, 0.3) !important;
+        }
+
+        .container article a:visited {
+            color: #8b5cf6 !important;
+            border-bottom-color: rgba(139, 92, 246, 0.3) !important;
+        }
+
+        .container article a:visited:hover {
+            color: #a78bfa !important;
+            border-bottom-color: rgba(167, 139, 250, 0.8) !important;
+        }
+
+        /* Override link styles specifically for back button */
+        .container article .back-to-blog-button,
+        .container article .back-to-blog-button:link,
+        .container article .back-to-blog-button:visited,
+        .container article .back-to-blog-button:active,
+        .container article .back-to-blog-button:hover {
+            color: #ffffff !important;
+            border-bottom: none !important;
+        }
+
+        /* Back to blog button with gradient theme */
+        .back-to-blog-button,
+        .back-to-blog-button:link,
+        .back-to-blog-button:visited,
+        .back-to-blog-button:active {
+            display: inline-block !important;
+            margin-top: 4rem !important;
+            padding: 12px 24px !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.1) 0%, rgba(185, 26, 238, 0.1) 100%) !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-radius: 8px !important;
+            font-weight: 400 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            font-size: 0.95rem !important;
+            border: 1px solid transparent !important;
+            position: relative !important;
+            overflow: hidden !important;
+            font-family: 'Raleway', system-ui, sans-serif !important;
+            border-bottom: none !important;
+        }
+
+        .back-to-blog-button::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: linear-gradient(90deg, #10ebff, #b91aee) !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s ease !important;
+            border-radius: 8px !important;
+            z-index: -1 !important;
+            padding: 1px !important;
+            margin: -1px !important;
+        }
+
+        .back-to-blog-button:hover::before {
+            opacity: 0.6 !important;
+        }
+
+        .back-to-blog-button:hover,
+        .back-to-blog-button:hover:link,
+        .back-to-blog-button:hover:visited,
+        .back-to-blog-button:hover:active {
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(16, 235, 255, 0.2), 0 0 20px rgba(185, 26, 238, 0.1) !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.15) 0%, rgba(185, 26, 238, 0.15) 100%) !important;
+            border-bottom: none !important;
+        }
+        </style>
+
+        <!-- Enhanced back button with gradient theme -->
+        <a href="/blog/" class="back-to-blog-button">← Back to Blog</a>
+    </article>
+</div>
+
+<style>
+@keyframes shimmerTitle {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Enhanced code block styling */
+.container article code {
+    background: rgba(16, 235, 255, 0.1) !important;
+    border: 1px solid rgba(16, 235, 255, 0.2) !important;
+    color: #10ebff !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.container article pre {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+.container article pre code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+.container article .highlight {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.25) !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    overflow: hidden !important;
+    font-size: 0.9rem !important;
+}
+
+.container article .highlight pre {
+    background: none !important;
+    border: none !important;
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+}
+
+.container article .highlight code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+/* Hide line numbers */
+.container article .highlight .lineno,
+.container article .highlight .gutter,
+.container article .highlight .gutter .lineno {
+    display: none !important;
+}
+
+.container article .highlight table {
+    border: none !important;
+    background: none !important;
+}
+
+.container article .highlight table td {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.container article .highlight table .code {
+    padding: 0 !important;
+}
+
+/* Custom scrollbar styling for code blocks - black theme */
+.container article pre::-webkit-scrollbar,
+.container article .highlight::-webkit-scrollbar {
+    height: 8px !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb,
+.container article .highlight::-webkit-scrollbar-thumb {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(80, 80, 80, 0.5) !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb:hover,
+.container article .highlight::-webkit-scrollbar-thumb:hover {
+    background: rgba(60, 60, 60, 0.9) !important;
+    border-color: rgba(100, 100, 100, 0.7) !important;
+}
+
+.container article pre::-webkit-scrollbar-track,
+.container article .highlight::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+/* Firefox scrollbar styling - black theme */
+.container article pre,
+.container article .highlight {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(40, 40, 40, 0.9) rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    /* Post title - add top padding and reduce size */
+    .container article h1 {
+        font-size: 2rem !important;
+        padding-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Force all code elements to same size - very aggressive approach */
+    .container article pre *,
+    .container article .highlight *,
+    .container article code,
+    .container article pre,
+    .container article .highlight,
+    .container article .highlight pre,
+    .container article .highlight code,
+    .container article .highlight table *,
+    .container article .highlight .gutter *,
+    .container article .highlight .code *,
+    .container article p code,
+    .container article li code,
+    .container article td code,
+    .container article h1 code,
+    .container article h2 code,
+    .container article h3 code,
+    .container article h4 code {
+        font-size: 0.7rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* Code block containers - uniform padding */
+    .container article pre,
+    .container article .highlight {
+        padding: 0.8rem !important;
+        margin: 1rem 0 !important;
+    }
+}
+</style>
+
+<script>
+// Nuclear option - force ALL code to be uniform on mobile
+function fixMobileCodeFonts() {
+    if (window.innerWidth <= 768) {
+        // Get EVERY element that might contain code
+        const allElements = document.querySelectorAll('*');
+
+        allElements.forEach(element => {
+            // Check if element is code-related
+            if (element.tagName === 'CODE' ||
+                element.tagName === 'PRE' ||
+                element.classList.contains('highlight') ||
+                element.classList.contains('language-plaintext') ||
+                element.classList.contains('highlighter-rouge') ||
+                element.className.includes('language-') ||
+                element.className.includes('highlight')) {
+
+                // Force the font size
+                element.style.setProperty('font-size', '0.6rem', 'important');
+                element.style.setProperty('line-height', '1.2', 'important');
+
+                // Also check all children
+                const children = element.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.setProperty('font-size', '0.6rem', 'important');
+                    child.style.setProperty('line-height', '1.2', 'important');
+                });
+            }
+        });
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', fixMobileCodeFonts);
+
+// Run on window resize
+window.addEventListener('resize', fixMobileCodeFonts);
+
+// Run again after a short delay to catch any dynamically loaded content
+setTimeout(fixMobileCodeFonts, 100);
+
+// Image zoom modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Find all images in the blog post content
+    const images = document.querySelectorAll('.container article img');
+
+    // Create modal HTML
+    const modal = document.createElement('div');
+    modal.id = 'image-modal';
+    modal.innerHTML = `
+        <div class="modal-backdrop"></div>
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <img class="modal-image" src="" alt="">
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    const modalElement = document.getElementById('image-modal');
+    const modalImage = modalElement.querySelector('.modal-image');
+    const closeBtn = modalElement.querySelector('.modal-close');
+    const backdrop = modalElement.querySelector('.modal-backdrop');
+
+    // Add click handler to each image
+    images.forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function() {
+            modalImage.src = this.src;
+            modalImage.alt = this.alt;
+            modalElement.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal handlers
+    function closeModal() {
+        modalElement.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    backdrop.addEventListener('click', closeModal);
+
+    // Close on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modalElement.classList.contains('active')) {
+            closeModal();
+        }
+    });
+});
+</script>
+
+<style>
+/* Image zoom modal styles */
+#image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+#image-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+#image-modal .modal-content {
+    position: relative;
+    max-width: 95%;
+    max-height: 95vh;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .modal-image {
+    max-width: 100%;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+#image-modal .modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    z-index: 10002;
+}
+
+#image-modal .modal-close:hover {
+    color: #10ebff;
+    transform: scale(1.1);
+}
+
+/* Make images look clickable */
+.container article img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container article img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(16, 235, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    #image-modal .modal-close {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+    }
+}
+</style>
+    </main>
+
+    
+    <style>
+    .modern-footer {
+        border-top: 1px solid rgba(16, 235, 255, 0.15);
+        margin-top: 4rem;
+        position: relative;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 14, 20, 0.4) 100%);
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 1.75rem 1.5rem 1.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 2rem 2rem 1.5rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.7;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(16, 235, 255, 0.95);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.12) 0%,
+            rgba(92, 92, 171, 0.1) 50%,
+            rgba(185, 26, 238, 0.12) 100%);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        box-shadow: 0 0 5px rgba(16, 235, 255, 0.15);
+    }
+
+    .footer-contact-btn:hover {
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.18) 0%,
+            rgba(92, 92, 171, 0.15) 50%,
+            rgba(185, 26, 238, 0.18) 100%);
+        border-color: rgba(16, 235, 255, 0.5);
+        box-shadow: 0 0 10px rgba(16, 235, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(16, 235, 255, 0.1);
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Geist', sans-serif;
+        margin: 0;
+    }
+</style>
+
+<footer class="modern-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/team/">Team</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/tooling/">Products</a></li>
+                    </ul>
+                </div>
+                <a href="/contact/" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Inversive Labs. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>

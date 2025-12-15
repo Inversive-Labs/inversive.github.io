@@ -240,12 +240,9 @@
             rgba(0, 0, 0, 0.3) 100%) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(16, 235, 255, 0.3) !important;
+        border: 1px solid #000 !important;
         border-radius: 20px !important;
         box-shadow:
-            0 0 1px rgba(16, 235, 255, 0.5),
-            0 0 10px rgba(16, 235, 255, 0.2),
-            0 0 20px rgba(92, 92, 171, 0.15),
             0 8px 32px rgba(0, 0, 0, 0.6) !important;
         animation: slideDown 0.3s ease-out !important;
         z-index: 1000 !important;
@@ -315,8 +312,8 @@
                 <a href="/about/" >About</a>
                 <a href="/team/" >Team</a>
                 <a href="/services/" >Services</a>
-                <a href="/products/" >Products</a>
-                <a href="/publications/" >Publications</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
                 <a href="/blog/" >Blog</a>
                 <a href="/contact/" >Contact</a>
             </div>
@@ -386,2593 +383,235 @@
 
 
     <main>
-        <!-- <section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h1><span class="gradient-text">I n v e r s i v e</span></h1>
-            <p class="tagline">Breaking On-Chain Assumptions</p>
-            <p class="subtitle">Security Automation, Research<br class="mobile-break"> and Engineering for Solana</p>
-            <div class="hero-actions">
-                <a href="/contact/" class="cta-primary">Get Started</a>
-                <a href="/services/" class="cta-secondary">View Services</a>
-            </div>
-        </div>
-    </div>
-</section> -->
-
-<style>
-.methodology-section {
-    padding: 16rem 0 12rem;
-    background: transparent;
+        <style>
+/* Hero Section */
+.hero-section {
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8rem 2rem 4rem;
     position: relative;
-    overflow: visible;
-    z-index: 10 !important;
-    transform: none;
 }
 
-.methodology-container {
+.hero-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 3rem;
-}
-
-.methodology-header {
     text-align: center;
-    margin-bottom: 12rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
-.methodology-title {
-    font-size: 4.5rem;
-    font-weight: 100;
-    color: #ffffff;
-    letter-spacing: -0.025em;
-    margin-bottom: 2rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    line-height: 1.2;
-    background: linear-gradient(90deg, #ffffff 0%, #ffffff 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    animation: waveLeftToRight 45s linear infinite;
-    position: relative;
-}
-
-body.home-page .methodology-section .methodology-title::after {
-    content: '';
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 2px;
-    background: linear-gradient(90deg, #10ebff, #b91aee);
-    opacity: 0;
-    animation: expandLineDesktop 0.8s ease 0.5s forwards;
-}
-
-@keyframes expandLineDesktop {
-    from {
-        width: 0;
-        opacity: 0;
-    }
-    to {
-        width: 80px;
-        opacity: 1;
-    }
-}
-
-@keyframes expandLine {
-    from {
-        width: 0;
-        opacity: 0;
-    }
-    to {
-        width: 60px;
-        opacity: 1;
-    }
-}
-
-.methodology-subtitle {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    max-width: 700px;
-    margin: 0 auto;
-    padding-top: 3.5rem;
-    line-height: 1.7;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-}
-
-/* Methodology Cycle */
-.methodology-cycle {
-    margin: 0 auto 16rem;
-    max-width: 1200px;
-    position: relative;
-}
-
-.cycle-title {
-    text-align: center;
-    font-size: 2.5rem;
-    font-weight: 100;
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 200;
     color: rgba(255, 255, 255, 0.95);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    font-family: 'Raleway', sans-serif;
     letter-spacing: -0.02em;
-    line-height: 1.2;
 }
 
-.cycle-subtitle {
-    font-size: 1.2rem;
+.hero-tagline {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
     font-weight: 300;
     color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    max-width: 700px;
-    margin: 0 auto 6rem;
-    line-height: 1.7;
-    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    font-family: 'Raleway', sans-serif;
 }
 
-.cycle-phases {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+/* Blockchain Logos */
+.blockchain-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     gap: 3rem;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 4rem auto;
+    flex-wrap: wrap;
 }
 
-.phase-item {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(16, 235, 255, 0.2);
-    border-radius: 12px;
-    padding: 2.5rem 2rem;
-    text-align: center;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(16, 235, 255, 0.1);
-    transition: all 0.3s ease;
+.logo-item {
     position: relative;
+    transition: opacity 0.3s ease;
 }
 
-.phase-item:hover {
-    border-color: rgba(16, 235, 255, 0.4);
-    box-shadow: 0 12px 48px rgba(16, 235, 255, 0.2);
-    transform: translateY(-5px);
+.chain-logo {
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, filter 0.3s ease;
 }
 
-
-
-.phase-number {
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #10ebff;
-    font-family: 'Raleway', sans-serif;
-    letter-spacing: 0.15em;
-    margin-bottom: 1rem;
-    position: relative;
-    z-index: 1;
-    text-transform: uppercase;
-}
-
-.phase-name {
-    font-size: 1.15rem;
-    font-weight: 400;
-    color: rgba(229, 231, 235, 1);
-    font-family: 'Raleway', sans-serif;
-    margin-bottom: 1rem;
-    line-height: 1.4;
-    position: relative;
-    z-index: 1;
-    letter-spacing: 0.01em;
-}
-
-.phase-desc {
-    font-size: 0.875rem;
-    font-weight: 300;
-    color: rgba(229, 231, 235, 0.65);
-    font-family: 'Raleway', sans-serif;
-    line-height: 1.7;
-    position: relative;
-    z-index: 1;
-    text-align: center;
-}
-
-/* Fuzzing Introduction */
-.fuzzing-intro {
-    text-align: center;
-    margin: 0 auto 10rem;
-    max-width: 800px;
-}
-
-.fuzzing-title {
-    font-size: 2.5rem;
-    font-weight: 100;
-    color: rgba(255, 255, 255, 0.95);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-}
-
-.fuzzing-subtitle {
-    font-size: 1.2rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    line-height: 1.7;
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-/* Vertical System Diagrams */
-.systems-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10rem;
-    max-width: 1000px;
-    margin: 0 auto;
-    isolation: auto;
-}
-
-.system-block {
-    position: relative;
-}
-
-.system-block:nth-child(1) { animation-delay: 0.1s; }
-.system-block:nth-child(2) { animation-delay: 0.2s; }
-.system-block:nth-child(3) { animation-delay: 0.3s; }
-.system-block:nth-child(4) { animation-delay: 0.4s; }
-.system-block:nth-child(5) { animation-delay: 0.5s; }
-
-.system-label {
-    text-align: center;
-    margin-bottom: 2.5rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.system-number {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: 'Raleway', sans-serif;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-
-.system-title {
-    font-size: 2rem;
-    font-weight: 100;
-    color: rgba(255, 255, 255, 0.95);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    margin-bottom: 1.5rem;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-}
-
-.system-description {
-    font-size: 1.1rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    line-height: 1.7;
-    max-width: 700px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-/* Canvas Visualization */
-.canvas-visualization {
-    position: relative;
-    width: 100%;
-    height: 600px;
-    background: transparent;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-@media (max-width: 768px) {
-    .canvas-visualization {
-        height: 450px;
-    }
-}
-
-@media (max-width: 480px) {
-    .canvas-visualization {
-        height: 400px;
-    }
-}
-
-.canvas-visualization canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-/* Decision Tree Visualization */
-.decision-tree {
-    position: relative;
-    padding: 4rem 2rem;
-    width: 100%;
-    min-height: 500px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: auto;
-}
-
-.decision-tree svg {
-    display: block;
-    margin: 0 auto;
-}
-
-@media (max-width: 768px) {
-    .decision-tree {
-        padding: 2rem 0;
-        min-height: 350px;
-        overflow-x: visible;
-    }
-
-    .decision-tree svg {
-        margin: 0 auto !important;
-        display: block;
-    }
-}
-
-@media (max-width: 480px) {
-    .decision-tree {
-        padding: 1.5rem 0;
-        overflow-x: visible;
-    }
-}
-
-.decision-tree .node circle {
-    fill: rgba(15, 15, 25, 0.9);
-    stroke: rgba(255, 255, 255, 0.3);
-    stroke-width: 1.5;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.decision-tree .node.explored circle {
-    fill: rgba(20, 20, 30, 0.95);
-    stroke: rgba(255, 255, 255, 0.2);
-    stroke-width: 1.5;
-}
-
-.decision-tree .node.root circle {
-    fill: rgba(60, 50, 120, 0.9);
-    stroke: rgba(120, 100, 255, 0.7);
-    stroke-width: 2;
-}
-
-.decision-tree .node:hover circle {
-    transform: scale(1.05);
-}
-
-.decision-tree .node text {
-    font-family: 'Raleway', sans-serif;
-    font-size: 14px;
-    font-weight: 400;
-    fill: rgba(255, 255, 255, 0.9);
-    text-anchor: middle;
-    pointer-events: none;
-    letter-spacing: 0.02em;
-}
-
-.decision-tree .link {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.25);
-    stroke-width: 2;
-}
-
-.decision-tree .link.explored {
-    stroke: rgba(255, 255, 255, 0.25);
-}
-
-/* Fuzzing Tree */
-.fuzzing-tree {
-    width: 100%;
-    min-height: 600px;
-    padding: 1.5rem 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow-x: auto;
-}
-
-@media (max-width: 768px) {
-    .fuzzing-tree {
-        min-height: 400px;
-        padding: 1rem 0.5rem;
-    }
-
-    .fuzzing-tree svg {
-        margin: 0 auto !important;
-    }
-}
-
-.fuzzing-tree .node circle {
-    fill: rgba(20, 20, 30, 0.95);
-    stroke: rgba(255, 255, 255, 0.2);
-    stroke-width: 1.5;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.fuzzing-tree .node.mutating circle {
-    fill: rgba(255, 180, 50, 0.85);
-    stroke: rgba(255, 200, 100, 0.7);
-    stroke-width: 2;
-}
-
-.fuzzing-tree .node.mutating-glow circle:first-child {
-    stroke: rgba(255, 180, 50, 0.4);
-}
-
-.fuzzing-tree .node text {
-    font-family: 'Raleway', sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    fill: rgba(255, 255, 255, 0.9);
-    text-anchor: middle;
-    pointer-events: none;
-}
-
-.fuzzing-tree .link {
-    fill: none;
-    stroke: rgba(255, 255, 255, 0.25);
-    stroke-width: 1.5;
-}
-
-.fuzzing-tree .link.mutating {
-    stroke: rgba(255, 180, 50, 0.5);
-    stroke-width: 2;
-}
-
-/* Instruction Sequence Mutation */
-.instruction-sequence {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    align-items: center;
-    padding: 6rem 2rem;
-    position: relative;
-    min-height: 400px;
-}
-
-.sequence-mutation-container {
-    position: relative;
-    width: 100%;
-    max-width: 700px;
-    height: 200px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
-    padding: 2rem;
-}
-
-.instruction-card {
-    width: 100%;
-    height: 80px;
-    padding: 1rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.instruction-card.active-mutation {
-    z-index: 10;
-}
-
-.card-content {
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    font-weight: 400;
-    white-space: nowrap;
-}
-
-/* Card 1 - Initialize (Position 0) - stays mostly stable */
-.card-1 {
-    animation: card1Position 10s ease-in-out infinite;
-    opacity: 0;
-    left: 0;
-    width: calc(25% - 0.6rem);
-}
-
-/* Card 2 - Transfer (Position 1) - Value mutations + position swaps */
-.card-2 {
-    animation: card2Position 10s ease-in-out infinite, card2Color 10s ease-in-out infinite;
-    opacity: 0;
-    left: calc(25% + 0.2rem);
-    width: calc(25% - 0.6rem);
-}
-
-/* Card 3 - Approve (Position 2) - Reordering */
-.card-3 {
-    animation: card3Position 10s ease-in-out infinite, card3Color 10s ease-in-out infinite;
-    opacity: 0;
-    left: calc(50% + 0.4rem);
-    width: calc(25% - 0.6rem);
-}
-
-/* Card 4 - Burn (Position 3) - Appears/disappears */
-.card-4 {
-    animation: card4Position 10s ease-in-out infinite, card4Color 10s ease-in-out infinite;
-    opacity: 0;
-    left: calc(75% + 0.6rem);
-    width: calc(25% - 0.6rem);
-}
-
-/* Mobile adjustments for card positions */
-@media (max-width: 768px) {
-    .card-1, .card-2, .card-3, .card-4 {
-        width: calc(25% - 0.6rem) !important;
-    }
-
-    .card-1 {
-        left: 0 !important;
-    }
-
-    .card-2 {
-        left: calc(25% + 0.2rem) !important;
-    }
-
-    .card-3 {
-        left: calc(50% + 0.4rem) !important;
-    }
-
-    .card-4 {
-        left: calc(75% + 0.6rem) !important;
-    }
-}
-
-.mutation-indicator-label {
-    text-align: center;
-    margin-top: 0;
-}
-
-.mutation-status {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.4);
-    font-family: 'Raleway', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    padding: 0.5rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    display: inline-block;
-    animation: statusPulse 2s ease-in-out infinite;
-}
-
-.sequence-row {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    position: relative;
-}
-
-.instruction-box {
-    min-width: 130px;
-    padding: 1.4rem 1.5rem;
-    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 6px;
-    text-align: center;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.8);
-    opacity: 0;
-    animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    position: relative;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    transition: all 0.4s ease;
-}
-
-.instruction-box:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.sequence-row:nth-child(1) .instruction-box:nth-child(1) { animation-delay: 0.6s; }
-.sequence-row:nth-child(1) .instruction-box:nth-child(2) { animation-delay: 0.8s; }
-.sequence-row:nth-child(1) .instruction-box:nth-child(3) { animation-delay: 1s; }
-.sequence-row:nth-child(1) .instruction-box:nth-child(4) { animation-delay: 1.2s; }
-
-.sequence-row:nth-child(3) .instruction-box:nth-child(1) { animation-delay: 2.2s; }
-.sequence-row:nth-child(3) .instruction-box:nth-child(2) {
-    animation: mutationTransform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 2.4s forwards,
-               continuousMutation 4s ease-in-out 3.5s infinite;
-}
-.sequence-row:nth-child(3) .instruction-box:nth-child(3) {
-    animation: insertTransform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 2.6s forwards,
-               continuousInsert 4s ease-in-out 3.7s infinite;
-}
-.sequence-row:nth-child(3) .instruction-box:nth-child(4) { animation-delay: 2.8s; }
-
-.instruction-box.mutated {
-    background: linear-gradient(135deg, rgba(255, 120, 50, 0.25) 0%, rgba(255, 100, 30, 0.15) 100%);
-    border-color: rgba(255, 150, 50, 0.5);
-    animation: mutationTransform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 2.4s forwards,
-               mutationPulse 2.5s ease-in-out 3.4s infinite;
-    box-shadow: 0 4px 20px rgba(255, 120, 50, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.instruction-box.mutated::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 150, 50, 0.5) 50%, transparent 70%);
-    animation: mutationSweep 2s ease 2.4s infinite;
-    animation-delay: 2.4s;
-}
-
-.instruction-box.mutated::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at center, rgba(255, 150, 50, 0.4) 0%, transparent 70%);
-    opacity: 0;
-    animation: mutationFlash 0.8s ease 3s infinite;
-}
-
-.instruction-box.new {
-    background: linear-gradient(135deg, rgba(80, 220, 120, 0.25) 0%, rgba(60, 200, 100, 0.15) 100%);
-    border-color: rgba(100, 255, 150, 0.5);
-    animation: insertTransform 1s cubic-bezier(0.34, 1.56, 0.64, 1) 2.6s forwards,
-               insertPulse 2.5s ease-in-out 3.6s infinite;
-    box-shadow: 0 4px 20px rgba(80, 220, 120, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.instruction-box.new::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(100, 255, 150, 0.5) 50%, transparent 70%);
-    animation: insertSweep 2.2s ease 2.6s infinite;
-}
-
-.instruction-box.new::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(100, 255, 150, 0.6) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: insertExpand 1s ease 3.2s infinite;
-}
-
-.instruction-box.reordered {
-    background: linear-gradient(135deg, rgba(150, 100, 255, 0.25) 0%, rgba(130, 80, 235, 0.15) 100%);
-    border-color: rgba(150, 100, 255, 0.5);
-    animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-               reorderPulse 2.5s ease-in-out 3.4s infinite;
-    box-shadow: 0 4px 20px rgba(150, 100, 255, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.instruction-box.reordered::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(150, 100, 255, 0.4) 50%, transparent 70%);
-    animation: insertSweep 2s ease 2.4s infinite;
-}
-
-.instruction-box.deleted {
-    background: linear-gradient(135deg, rgba(255, 80, 80, 0.2) 0%, rgba(200, 60, 60, 0.1) 100%);
-    border-color: rgba(255, 100, 100, 0.4);
-    animation: slideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards,
-               deletePulse 2.5s ease-in-out 3.4s infinite;
-    box-shadow: 0 4px 20px rgba(255, 80, 80, 0.2);
-    position: relative;
-    overflow: hidden;
-    opacity: 0.6;
-}
-
-.instruction-box.deleted::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: rgba(255, 100, 100, 0.8);
-    transform: translateY(-50%) scaleX(0);
-    animation: strikethrough 0.6s ease forwards;
-    animation-delay: 2.8s;
-}
-
-.instruction-box.deleted::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 80, 80, 0.3) 50%, transparent 70%);
-    animation: insertSweep 2s ease 2.6s infinite;
-}
-
-.mutation-arrow {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.4);
-    opacity: 0;
-    animation: arrowBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) 1.6s forwards;
-    position: relative;
-}
-
-.mutation-arrow::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 40px;
-    height: 40px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-    border-radius: 50%;
-    animation: arrowGlow 2s ease-in-out 2s infinite;
-}
-
-.mutation-label {
-    position: absolute;
-    top: -2.5rem;
-    left: 50%;
-    transform: translateX(-50%) scale(0.8);
-    font-size: 0.7rem;
-    font-weight: 400;
-    color: rgba(255, 150, 50, 0.9);
-    font-family: 'Raleway', sans-serif;
-    white-space: nowrap;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0;
-    padding: 0.3rem 0.8rem;
-    background: rgba(255, 150, 50, 0.15);
-    border: 1px solid rgba(255, 150, 50, 0.3);
-    border-radius: 3px;
-    animation: labelPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-.instruction-box.mutated .mutation-label {
-    animation-delay: 2.5s;
-}
-
-.instruction-box.new .mutation-label {
-    color: rgba(100, 255, 150, 0.9);
-    background: rgba(100, 255, 150, 0.15);
-    border-color: rgba(100, 255, 150, 0.3);
-    animation-delay: 2.7s;
-}
-
-.instruction-box.reordered .mutation-label {
-    color: rgba(150, 100, 255, 0.9);
-    background: rgba(150, 100, 255, 0.15);
-    border-color: rgba(150, 100, 255, 0.3);
-    animation-delay: 2.7s;
-}
-
-.instruction-box.deleted .mutation-label {
-    color: rgba(255, 100, 100, 0.9);
-    background: rgba(255, 100, 100, 0.15);
-    border-color: rgba(255, 100, 100, 0.3);
-    animation-delay: 2.9s;
-}
-
-/* Mutation particles */
-.instruction-box.mutated .mutation-particle,
-.instruction-box.new .mutation-particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.6);
-    border-radius: 50%;
-    pointer-events: none;
-}
-
-/* sBPF Coverage Visualization */
-.coverage-visualization {
-    display: flex;
-    gap: 4rem;
-    align-items: center;
-    justify-content: center;
-    padding: 4rem 2rem;
-}
-
-.bytecode-panel {
-    flex: 1;
-    max-width: 400px;
-}
-
-.bytecode-header {
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', sans-serif;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-}
-
-.bytecode-lines {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    font-family: 'Courier New', monospace;
-    font-size: 0.85rem;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(16, 235, 255, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.bytecode-line {
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem;
-    margin-bottom: 0.3rem;
-    position: relative;
-    border-left: 2px solid transparent;
-}
-
-.execution-marker {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 3px;
-    background: rgba(100, 200, 255, 0.8);
-    opacity: 0;
-    box-shadow: 0 0 10px rgba(100, 200, 255, 0.6);
-}
-
-.line-1 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 0.8s forwards, lineExecution1 2.5s linear 2s infinite;
-}
-.line-1 .execution-marker { animation: executeMarker1 2.5s linear 2s infinite; }
-
-.line-2 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 1s forwards, lineExecution2 2.5s linear 2s infinite;
-}
-.line-2 .execution-marker { animation: executeMarker2 2.5s linear 2s infinite; }
-
-.line-3 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 1.2s forwards, lineExecution3 2.5s linear 2s infinite;
-}
-.line-3 .execution-marker { animation: executeMarker3 2.5s linear 2s infinite; }
-
-.line-4 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 1.4s forwards, lineExecution4 2.5s linear 2s infinite;
-}
-.line-4 .execution-marker { animation: executeMarker4 2.5s linear 2s infinite; }
-
-.line-5 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 1.6s forwards, lineExecution5 2.5s linear 2s infinite;
-}
-.line-5 .execution-marker { animation: executeMarker5 2.5s linear 2s infinite; }
-
-.line-6 {
-    opacity: 0;
-    animation: fadeIn 0.3s ease 1.8s forwards, lineExecution6 2.5s linear 2s infinite;
-}
-.line-6 .execution-marker { animation: executeMarker6 2.5s linear 2s infinite; }
-
-.line-number {
-    color: rgba(255, 255, 255, 0.3);
-    min-width: 3rem;
-}
-
-.line-code {
-    color: rgba(255, 255, 255, 0.6);
-    flex: 1;
-}
-
-.coverage-arrow {
-    font-size: 2rem;
-    color: rgba(255, 255, 255, 0.2);
-    opacity: 0;
-    animation: fadeIn 0.5s ease 1.5s forwards;
-}
-
-.coverage-stats {
-    flex: 1;
-    max-width: 300px;
-}
-
-.stat-item {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: slideIn 0.5s ease forwards;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(16, 235, 255, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.stat-item:nth-child(1) {
-    animation: slideIn 0.5s ease 2s forwards, statPulse1 2.5s linear 2s infinite;
-}
-.stat-item:nth-child(2) {
-    animation: slideIn 0.5s ease 2.2s forwards, statPulse2 2.5s linear 2s infinite;
-}
-.stat-item:nth-child(3) {
-    animation: slideIn 0.5s ease 2.4s forwards, statPulse3 2.5s linear 2s infinite;
-}
-
-.stat-label {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 0.5rem;
-}
-
-.stat-value {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.9);
-    font-family: 'Raleway', sans-serif;
-}
-
-.stat-bar {
-    height: 4px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 2px;
-    margin-top: 0.5rem;
-    overflow: hidden;
-}
-
-.stat-bar-fill {
-    height: 100%;
-    background: linear-gradient(90deg, rgba(100, 255, 100, 0.6), rgba(100, 255, 100, 0.3));
-    border-radius: 2px;
-    width: 0;
-}
-
-.stat-bar-fill-1 {
-    animation: fillBar1 2.5s linear 2.2s infinite;
-}
-
-.stat-bar-fill-2 {
-    animation: fillBar2 2.5s linear 2.4s infinite;
-}
-
-.stat-bar-fill-3 {
-    animation: fillBar3 2.5s linear 2.6s infinite;
-}
-
-/* Structure-Aware Mutations */
-.structure-mutations {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 4rem 2rem;
-}
-
-/* Invariant Testing */
-.invariant-visualization {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 4rem 2rem;
-    gap: 1rem;
-}
-
-.invariant-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
-    max-width: 900px;
-    width: 100%;
-}
-
-.invariant-card {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 1rem 1.25rem;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 32px rgba(16, 235, 255, 0.1);
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.invariant-card:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-}
-
-.invariant-name {
-    font-size: 0.9rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.95);
-    font-family: 'Raleway', sans-serif;
-    margin-bottom: 0.5rem;
-}
-
-.invariant-formula {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Courier New', monospace;
-    margin-bottom: 0.5rem;
-}
-
-.invariant-status {
-    font-size: 0.7rem;
-    font-weight: 300;
-    color: rgba(100, 255, 150, 0.8);
-    font-family: 'Raleway', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-.invariant-status.checking {
-    color: rgba(255, 200, 100, 0.8);
-    animation: checkingPulse 1.5s ease-in-out infinite;
-}
-
-.structure-box {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 12px;
-    padding: 2rem 3rem;
-    position: relative;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    opacity: 0;
-    animation: slideIn 0.6s ease forwards;
-    width: 620px;
-    margin: 0 auto;
-}
-
-.structure-box:nth-child(1) { animation-delay: 0.8s; }
-.structure-box:nth-child(3) { animation-delay: 1.8s; }
-
-.structure-title {
-    font-size: 0.8rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-.protobuf-schema {
-    font-family: 'Courier New', monospace;
-    font-size: 0.75rem;
-    line-height: 1.8;
-    overflow-x: auto;
-}
-
-.schema-line {
-    display: block;
-    margin-bottom: 0.3rem;
-}
-
-.schema-keyword {
-    color: rgba(150, 150, 255, 0.8);
-}
-
-.schema-type {
-    color: rgba(255, 200, 100, 0.8);
-}
-
-.schema-field {
-    color: rgba(255, 255, 255, 0.7);
-}
-
-.schema-value {
-    color: rgba(100, 255, 150, 0.9);
-    transition: opacity 0.08s ease;
-}
-
-.schema-changed {
-    background: rgba(255, 150, 50, 0.2);
-    padding: 0.2rem 0.4rem;
-    border-radius: 2px;
-    animation: highlight 2s ease infinite;
-}
-
-.mutation-indicator {
-    text-align: center;
-    opacity: 0;
-    animation: fadeIn 0.5s ease 1.4s forwards;
-}
-
-.mutation-types {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-}
-
-.mutation-type {
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: rgba(255, 255, 255, 0.5);
-    font-family: 'Raleway', sans-serif;
-    padding: 0.5rem 1rem;
-    background: rgba(255, 150, 50, 0.1);
-    border: 1px solid rgba(255, 150, 50, 0.3);
-    border-radius: 2px;
-    text-align: center;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(40px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-
-@keyframes gridPulse {
-    0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.95);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(1.05);
-    }
-}
-
-@keyframes fuzzSpiral1 {
-    0% {
-        transform: translate(-50%, -50%) rotate(0deg) translateX(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(1080deg) translateX(50px);
-        opacity: 0;
-    }
-}
-
-@keyframes fuzzSpiral2 {
-    0% {
-        transform: translate(-50%, -50%) rotate(180deg) translateX(0);
-        opacity: 1;
-    }
-    100% {
-        transform: translate(-50%, -50%) rotate(1260deg) translateX(50px);
-        opacity: 0;
-    }
-}
-
-@keyframes sonarPing {
-    0% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.8;
-        border-width: 1px;
-    }
-    50% {
-        opacity: 0.4;
-    }
-    100% {
-        transform: translate(-50%, -50%) scale(8);
-        opacity: 0;
-        border-width: 0.5px;
-    }
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes nodeReveal {
-    0% {
-        opacity: 0;
-        transform: translateY(20px) scale(0.9);
-    }
-    60% {
-        transform: translateY(-5px) scale(1.02);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-@keyframes connectionGrow {
-    0% {
-        transform: translateX(-50%) scaleY(0);
-        opacity: 0;
-    }
-    100% {
-        transform: translateX(-50%) scaleY(1);
-        opacity: 1;
-    }
-}
-
-@keyframes exploredGlow {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(80, 200, 120, 0.25);
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(80, 200, 120, 0.4);
-    }
-}
-
-@keyframes pulseIndicator {
-    0%, 100% {
-        opacity: 1;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: scale(0.8);
-    }
-}
-
-@keyframes flowParticle {
-    0% {
-        top: 0;
-        opacity: 1;
-    }
-    100% {
-        top: 100%;
-        opacity: 0;
-    }
-}
-
-@keyframes drawBranch {
-    to {
-        stroke-dashoffset: 0;
-    }
-}
-
-@keyframes mutationTransform {
-    0% {
-        opacity: 0;
-        transform: scale(0.8) rotateY(90deg);
-    }
-    50% {
-        transform: scale(1.15) rotateY(0deg);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotateY(0deg);
-    }
-}
-
-@keyframes insertTransform {
-    0% {
-        opacity: 0;
-        transform: scale(0) rotate(0deg);
-    }
-    60% {
-        transform: scale(1.2) rotate(10deg);
-    }
-    100% {
-        opacity: 1;
-        transform: scale(1) rotate(0deg);
-    }
-}
-
-@keyframes mutationPulse {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(255, 120, 50, 0.3);
-        border-color: rgba(255, 150, 50, 0.5);
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(255, 120, 50, 0.5), 0 0 20px rgba(255, 120, 50, 0.3);
-        border-color: rgba(255, 150, 50, 0.7);
-    }
-}
-
-@keyframes insertPulse {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(80, 220, 120, 0.3);
-        border-color: rgba(100, 255, 150, 0.5);
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(80, 220, 120, 0.5), 0 0 20px rgba(80, 220, 120, 0.3);
-        border-color: rgba(100, 255, 150, 0.7);
-    }
-}
-
-@keyframes mutationSweep {
-    0% {
-        transform: translateX(-100%) skewX(-15deg);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100%) skewX(-15deg);
-        opacity: 0;
-    }
-}
-
-@keyframes insertSweep {
-    0% {
-        transform: translateX(-100%) skewX(-15deg);
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(100%) skewX(-15deg);
-        opacity: 0;
-    }
-}
-
-@keyframes mutationFlash {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0.8;
-    }
-    100% {
-        opacity: 0;
-    }
-}
-
-@keyframes insertExpand {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 0.8;
-    }
-    100% {
-        width: 200%;
-        height: 200%;
-        opacity: 0;
-    }
-}
-
-@keyframes arrowBounce {
-    0% {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    60% {
-        transform: translateY(5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes arrowGlow {
-    0%, 100% {
-        opacity: 0.3;
-        transform: translate(-50%, -50%) scale(1);
-    }
-    50% {
-        opacity: 0.6;
-        transform: translate(-50%, -50%) scale(1.2);
-    }
-}
-
-@keyframes labelPop {
-    0% {
-        opacity: 0;
-        transform: translateX(-50%) scale(0.5) translateY(10px);
-    }
-    60% {
-        transform: translateX(-50%) scale(1.1) translateY(0);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(-50%) scale(1) translateY(0);
-    }
-}
-
-@keyframes continuousMutation {
-    0%, 100% {
-        transform: scale(1) rotateY(0deg);
-    }
-    25% {
-        transform: scale(1.05) rotateY(5deg);
-    }
-    50% {
-        transform: scale(0.98) rotateY(-5deg);
-    }
-    75% {
-        transform: scale(1.02) rotateY(3deg);
-    }
-}
-
-@keyframes continuousInsert {
-    0%, 100% {
-        transform: scale(1) rotate(0deg);
-    }
-    25% {
-        transform: scale(1.03) rotate(2deg);
-    }
-    50% {
-        transform: scale(0.98) rotate(-2deg);
-    }
-    75% {
-        transform: scale(1.02) rotate(1deg);
-    }
-}
-
-@keyframes variantSlideIn {
-    0% {
-        opacity: 0;
-        transform: translateX(-40px);
-    }
-    60% {
-        transform: translateX(5px);
-    }
-    100% {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-@keyframes reorderPulse {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(150, 100, 255, 0.3);
-        border-color: rgba(150, 100, 255, 0.5);
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(150, 100, 255, 0.5), 0 0 20px rgba(150, 100, 255, 0.3);
-        border-color: rgba(150, 100, 255, 0.7);
-    }
-}
-
-@keyframes deletePulse {
-    0%, 100% {
-        box-shadow: 0 4px 20px rgba(255, 80, 80, 0.2);
-        border-color: rgba(255, 100, 100, 0.4);
-    }
-    50% {
-        box-shadow: 0 4px 30px rgba(255, 80, 80, 0.4), 0 0 20px rgba(255, 80, 80, 0.2);
-        border-color: rgba(255, 100, 100, 0.6);
-    }
-}
-
-@keyframes strikethrough {
-    0% {
-        transform: translateY(-50%) scaleX(0);
-    }
-    100% {
-        transform: translateY(-50%) scaleX(1);
-    }
-}
-
-/* Bytecode execution animations */
-@keyframes executeMarker1 {
-    0%, 5% { opacity: 0; }
-    6%, 10% { opacity: 1; }
-    11%, 100% { opacity: 0; }
-}
-@keyframes lineExecution1 {
-    0%, 5% { background: transparent; border-left-color: transparent; }
-    6%, 10% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    11%, 40% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-    41%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-@keyframes executeMarker2 {
-    0%, 10% { opacity: 0; }
-    11%, 15% { opacity: 1; }
-    16%, 100% { opacity: 0; }
-}
-@keyframes lineExecution2 {
-    0%, 10% { background: transparent; border-left-color: transparent; }
-    11%, 15% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    16%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-@keyframes executeMarker3 {
-    0%, 15% { opacity: 0; }
-    16%, 20% { opacity: 1; }
-    21%, 100% { opacity: 0; }
-}
-@keyframes lineExecution3 {
-    0%, 15% { background: transparent; border-left-color: transparent; }
-    16%, 20% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    21%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-@keyframes executeMarker4 {
-    0%, 40% { opacity: 0; }
-    41%, 45% { opacity: 1; }
-    46%, 100% { opacity: 0; }
-}
-@keyframes lineExecution4 {
-    0%, 40% { background: transparent; border-left-color: transparent; }
-    41%, 45% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    46%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-@keyframes executeMarker5 {
-    0%, 20% { opacity: 0; }
-    21%, 25% { opacity: 1; }
-    26%, 100% { opacity: 0; }
-}
-@keyframes lineExecution5 {
-    0%, 20% { background: transparent; border-left-color: transparent; }
-    21%, 25% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    26%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-@keyframes executeMarker6 {
-    0%, 25% { opacity: 0; }
-    26%, 30% { opacity: 1; }
-    31%, 100% { opacity: 0; }
-}
-@keyframes lineExecution6 {
-    0%, 25% { background: transparent; border-left-color: transparent; }
-    26%, 30% { background: rgba(100, 200, 255, 0.15); border-left-color: rgba(100, 200, 255, 0.6); }
-    31%, 100% { background: rgba(100, 255, 100, 0.1); border-left-color: rgba(100, 255, 100, 0.5); }
-}
-
-/* Coverage stat animations */
-@keyframes statPulse1 {
-    0%, 25% { border-color: rgba(255, 255, 255, 0.15); }
-    26%, 32% { border-color: rgba(100, 255, 150, 0.6); box-shadow: 0 0 15px rgba(100, 255, 150, 0.3); }
-    33%, 100% { border-color: rgba(255, 255, 255, 0.15); }
-}
-
-@keyframes statPulse2 {
-    0%, 10% { border-color: rgba(255, 255, 255, 0.15); }
-    11%, 17% { border-color: rgba(100, 255, 150, 0.6); box-shadow: 0 0 15px rgba(100, 255, 150, 0.3); }
-    18%, 45% { border-color: rgba(255, 255, 255, 0.15); }
-    46%, 52% { border-color: rgba(100, 255, 150, 0.6); box-shadow: 0 0 15px rgba(100, 255, 150, 0.3); }
-    53%, 100% { border-color: rgba(255, 255, 255, 0.15); }
-}
-
-@keyframes statPulse3 {
-    0%, 45% { border-color: rgba(255, 255, 255, 0.15); }
-    46%, 52% { border-color: rgba(100, 255, 150, 0.6); box-shadow: 0 0 15px rgba(100, 255, 150, 0.3); }
-    53%, 100% { border-color: rgba(255, 255, 255, 0.15); }
-}
-
-/* Fill bar animations */
-@keyframes fillBar1 {
-    0%, 25% { width: 50%; }
-    26%, 100% { width: 67%; }
-}
-
-@keyframes fillBar2 {
-    0%, 10% { width: 72%; }
-    11%, 45% { width: 80%; }
-    46%, 100% { width: 85%; }
-}
-
-@keyframes fillBar3 {
-    0%, 45% { width: 42%; }
-    46%, 100% { width: 55%; }
-}
-
-/* Card Position Animations - Show actual reordering */
-
-/* Card 1 - Stays in position 0 mostly */
-@keyframes card1Position {
-    0% {
-        opacity: 0;
-        left: 2rem;
-        transform: scale(0.8);
-    }
-    2%, 98% {
-        opacity: 1;
-        left: 2rem;
-        transform: scale(1);
-    }
-    100% {
-        opacity: 1;
-        left: 2rem;
-        transform: scale(1);
-    }
-}
-
-/* Mobile card 1 position */
-@media (max-width: 768px) {
-    @keyframes card1Position {
-        0% {
-            opacity: 0;
-            left: 1rem;
-            transform: scale(0.8);
-        }
-        2%, 98% {
-            opacity: 1;
-            left: 1rem;
-            transform: scale(1);
-        }
-        100% {
-            opacity: 1;
-            left: 1rem;
-            transform: scale(1);
-        }
-    }
-}
-
-/* Card 2 - Transfer - Swaps with Approve */
-@keyframes card2Position {
-    0% {
-        opacity: 0;
-        left: calc(25% + 0.25rem);
-        transform: scale(0.8);
-    }
-    3%, 30% {
-        opacity: 1;
-        left: calc(25% + 0.25rem);
-        transform: scale(1);
-        z-index: 1;
-    }
-    35%, 40% {
-        /* Swap with Approve (card 3) - move RIGHT */
-        left: calc(50% + 0.5rem);
-        transform: translateY(-25px) scale(1.1);
-        z-index: 20;
-    }
-    45%, 97% {
-        /* Stay in position 2 */
-        left: calc(50% + 0.5rem);
-        transform: translateY(0) scale(1);
-        z-index: 1;
-    }
-    100% {
-        opacity: 1;
-        left: calc(50% + 0.5rem);
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Mobile card 2 position */
-@media (max-width: 768px) {
-    @keyframes card2Position {
-        0% {
-            opacity: 0;
-            left: calc(25% + 0.125rem);
-            transform: scale(0.8);
-        }
-        3%, 30% {
-            opacity: 1;
-            left: calc(25% + 0.125rem);
-            transform: scale(1);
-            z-index: 1;
-        }
-        35%, 40% {
-            left: calc(50% + 0.25rem);
-            transform: translateY(-20px) scale(1.08);
-            z-index: 20;
-        }
-        45%, 97% {
-            left: calc(50% + 0.25rem);
-            transform: translateY(0) scale(1);
-            z-index: 1;
-        }
-        100% {
-            opacity: 1;
-            left: calc(50% + 0.25rem);
-            transform: translateY(0) scale(1);
-        }
-    }
-}
-
-/* Card 3 - Approve - Swaps with Transfer then Burn */
-@keyframes card3Position {
-    0% {
-        opacity: 0;
-        left: calc(50% + 0.5rem);
-        transform: scale(0.8);
-    }
-    4%, 30% {
-        opacity: 1;
-        left: calc(50% + 0.5rem);
-        transform: scale(1);
-        z-index: 1;
-    }
-    35%, 40% {
-        /* Swap with Transfer (card 2) - move LEFT */
-        left: calc(25% + 0.25rem);
-        transform: translateY(25px) scale(1.1);
-        z-index: 15;
-    }
-    45%, 60% {
-        /* Stay in position 1 */
-        left: calc(25% + 0.25rem);
-        transform: translateY(0) scale(1);
-        z-index: 1;
-    }
-    65%, 70% {
-        /* Swap with Burn (card 4) - move RIGHT to position 3 */
-        left: calc(75% + 0.75rem);
-        transform: translateY(-25px) scale(1.1);
-        z-index: 20;
-    }
-    75%, 97% {
-        /* Stay in position 3 */
-        left: calc(75% + 0.75rem);
-        transform: translateY(0) scale(1);
-        z-index: 1;
-    }
-    100% {
-        opacity: 1;
-        left: calc(75% + 0.75rem);
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Mobile card 3 position */
-@media (max-width: 768px) {
-    @keyframes card3Position {
-        0% {
-            opacity: 0;
-            left: calc(50% + 0.25rem);
-            transform: scale(0.8);
-        }
-        4%, 30% {
-            opacity: 1;
-            left: calc(50% + 0.25rem);
-            transform: scale(1);
-            z-index: 1;
-        }
-        35%, 40% {
-            left: calc(25% + 0.125rem);
-            transform: translateY(20px) scale(1.08);
-            z-index: 15;
-        }
-        45%, 60% {
-            left: calc(25% + 0.125rem);
-            transform: translateY(0) scale(1);
-            z-index: 1;
-        }
-        65%, 70% {
-            left: calc(75% + 0.375rem);
-            transform: translateY(-20px) scale(1.08);
-            z-index: 20;
-        }
-        75%, 97% {
-            left: calc(75% + 0.375rem);
-            transform: translateY(0) scale(1);
-            z-index: 1;
-        }
-        100% {
-            opacity: 1;
-            left: calc(75% + 0.375rem);
-            transform: translateY(0) scale(1);
-        }
-    }
-}
-
-/* Card 4 - Burn - Swaps with Approve */
-@keyframes card4Position {
-    0% {
-        opacity: 0;
-        left: calc(75% + 0.75rem);
-        transform: scale(0.8);
-    }
-    5%, 60% {
-        /* Stay visible in position 3 */
-        opacity: 1;
-        left: calc(75% + 0.75rem);
-        transform: scale(1);
-        z-index: 1;
-    }
-    65%, 70% {
-        /* Swap with Approve (card 3) - move LEFT to position 1 */
-        left: calc(25% + 0.25rem);
-        transform: translateY(25px) scale(1.1);
-        z-index: 15;
-    }
-    75%, 97% {
-        /* Stay in position 1 */
-        left: calc(25% + 0.25rem);
-        transform: translateY(0) scale(1);
-        z-index: 1;
-    }
-    100% {
-        opacity: 1;
-        left: calc(25% + 0.25rem);
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Mobile card 4 position */
-@media (max-width: 768px) {
-    @keyframes card4Position {
-        0% {
-            opacity: 0;
-            left: calc(75% + 0.375rem);
-            transform: scale(0.8);
-        }
-        5%, 60% {
-            opacity: 1;
-            left: calc(75% + 0.375rem);
-            transform: scale(1);
-            z-index: 1;
-        }
-        65%, 70% {
-            left: calc(25% + 0.125rem);
-            transform: translateY(20px) scale(1.08);
-            z-index: 15;
-        }
-        75%, 97% {
-            left: calc(25% + 0.125rem);
-            transform: translateY(0) scale(1);
-            z-index: 1;
-        }
-        100% {
-            opacity: 1;
-            left: calc(25% + 0.125rem);
-            transform: translateY(0) scale(1);
-        }
-    }
-}
-
-/* Color/mutation animations */
-@keyframes card2Color {
-    0%, 32% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-    37%, 47% {
-        /* Purple during swap with Approve */
-        background: linear-gradient(135deg, rgba(150, 100, 255, 0.3) 0%, rgba(130, 80, 235, 0.2) 100%);
-        border-color: rgba(150, 100, 255, 0.7);
-        box-shadow: 0 4px 30px rgba(150, 100, 255, 0.5);
-    }
-    52%, 100% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
+.logo-item:hover .chain-logo {
+    opacity: 1;
 }
 
-@keyframes card3Color {
-    0%, 32% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-    37%, 47% {
-        /* Purple during swap with Transfer */
-        background: linear-gradient(135deg, rgba(150, 100, 255, 0.3) 0%, rgba(130, 80, 235, 0.2) 100%);
-        border-color: rgba(150, 100, 255, 0.7);
-        box-shadow: 0 4px 30px rgba(150, 100, 255, 0.5);
-    }
-    52%, 62% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-    67%, 77% {
-        /* Purple during swap with Burn */
-        background: linear-gradient(135deg, rgba(150, 100, 255, 0.3) 0%, rgba(130, 80, 235, 0.2) 100%);
-        border-color: rgba(150, 100, 255, 0.7);
-        box-shadow: 0 4px 30px rgba(150, 100, 255, 0.5);
-    }
-    82%, 100% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
+.chain-logo-solana {
+    height: 50px;
+    width: 50px;
 }
 
-@keyframes card4Color {
-    0%, 62% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-    67%, 77% {
-        /* Purple during swap with Approve */
-        background: linear-gradient(135deg, rgba(150, 100, 255, 0.3) 0%, rgba(130, 80, 235, 0.2) 100%);
-        border-color: rgba(150, 100, 255, 0.7);
-        box-shadow: 0 4px 30px rgba(150, 100, 255, 0.5);
-    }
-    82%, 100% {
-        background: linear-gradient(135deg, rgba(0, 0, 0, 0.7) 0%, rgba(15, 15, 25, 0.8) 100%);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
+.chain-logo-ethereum {
+    height: 60px;
+    width: 60px;
+    filter: grayscale(1);
 }
 
-@keyframes statusPulse {
-    0%, 100% {
-        opacity: 0.6;
-        border-color: rgba(255, 255, 255, 0.1);
-    }
-    50% {
-        opacity: 1;
-        border-color: rgba(255, 255, 255, 0.3);
-    }
+.logo-item:hover .chain-logo-ethereum {
+    filter: grayscale(0);
+    opacity: 1;
 }
 
-@keyframes highlight {
-    0%, 100% {
-        background: rgba(255, 150, 50, 0.2);
-    }
-    50% {
-        background: rgba(255, 150, 50, 0.4);
-    }
+.chain-logo-aptos {
+    height: 55px;
+    width: 55px;
+    filter: brightness(0) invert(1) opacity(0.7);
+    transition: filter 0.3s ease;
 }
 
-@keyframes fillBar {
-    from { width: 0; }
-    to { width: 100%; }
+.logo-item:hover .chain-logo-aptos {
+    filter: brightness(0) invert(1) opacity(1);
 }
 
-@keyframes checkingPulse {
-    0%, 100% {
-        opacity: 0.6;
-    }
-    50% {
-        opacity: 1;
-    }
+.gradient-text {
+    background: linear-gradient(90deg, #10ebff, #b91aee, #10ebff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradientShift 3s linear infinite;
 }
 
 @keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .coverage-visualization,
-    .structure-mutations {
-        flex-direction: column;
-        gap: 2rem;
-    }
-
-    .coverage-arrow {
-        transform: rotate(90deg);
-        font-size: 1.5rem;
-    }
-
-    .cycle-phases {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-        max-width: 500px;
-    }
-
-    .fuzzing-intro {
-        margin: 8rem auto 4rem;
-    }
+/* Services Grid */
+.services-showcase {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
-@media (max-width: 768px) {
-    .methodology-section {
-        padding: 6rem 0 3rem;
-    }
-
-    .methodology-container {
-        padding: 0 1rem;
-    }
-
-    .methodology-header {
-        margin-bottom: 7rem;
-        padding-top: 2rem;
-    }
-
-    .methodology-title {
-        font-size: 3rem;
-        font-weight: 200;
-        margin-bottom: 1rem;
-    }
-
-    body.home-page .methodology-section .methodology-title::after {
-        width: 60px;
-        animation: expandLine 0.8s ease 0.5s forwards;
-    }
-
-    .methodology-subtitle {
-        font-size: 1rem;
-        line-height: 1.7;
-    }
-
-    .cycle-title {
-        font-size: 1.8rem;
-        font-weight: 300;
-        margin-bottom: 1.5rem;
-        padding-bottom: 1rem;
-    }
-
-    .cycle-subtitle {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        margin-bottom: 3rem;
-    }
-
-    .cycle-phases {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-
-    .phase-item {
-        padding: 2rem 1.5rem;
-    }
-
-    .phase-number {
-        font-size: 0.65rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .phase-name {
-        font-size: 1rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .phase-desc {
-        font-size: 0.8rem;
-        line-height: 1.6;
-    }
-
-    .fuzzing-intro {
-        margin: 6rem auto 3rem;
-        padding: 0 1rem;
-    }
-
-    .fuzzing-title {
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .fuzzing-subtitle {
-        font-size: 0.95rem;
-        line-height: 1.7;
-    }
-
-    .systems-container {
-        gap: 5rem;
-        max-width: 100%;
-        padding: 0 1rem;
-    }
-
-    .system-label {
-        margin-bottom: 2rem;
-    }
-
-    .system-title {
-        font-size: 1.6rem;
-        font-weight: 300;
-        margin-bottom: 0.5rem;
-    }
-
-    .system-description {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        max-width: 100%;
-    }
-
-    /* Decision tree - make it scrollable on mobile */
-    .decision-tree {
-        padding: 2rem 0;
-        overflow-x: auto;
-        min-height: 400px;
-    }
-
-    .decision-tree svg {
-        min-width: 600px;
-    }
-
-    /* Instruction sequence - adjust for mobile */
-    .instruction-sequence {
-        padding: 3rem 0.5rem;
-        min-height: 300px;
-    }
-
-    .sequence-mutation-container {
-        max-width: 100%;
-        height: 180px;
-        padding: 0.5rem;
-        gap: 0.25rem;
-    }
-
-    .instruction-card {
-        height: 60px;
-        padding: 0.4rem 0.15rem;
-    }
-
-    .card-1, .card-2, .card-3, .card-4 {
-        width: calc(25% - 0.75rem) !important;
-    }
-
-    .card-1 {
-        left: 0.5rem !important;
-    }
-
-    .card-2 {
-        left: calc(25% + 0.5rem) !important;
-    }
-
-    .card-3 {
-        left: calc(50% + 0.5rem) !important;
-    }
-
-    .card-4 {
-        left: calc(75% + 0.5rem) !important;
-    }
-
-    .card-content {
-        font-size: 0.55rem;
-        white-space: normal;
-        word-break: break-word;
-        line-height: 1.2;
-    }
-
-    .mutation-status {
-        font-size: 0.7rem;
-        padding: 0.4rem 1rem;
-        letter-spacing: 0.1em;
-    }
-
-    /* Coverage visualization - stack vertically */
-    .coverage-visualization {
-        padding: 2rem 0.5rem;
-    }
-
-    .bytecode-panel {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .bytecode-header {
-        font-size: 0.75rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .bytecode-lines {
-        padding: 1rem;
-        font-size: 0.7rem;
-        overflow-x: auto;
-        width: 100%;
-    }
-
-    .bytecode-line {
-        padding: 0.4rem;
-        margin-bottom: 0.2rem;
-    }
-
-    .line-number {
-        min-width: 2.5rem;
-        font-size: 0.7rem;
-    }
-
-    .line-code {
-        font-size: 0.7rem;
-    }
-
-    .coverage-arrow {
-        transform: rotate(90deg);
-        font-size: 1.5rem;
-        margin: 1rem 0;
-    }
-
-    .coverage-stats {
-        max-width: 100%;
-        width: 100%;
-    }
-
-    .stat-item {
-        padding: 1.25rem;
-        margin-bottom: 0.75rem;
-    }
-
-    .stat-label {
-        font-size: 0.7rem;
-        margin-bottom: 0.4rem;
-    }
-
-    .stat-value {
-        font-size: 1.3rem;
-    }
-
-    /* Structure mutations - adjust for mobile */
-    .structure-mutations {
-        padding: 2rem 0.5rem;
-    }
-
-    .structure-box {
-        width: 100%;
-        max-width: 100%;
-        padding: 1.5rem 1rem;
-        overflow-x: auto;
-    }
-
-    .structure-title {
-        font-size: 0.75rem;
-        margin-bottom: 1rem;
-    }
-
-    .protobuf-schema {
-        font-size: 0.65rem;
-        line-height: 1.7;
-        min-width: 400px;
-    }
-
-    /* Invariant testing - adjust grid */
-    .invariant-visualization {
-        padding: 2rem 1rem;
-    }
-
-    .invariant-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        max-width: 100%;
-    }
-
-    .invariant-card {
-        padding: 1.25rem;
-    }
-
-    .invariant-name {
-        font-size: 0.95rem;
-        margin-bottom: 0.6rem;
-    }
-
-    .invariant-formula {
-        font-size: 0.75rem;
-        margin-bottom: 0.85rem;
-        padding: 0.4rem;
-    }
-
-    .invariant-status {
-        font-size: 0.7rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .methodology-header {
-        margin-bottom: 5.5rem;
-    }
-
-    .methodology-title {
-        font-size: 2.5rem;
-        font-weight: 300;
-    }
-
-    .methodology-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .cycle-title {
-        font-size: 1.5rem;
-        font-weight: 400;
-        margin-bottom: 1.25rem;
-    }
-
-    .cycle-subtitle {
-        font-size: 0.9rem;
-        margin-bottom: 2.5rem;
-    }
-
-    .phase-item {
-        padding: 1.5rem 1rem;
-    }
-
-    .fuzzing-title {
-        font-size: 1.8rem;
-        font-weight: 300;
-    }
-
-    .system-label {
-        margin-bottom: 1.5rem;
-    }
-
-    .system-title {
-        font-size: 1.4rem;
-        font-weight: 400;
-    }
-
-    .systems-container {
-        gap: 4rem;
-        max-width: 100%;
-        padding: 0 0.5rem;
-    }
-
-    .structure-box {
-        padding: 1rem 0.75rem;
-    }
-
-    .protobuf-schema {
-        font-size: 0.6rem;
-        min-width: 350px;
-    }
-
-    .card-content {
-        font-size: 0.5rem;
-    }
-
-    .instruction-card {
-        padding: 0.4rem 0.2rem;
-    }
-}
-</style>
-
-<section class="methodology-section">
-    <div class="methodology-container">
-        <div class="methodology-header">
-            <h2 class="methodology-title">Audits Powered by Advanced Tooling</h2>
-            <p class="methodology-subtitle">We combine manual code review and custom automated security testing to systematically validate invariants across millions of execution paths, providing security guarantees that just by manual analysis alone can't be achieved</p>
-        </div>
-
-        <!-- Methodology Cycle -->
-        <div class="methodology-cycle">
-            <div class="cycle-title">Three-Phase Audit Methodology</div>
-            <p class="cycle-subtitle">Traditional audits depend on manual review, limiting how much code can be tested. Our automation tools systematically explore millions of execution paths, while our security engineers focus on validating complex business logic, architectural risks and threat modelling</p>
-            <div class="cycle-phases">
-                <div class="phase-item">
-                    <div class="phase-number">01</div>
-                    <div class="phase-name">Invariant Specification & Protocol Modeling</div>
-                    <div class="phase-desc">Map security-critical properties, state machines, and economic invariants that define protocol correctness, establishing validation criteria that will guide automated testing while ensuring spotted edge-cases are correctly modelled.</div>
-                </div>
-                <div class="phase-item">
-                    <div class="phase-number">02</div>
-                    <div class="phase-name">Automated Security Testing & Analysis</div>
-                    <div class="phase-desc">Deploy our complete tooling suite, involving Solaris for custom fuzzing infrastructure for state space exploration, Radiant for directed complex invariant testing, and Eloizer for source-level vulnerability detection.</div>
-                </div>
-                <div class="phase-item">
-                    <div class="phase-number">03</div>
-                    <div class="phase-name">Expert Validation & Remediation</div>
-                    <div class="phase-desc">Security Engineers analyze automated findings, validate business logic invariants and provide architectural guidance, ensuring discovered vulnerabilities are understood in full protocol context</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fuzzing Implementation -->
-        <div class="fuzzing-intro">
-            <h3 class="fuzzing-title">Purpose-Built Fuzzing Infrastructure for Solana</h3>
-            <p class="fuzzing-subtitle">Off-the-shelf fuzzing tools cannot effectively test Solana smart contracts. We have engineered a complete instrumentation and fuzzing stack specifically for sBPF bytecode, enabling capabilities that distinguish our audits from traditional security firms</p>
-        </div>
-
-        <div class="systems-container">
-
-            <!-- Unified Feature: Program Analysis & State Space Exploration -->
-            <div class="system-block">
-                <div class="system-label">
-                    <h3 class="system-title">Program Analysis & State Space Exploration</h3>
-                    <p class="system-description">We model protocol state machines and construct decision trees that guide our fuzzing tools toward critical state transitions, using schema-driven input generation to track instruction sequences and systematically explore execution paths and discover vulnerabilities in complex protocol logic.</p>
-                </div>
-                <div class="canvas-visualization">
-                    <canvas id="fuzzer-canvas"></canvas>
-                </div>
-            </div>
-
-            <!-- Feature 3: Bytecode-Level Coverage -->
-            <div class="system-block">
-                <div class="system-label">
-                    <h3 class="system-title">Bytecode-Level Coverage Instrumentation</h3>
-                    <p class="system-description">Traditional audits cannot quantify code coverage. Our custom sBPF runtime instrumentation tracks execution at the bytecode level, providing empirical metrics on audit thoroughness.</p>
-                </div>
-                <div class="coverage-visualization">
-                    <div class="bytecode-panel">
-                        <div class="bytecode-header">Program Bytecode</div>
-                        <div class="bytecode-lines">
-                            <div class="bytecode-line line-1">
-                                <span class="line-number">0x1000</span>
-                                <span class="line-code">ldxdw r1, [r10-8]</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                            <div class="bytecode-line line-2">
-                                <span class="line-number">0x1008</span>
-                                <span class="line-code">add64 r1, r2</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                            <div class="bytecode-line line-3">
-                                <span class="line-number">0x1010</span>
-                                <span class="line-code">jgt r1, 0xFFFFFFFF, 0x1020</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                            <div class="bytecode-line line-4">
-                                <span class="line-number">0x1018</span>
-                                <span class="line-code">syscall sol_invoke_signed</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                            <div class="bytecode-line line-5">
-                                <span class="line-number">0x1020</span>
-                                <span class="line-code">stxdw [r10-16], r0</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                            <div class="bytecode-line line-6">
-                                <span class="line-number">0x1028</span>
-                                <span class="line-code">exit</span>
-                                <span class="execution-marker"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="coverage-arrow">→</div>
-                    <div class="coverage-stats">
-                        <div class="stat-item">
-                            <div class="stat-label">Edge Coverage</div>
-                            <div class="stat-value stat-value-1">67%</div>
-                            <div class="stat-bar">
-                                <div class="stat-bar-fill stat-bar-fill-1"></div>
-                            </div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">Unique Edges</div>
-                            <div class="stat-value stat-value-2">1,247</div>
-                            <div class="stat-bar">
-                                <div class="stat-bar-fill stat-bar-fill-2"></div>
-                            </div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">New Paths</div>
-                            <div class="stat-value stat-value-3">423</div>
-                            <div class="stat-bar">
-                                <div class="stat-bar-fill stat-bar-fill-3"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Feature 4: Semantics-Preserving Input Generation -->
-            <div class="system-block">
-                <div class="system-label">
-                    <h3 class="system-title">Structure-Aware Input Generation</h3>
-                    <p class="system-description">Random fuzzing generates invalid inputs rejected early in execution or during deserialization. Our schema-aware mutation engine respects protocol data structures and instruction formats, ensuring test cases penetrate deep into program logic.</p>
-                </div>
-                <div class="structure-mutations">
-                    <div class="structure-box">
-                        <div class="structure-title">Mutating Schema</div>
-                        <div class="protobuf-schema">
-                            <span class="schema-line"><span class="schema-keyword">message</span> <span class="schema-type">VaultInstruction</span> {</span>
-                            <span class="schema-line">&nbsp;&nbsp;<span class="schema-type">uint64</span> <span class="schema-field">amount</span> = <span class="schema-value" id="amount-value">1000</span>;</span>
-                            <span class="schema-line">&nbsp;&nbsp;<span class="schema-type">bytes</span> <span class="schema-field">destination</span> = <span class="schema-value" id="dest-value">11111111111111111111111111111111</span>;</span>
-                            <span class="schema-line">&nbsp;&nbsp;<span class="schema-keyword">optional</span> <span class="schema-type">AccountMeta</span> <span class="schema-field">signer</span> = {</span>
-                            <span class="schema-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="schema-type">bytes</span> <span class="schema-field">pubkey</span> = <span class="schema-value" id="signer-value">TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA</span>;</span>
-                            <span class="schema-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="schema-type">bool</span> <span class="schema-field">is_writable</span> = <span class="schema-value" id="writable-value">true</span>;</span>
-                            <span class="schema-line">&nbsp;&nbsp;};</span>
-                            <span class="schema-line">}</span>
-                        </div>
-                        <div class="mutation-indicator-label">
-                            <span class="mutation-status">Fuzzing...</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Feature 5: Invariant Testing -->
-            <div class="system-block">
-                <div class="system-label">
-                    <h3 class="system-title">Automated Invariant Validation</h3>
-                    <p class="system-description">Our automated framework tests invariants across millions of execution paths, systematically validating critical security properties and security guarantees.</p>
-                </div>
-                <div class="invariant-visualization">
-                    <div class="invariant-grid">
-                        <div class="invariant-card" id="inv-1">
-                            <div class="invariant-name">Balance Conservation</div>
-                            <div class="invariant-formula">Σ(balances) = constant</div>
-                            <div class="invariant-status">✓ Passing</div>
-                        </div>
-                        <div class="invariant-card" id="inv-2">
-                            <div class="invariant-name">Access Control</div>
-                            <div class="invariant-formula">authorized(caller) → allowed(action)</div>
-                            <div class="invariant-status">✓ Passing</div>
-                        </div>
-                        <div class="invariant-card" id="inv-3">
-                            <div class="invariant-name">State Consistency</div>
-                            <div class="invariant-formula">total_supply ≥ Σ(holdings)</div>
-                            <div class="invariant-status">✓ Passing</div>
-                        </div>
-                        <div class="invariant-card" id="inv-4">
-                            <div class="invariant-name">Overflow Protection</div>
-                            <div class="invariant-formula">∀x: x + y ≤ MAX_U64</div>
-                            <div class="invariant-status checking">⟳ Checking</div>
-                        </div>
-                    </div>
-                    <div class="mutation-indicator-label">
-                        <span class="mutation-status">Validating Invariants...</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="audit-cta-section">
-    <div class="methodology-container">
-        <div class="audit-cta-content">
-            <h2 class="cta-title">Elevate Your Security Standards</h2>
-            <p class="cta-description">Our automated testing infrastructure delivers advanced security validation that becomes a cornerstone of your protocol's security posture.</p>
-            <div class="cta-buttons">
-                <a href="/contact/" class="cta-button-primary">Request an Audit</a>
-                <a href="/services/" class="cta-button-secondary">Explore Our Services</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<style>
-.audit-cta-section {
-    padding: 8rem 0;
-    background: rgba(16, 235, 255, 0.03);
-    border-top: 1px solid rgba(16, 235, 255, 0.2);
-    position: relative;
-    z-index: 10;
-}
-
-.audit-cta-content {
+.services-header {
     text-align: center;
-    max-width: 800px;
+    margin-bottom: 4rem;
+}
+
+.services-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.services-description {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 700px;
+    margin: 0 auto;
+    font-family: 'Raleway', sans-serif;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.service-card {
+    background: linear-gradient(135deg, rgba(3, 3, 8, 0.98) 0%, rgba(2, 2, 6, 0.98) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: rgba(16, 235, 255, 0.3);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+}
+
+.service-card h3 {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.service-card p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.service-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: rgba(16, 235, 255, 0.8);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-family: 'Raleway', sans-serif;
+}
+
+.service-link:hover {
+    color: rgba(16, 235, 255, 1);
+    gap: 0.75rem;
+}
+
+.service-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+}
+
+.service-link:hover svg {
+    transform: translateX(3px);
+}
+
+/* CTA Section */
+.cta-section {
+    padding: 2rem 2rem 4rem;
+    text-align: center;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .cta-title {
-    font-size: 3rem;
-    font-weight: 100;
-    color: #ffffff;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    font-weight: 200;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
 }
 
-.cta-description {
-    font-size: 1.2rem;
+.cta-subtitle {
+    font-size: 1rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.8;
-    margin-bottom: 3rem;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 2.5rem;
+    font-family: 'Raleway', sans-serif;
 }
 
 .cta-buttons {
@@ -2982,852 +621,168 @@ body.home-page .methodology-section .methodology-title::after {
     flex-wrap: wrap;
 }
 
-.cta-button-primary,
-.cta-button-secondary {
-    padding: 1.2rem 3rem;
-    font-size: 1.1rem;
-    font-weight: 500;
+.cta-button {
+    padding: 0.75rem 1.75rem;
     text-decoration: none;
+    font-weight: 300;
     border-radius: 9999px;
+    font-size: 0.9rem;
+    font-family: 'Raleway', sans-serif;
     transition: all 0.3s ease;
-    display: inline-block;
-    font-family: 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .cta-button-primary {
-    position: relative;
-    color: #ffffff;
-    border: 2px solid transparent;
-    background:
-        transparent padding-box,
-        linear-gradient(90deg, #10ebff, #b91aee) border-box;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 0 15px rgba(16, 235, 255, 0.3),
-                0 0 15px rgba(185, 26, 238, 0.3),
-                inset 0 0 10px rgba(16, 235, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .cta-button-primary:hover {
-    transform: translateY(-4px) scale(1.02);
-    color: #ffffff;
-    box-shadow: 0 0 30px rgba(16, 235, 255, 0.8),
-                0 0 50px rgba(185, 26, 238, 0.6),
-                0 0 70px rgba(16, 235, 255, 0.4),
-                0 8px 35px rgba(16, 235, 255, 0.3),
-                inset 0 0 30px rgba(16, 235, 255, 0.2),
-                inset 0 0 20px rgba(185, 26, 238, 0.15);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .cta-button-secondary {
     background: transparent;
-    color: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .cta-button-secondary:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.5);
-    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.03);
 }
 
+/* Responsive */
 @media (max-width: 768px) {
-    .audit-cta-section {
-        padding: 6rem 0;
+    .hero-section {
+        padding: 5rem 1rem 2rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        padding-top: 6rem;
     }
 
-    .cta-title {
-        font-size: 2rem;
+    .hero-content {
+        width: 100%;
     }
 
-    .cta-description {
+    .hero-title {
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero-tagline {
         font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+    }
+
+    .blockchain-logos {
+        gap: 1.5rem;
+        margin: 2rem auto;
+    }
+
+    .cta-buttons {
+        margin-top: 2rem !important;
+        flex-direction: row !important;
+        gap: 0.75rem !important;
+        justify-content: center;
+    }
+
+    .cta-button {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+        flex: 0 0 auto;
+        justify-content: center;
+        min-width: 120px;
+    }
+
+    .chain-logo {
+        height: 45px;
+        width: 45px;
+    }
+
+    .chain-logo-solana {
+        height: 35px !important;
+        width: 35px !important;
+    }
+
+    .chain-logo-ethereum {
+        height: 50px !important;
+        width: 50px !important;
+    }
+
+    .chain-logo-aptos {
+        height: 37px !important;
+        width: 37px !important;
+    }
+
+    .services-showcase {
+        padding: 4rem 1rem;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .service-card {
+        padding: 2rem;
+    }
+
+    .cta-section {
+        padding: 4rem 1rem;
     }
 
     .cta-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
     }
 
-    .cta-button-primary,
-    .cta-button-secondary {
-        width: 100%;
-        max-width: 300px;
+    .cta-button {
+        justify-content: center;
     }
 }
 </style>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script>
-// Canvas Animation for Program Analysis & State Space Exploration
-window.addEventListener('DOMContentLoaded', function() {
-    const canvas = document.getElementById('fuzzer-canvas');
-    if (!canvas) return;
-
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-
-    let width, height;
-    let isMobile = false;
-    let isSmallMobile = false;
-
-    // State
-    const STATE = {
-        phase: 0,
-        paths: 0,
-        coverage: 0,
-        objects: [],
-        particles: [],
-        activeAnimations: 0,
-        maxConcurrentAnimations: 0  // Will be set based on screen size
-    };
-
-    // Colors
-    const C = {
-        bg: '#000000',
-        white: '#FFFFFF',
-        grey: '#333333',
-        purple: '#A855F7',
-        purpleGlow: 'rgba(168, 85, 247, 0.6)',
-        blue: '#3b82f6'
-    };
-
-    function resize() {
-        const container = canvas.parentElement;
-        width = container.clientWidth;
-        height = container.clientHeight;
-
-        // Detect mobile screens
-        isMobile = window.innerWidth <= 768;
-        isSmallMobile = window.innerWidth <= 480;
-
-        // Set max concurrent animations based on screen size - more aggressive
-        STATE.maxConcurrentAnimations = isSmallMobile ? 2 : (isMobile ? 3 : 4);
-
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
-        ctx.scale(dpr, dpr);
-
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    // --- PARTICLES ---
-    class Particle {
-        constructor(x, y, color, speed, life) {
-            this.x = x;
-            this.y = y;
-            this.color = color;
-            const angle = Math.random() * Math.PI * 2;
-            this.vx = Math.cos(angle) * speed * Math.random();
-            this.vy = Math.sin(angle) * speed * Math.random();
-            this.life = life;
-            this.maxLife = life;
-            this.size = Math.random() * 2 + 1;
-        }
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-            this.life -= 0.02;
-            this.vx *= 0.95;
-            this.vy *= 0.95;
-        }
-        draw(ctx) {
-            ctx.globalAlpha = Math.max(0, this.life / this.maxLife);
-            ctx.fillStyle = this.color;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.globalAlpha = 1;
-        }
-    }
-
-    function spawnExplosion(x, y, color, count = 20) {
-        for (let i = 0; i < count; i++) {
-            STATE.particles.push(new Particle(x, y, color, 6, 1.0));
-        }
-    }
-
-    // --- OBJECTS ---
-
-    class Card {
-        constructor(x, y, w, h, text, type = 'program') {
-            this.x = x;
-            this.y = y;
-            this.w = w;
-            this.h = h;
-            this.text = text;
-            this.type = type;
-            this.alpha = 0;
-            this.scale = 0;
-            this.borderAlpha = 0;
-            this.glowStrength = 0;
-            this.textAlpha = 1;
-        }
-
-        draw(ctx) {
-            if (this.alpha <= 0.01) return;
-
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.scale(this.scale, this.scale);
-            ctx.globalAlpha = this.alpha;
-
-            // Glow
-            if (this.type === 'program' || this.glowStrength > 0) {
-                const strength = this.type === 'program' ? 40 : 30 * this.glowStrength;
-                const color = this.type === 'program' ? 'rgba(255, 255, 255, 0.1)' : C.purpleGlow;
-                ctx.shadowBlur = strength;
-                ctx.shadowColor = color;
-            }
-
-            // Border
-            ctx.strokeStyle = this.type === 'program' ? C.white : C.grey;
-            if (this.glowStrength > 0) {
-                ctx.strokeStyle = `rgba(168, 85, 247, ${this.glowStrength})`;
-            }
-
-            ctx.lineWidth = 1;
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
-
-            const r = 4;
-            const hw = this.w / 2;
-            const hh = this.h / 2;
-
-            ctx.beginPath();
-            if (this.w < 10) {
-                ctx.arc(0, 0, this.w, 0, Math.PI * 2);
-            } else {
-                ctx.roundRect(-hw, -hh, this.w, this.h, r);
-            }
-            ctx.fill();
-            ctx.stroke();
-
-            // Text
-            if (this.textAlpha > 0.01 && this.w > 20) {
-                ctx.shadowBlur = 0;
-                ctx.globalAlpha = this.alpha * this.textAlpha;
-                ctx.fillStyle = C.white;
-                const programFontSize = isSmallMobile ? 12 : (isMobile ? 14 : 16);
-                const instructionFontSize = isSmallMobile ? 10 : (isMobile ? 11 : 13);
-                ctx.font = this.type === 'program'
-                    ? `600 ${programFontSize}px Inter`
-                    : `400 ${instructionFontSize}px "JetBrains Mono"`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(this.text, 0, 0);
-            }
-
-            ctx.restore();
-        }
-    }
-
-    class Node {
-        constructor(x, y, type = 'minor', label = '') {
-            this.x = x;
-            this.y = y;
-            this.type = type;
-            this.label = label;
-            // Responsive sizing
-            this.w = isSmallMobile ? 70 : (isMobile ? 85 : 100);
-            this.h = isSmallMobile ? 28 : (isMobile ? 30 : 35);
-            this.alpha = 0;
-            this.scale = 0;
-            this.visited = false;
-            this.pulse = 0;
-
-            // For Bloom animation
-            this.targetX = x;
-            this.targetY = y;
-        }
-
-        draw(ctx) {
-            if (this.alpha <= 0) return;
-
-            ctx.save();
-            ctx.translate(this.x, this.y);
-            ctx.scale(this.scale, this.scale);
-
-            // Rectangle background
-            ctx.globalAlpha = this.alpha;
-            ctx.fillStyle = this.visited ? 'rgba(168, 85, 247, 0.3)' : 'rgba(0, 0, 0, 0.3)';
-            const hw = this.w / 2;
-            const hh = this.h / 2;
-            ctx.beginPath();
-            ctx.roundRect(-hw, -hh, this.w, this.h, 6);
-            ctx.fill();
-
-            // Border
-            ctx.strokeStyle = this.visited ? C.purple : '#555';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            // Label text
-            if (this.label) {
-                ctx.globalAlpha = this.alpha;
-                ctx.fillStyle = C.white;
-                const fontSize = isSmallMobile ? 8 : (isMobile ? 9 : 11);
-                ctx.font = `400 ${fontSize}px Inter`;
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(this.label, 0, 0);
-            }
-
-            // Pulse effect
-            if (this.pulse > 0) {
-                ctx.strokeStyle = C.purple;
-                ctx.lineWidth = 2;
-                ctx.globalAlpha = this.pulse;
-                const expand = (1 - this.pulse) * 10;
-                ctx.beginPath();
-                ctx.roundRect(-hw - expand, -hh - expand, this.w + expand * 2, this.h + expand * 2, 6);
-                ctx.stroke();
-            }
-            ctx.restore();
-        }
-    }
-
-    class Edge {
-        constructor(n1, n2) {
-            this.n1 = n1;
-            this.n2 = n2;
-            this.alpha = 0;
-            this.active = false;
-            this.progress = 0;
-        }
-
-        draw(ctx) {
-            if (this.alpha <= 0) return;
-
-            ctx.globalAlpha = this.alpha * 0.6;
-            ctx.strokeStyle = '#444';
-            ctx.lineWidth = 1.5;
-
-            ctx.beginPath();
-            // Smooth horizontal curve
-            const midX = (this.n1.x + this.n2.x) / 2;
-            ctx.moveTo(this.n1.x, this.n1.y);
-            ctx.bezierCurveTo(midX, this.n1.y, midX, this.n2.y, this.n2.x, this.n2.y);
-            ctx.stroke();
-
-            if (this.active) {
-                const t = this.progress;
-                const cx = Math.pow(1 - t, 3) * this.n1.x + 3 * Math.pow(1 - t, 2) * t * midX + 3 * (1 - t) * Math.pow(t, 2) * midX + Math.pow(t, 3) * this.n2.x;
-                const cy = Math.pow(1 - t, 3) * this.n1.y + 3 * Math.pow(1 - t, 2) * t * this.n1.y + 3 * (1 - t) * Math.pow(t, 2) * this.n2.y + Math.pow(t, 3) * this.n2.y;
-
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = C.purple;
-                ctx.fillStyle = C.purple;
-                ctx.globalAlpha = 1;
-                ctx.beginPath();
-                ctx.arc(cx, cy, 4, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-            ctx.globalAlpha = 1;
-        }
-    }
-
-    // --- SCENE MANAGEMENT ---
-
-    let programCard;
-    let instructionCards = [];
-    let treeNodes = [];
-    let treeEdges = [];
-
-    function init() {
-        // Phase 1: Program
-        const progW = isSmallMobile ? 100 : (isMobile ? 120 : 140);
-        const progH = isSmallMobile ? 45 : (isMobile ? 52 : 60);
-        programCard = new Card(width / 2, height / 2, progW, progH, "PROGRAM");
-        STATE.objects.push(programCard);
-
-        gsap.to(programCard, {
-            alpha: 1,
-            scale: 1,
-            duration: 1.5,
-            ease: "expo.out",
-            delay: 0.5
-        });
-
-        setTimeout(initPhase2, 2500);
-    }
-
-    function initPhase2() {
-        // Radial Layout
-        const instructions = ["Initialize", "Deposit", "Withdraw", "Swap", "FlashLoan", "Liquidate", "Vote", "Close"];
-        const radius = isSmallMobile ? 120 : (isMobile ? 160 : 220);
-        const count = instructions.length;
-
-        instructions.forEach((text, i) => {
-            const angle = (i / count) * Math.PI * 2 - Math.PI / 2;
-            const x = width / 2 + Math.cos(angle) * radius;
-            const y = height / 2 + Math.sin(angle) * radius;
-
-            const cardW = isSmallMobile ? 80 : (isMobile ? 100 : 120);
-            const cardH = isSmallMobile ? 32 : (isMobile ? 36 : 40);
-            const card = new Card(x, y, cardW, cardH, text, 'instruction');
-            instructionCards.push(card);
-            STATE.objects.push(card);
-
-            gsap.to(card, {
-                alpha: 1,
-                scale: 1,
-                duration: 1.0,
-                ease: "back.out(1.1)",
-                delay: 0.5 + i * 0.1
-            });
-
-            gsap.to(card, {
-                glowStrength: 1,
-                duration: 0.3,
-                delay: 2.0 + i * 0.2,
-                yoyo: true,
-                repeat: 1
-            });
-        });
-
-        setTimeout(initPhase3, 5500);
-    }
-
-    function initPhase3() {
-        // IMPLOSION
-        instructionCards.forEach((card, i) => {
-            gsap.to(card, {
-                x: width / 2,
-                y: height / 2,
-                scale: 0,
-                alpha: 0,
-                duration: 1.0,
-                ease: "power3.inOut",
-                delay: i * 0.03
-            });
-        });
-
-        // Shrink Program
-        gsap.to(programCard, {
-            w: 6,
-            h: 6,
-            textAlpha: 0,
-            duration: 1.2,
-            ease: "power3.inOut",
-            delay: 0.8,
-            onComplete: () => {
-                spawnExplosion(programCard.x, programCard.y, C.white, 40);
-            }
-        });
-
-        // Move Micro-Root to Left
-        const rootX = isSmallMobile ? 50 : (isMobile ? 70 : 100);
-        const rootY = height / 2;
-        gsap.to(programCard, {
-            x: rootX,
-            y: rootY,
-            duration: 1.2,
-            ease: "power3.inOut",
-            delay: 1.0
-        });
-
-        // --- HORIZONTAL 2D TREE ---
-        const instructionNames = [
-            "Initialize",
-            "CreateVault", "CreateNFT", "Swap", "Stake",
-            "Deposit", "Withdraw", "Transfer", "Burn", "Claim", "Unstake", "Close", "Update"
-        ];
-
-        const root = new Node(rootX, rootY, 'major', instructionNames[0]);
-        root.alpha = 0;
-        treeNodes.push(root);
-
-        // Build tree structure with levels - reduce nodes on mobile
-        const levels = isSmallMobile ? [
-            { count: 1, nodes: [root] },
-            { count: 2, nodes: [] },
-            { count: 4, nodes: [] },
-            { count: 6, nodes: [] }
-        ] : (isMobile ? [
-            { count: 1, nodes: [root] },
-            { count: 3, nodes: [] },
-            { count: 5, nodes: [] },
-            { count: 8, nodes: [] }
-        ] : [
-            { count: 1, nodes: [root] },
-            { count: 3, nodes: [] },
-            { count: 6, nodes: [] },
-            { count: 10, nodes: [] }
-        ]);
-
-        const edgePadding = isSmallMobile ? 100 : (isMobile ? 150 : 250);
-        const levelSpacing = (width - edgePadding) / (levels.length - 1);
-
-        // Generate nodes for each level
-        let nameIndex = 1;
-        for (let l = 1; l < levels.length; l++) {
-            const level = levels[l];
-            const x = rootX + l * levelSpacing;
-            const topBottomMargin = isSmallMobile ? 80 : (isMobile ? 100 : 150);
-            const verticalSpacing = (height - topBottomMargin) / (level.count + 1);
-
-            for (let i = 0; i < level.count; i++) {
-                const yStart = isSmallMobile ? 40 : (isMobile ? 50 : 75);
-                const y = yStart + (i + 1) * verticalSpacing;
-                const label = instructionNames[nameIndex % instructionNames.length];
-                const node = new Node(x, y, l === 1 ? 'major' : 'minor', label);
-                treeNodes.push(node);
-                level.nodes.push(node);
-                nameIndex++;
-            }
-        }
-
-        // Connect nodes between levels
-        for (let l = 0; l < levels.length - 1; l++) {
-            const currentLevel = levels[l];
-            const nextLevel = levels[l + 1];
-
-            currentLevel.nodes.forEach((parent, parentIdx) => {
-                const childrenPerParent = Math.ceil(nextLevel.count / currentLevel.count);
-                const startIdx = parentIdx * childrenPerParent;
-                const endIdx = Math.min(startIdx + childrenPerParent + 1, nextLevel.count);
-
-                for (let i = startIdx; i < endIdx; i++) {
-                    if (i < nextLevel.nodes.length) {
-                        const child = nextLevel.nodes[i];
-                        const edge = new Edge(parent, child);
-                        treeEdges.push(edge);
-
-                        if (!parent.children) parent.children = [];
-                        parent.children.push({ edge, node: child });
-                    }
-                }
-            });
-        }
-
-        treeEdges.forEach(e => STATE.objects.push(e));
-        treeNodes.forEach(n => STATE.objects.push(n));
-
-        // --- BLOOM TRANSITION ---
-        treeNodes.forEach(n => {
-            n.targetX = n.x;
-            n.targetY = n.y;
-            n.x = rootX;
-            n.y = rootY;
-            n.scale = 0;
-            n.alpha = 1;
-        });
-
-        treeNodes.forEach((n, i) => {
-            if (i === 0) { n.scale = 1; return; }
-
-            gsap.to(n, {
-                x: n.targetX,
-                y: n.targetY,
-                scale: 1,
-                duration: 1.2,
-                ease: "power2.out",
-                delay: 2.2 + (n.targetX - rootX) / 2000
-            });
-        });
-
-        treeEdges.forEach(e => {
-            gsap.to(e, {
-                alpha: 1,
-                duration: 0.8,
-                ease: "power2.out",
-                delay: 2.4
-            });
-        });
-
-        setTimeout(startFloodFill, 4000);
-    }
-
-    function startFloodFill() {
-        STATE.phase = 3;
-        // Start multiple paths with faster staggered delays
-        for (let i = 0; i < STATE.maxConcurrentAnimations; i++) {
-            setTimeout(() => scheduleNextPath(), i * 200);
-        }
-    }
-
-    function scheduleNextPath() {
-        if (STATE.activeAnimations < STATE.maxConcurrentAnimations) {
-            animatePath();
-        }
-        // Schedule next attempt - faster for aggressive fuzzing feel
-        setTimeout(scheduleNextPath, 300 + Math.random() * 400);
-    }
-
-    function animatePath() {
-        if (STATE.activeAnimations >= STATE.maxConcurrentAnimations) {
-            return;
-        }
-
-        STATE.activeAnimations++;
-
-        // Pick a random path from root to a leaf
-        const path = [];
-        let currentNode = treeNodes[0];
-        path.push(currentNode);
-
-        // Build random path to a leaf
-        while (currentNode.children && currentNode.children.length > 0) {
-            const randomChild = currentNode.children[Math.floor(Math.random() * currentNode.children.length)];
-            currentNode = randomChild.node;
-            path.push({ node: currentNode, edge: randomChild.edge });
-        }
-
-        // Animate this path sequentially
-        animatePathSequence(path, 0);
-    }
-
-    function animatePathSequence(path, index) {
-        if (index >= path.length) {
-            // Path complete
-            STATE.activeAnimations--;
-            STATE.paths++;
-            return;
-        }
-
-        const item = path[index];
-        const node = item.node || item;
-
-        // Pulse node faster
-        node.visited = true;
-        node.pulse = 1;
-        gsap.to(node, { pulse: 0, duration: 0.3, ease: "power2.out" });
-
-        // Add particle burst more frequently for fuzzing feel
-        if (index > 0 && Math.random() < 0.5) {
-            spawnExplosion(node.x, node.y, C.purple, 5);
-        }
-
-        // Animate edge if it exists - faster
-        if (item.edge) {
-            const edge = item.edge;
-            edge.active = true;
-            edge.progress = 0;
-
-            gsap.to(edge, {
-                progress: 1,
-                duration: 0.2,
-                ease: "power1.inOut",
-                onComplete: () => {
-                    edge.active = false;
-                    edge.progress = 0;
-                    // Continue to next node faster
-                    setTimeout(() => animatePathSequence(path, index + 1), 30);
-                }
-            });
-        } else {
-            // First node (root), continue faster
-            setTimeout(() => animatePathSequence(path, index + 1), 50);
-        }
-    }
-
-    // --- RENDER LOOP ---
-    let lastFrameTime = 0;
-    const targetFPS = 60;
-    const frameInterval = 1000 / targetFPS;
-
-    function loop(currentTime) {
-        // Throttle to target FPS
-        const elapsed = currentTime - lastFrameTime;
-
-        if (elapsed > frameInterval) {
-            lastFrameTime = currentTime - (elapsed % frameInterval);
-
-            ctx.clearRect(0, 0, width, height);
-
-            // Update and draw particles
-            STATE.particles = STATE.particles.filter(p => p.life > 0);
-            for (let i = 0; i < STATE.particles.length; i++) {
-                STATE.particles[i].update();
-                STATE.particles[i].draw(ctx);
-            }
-
-            // Draw objects
-            for (let i = 0; i < STATE.objects.length; i++) {
-                STATE.objects[i].draw(ctx);
-            }
-        }
-
-        requestAnimationFrame(loop);
-    }
-
-    // Use Intersection Observer to start animation when visible
-    let isAnimating = false;
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting && !isAnimating) {
-                isAnimating = true;
-                init();
-                requestAnimationFrame(loop);
-            }
-        });
-    }, { threshold: 0.2 });
-
-    observer.observe(canvas);
-});
-</script>
-
-<script>
-// Animate coverage stats
-const statValues = [
-    { el: '.stat-value-1', values: ['50%', '67%'], timing: [0, 650] }, // Updates at 26% of 2.5s = 650ms
-    { el: '.stat-value-2', values: ['1,125', '1,189', '1,247'], timing: [0, 275, 1150] }, // 11% = 275ms, 46% = 1150ms
-    { el: '.stat-value-3', values: ['372', '423'], timing: [0, 1150] } // 46% = 1150ms
-];
-
-function animateStats() {
-    statValues.forEach(stat => {
-        const element = document.querySelector(stat.el);
-        if (!element) return;
-
-        let currentIndex = 0;
-        element.textContent = stat.values[0];
-
-        stat.timing.slice(1).forEach((time, idx) => {
-            setTimeout(() => {
-                element.textContent = stat.values[idx + 1];
-            }, time);
-        });
-    });
-}
-
-// Use Intersection Observer to start animation when visible
-let statsInterval;
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !statsInterval) {
-            animateStats();
-            statsInterval = setInterval(animateStats, 2500);
-        }
-    });
-}, { threshold: 0.2 });
-
-const coverageViz = document.querySelector('.coverage-visualization');
-if (coverageViz) {
-    statsObserver.observe(coverageViz);
-}
-</script>
-
-<script>
-// Animate structure-aware mutations - rapid field value changes
-const amountValues = ['1000', '50000', '999999999', '42', '7500', '250000', '1'];
-const destValues = [
-    'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA', // Token Program
-    'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL', // Associated Token Program
-    '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin', // Serum DEX
-    'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s', // Metaplex
-    'BPFLoaderUpgradeab1e11111111111111111111111', // BPF Loader
-    'SysvarC1ock11111111111111111111111111111111', // Sysvar Clock
-    'ComputeBudget111111111111111111111111111111' // Compute Budget
-];
-const signerValues = [
-    'TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA',
-    'ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL',
-    'metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s',
-    '9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin',
-    'BPFLoaderUpgradeab1e11111111111111111111111',
-    'SysvarRent111111111111111111111111111111111',
-    'Stake11111111111111111111111111111111111111'
-];
-const writableValues = ['true', 'false', 'true', 'true', 'false', 'true', 'false'];
-
-// Use Intersection Observer to start mutation animation when visible
-let mutationInterval;
-const mutationObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !mutationInterval) {
-            const amountEl = document.getElementById('amount-value');
-            const destEl = document.getElementById('dest-value');
-            const signerEl = document.getElementById('signer-value');
-            const writableEl = document.getElementById('writable-value');
-
-            if (!amountEl || !destEl || !signerEl || !writableEl) return;
-
-            let iteration = 0;
-
-            function updateValues() {
-                const idx = iteration % amountValues.length;
-
-                // Add flash effect
-                amountEl.style.opacity = '0.3';
-                destEl.style.opacity = '0.3';
-                signerEl.style.opacity = '0.3';
-                writableEl.style.opacity = '0.3';
-
-                setTimeout(() => {
-                    amountEl.textContent = amountValues[idx];
-                    destEl.textContent = destValues[idx];
-                    signerEl.textContent = signerValues[idx];
-                    writableEl.textContent = writableValues[idx];
-
-                    amountEl.style.opacity = '1';
-                    destEl.style.opacity = '1';
-                    signerEl.style.opacity = '1';
-                    writableEl.style.opacity = '1';
-                }, 80);
-
-                iteration++;
-            }
-
-            // Update every 300ms for rapid fuzzing impression
-            mutationInterval = setInterval(updateValues, 300);
-        }
-    });
-}, { threshold: 0.2 });
-
-const structureMutations = document.querySelector('.structure-mutations');
-if (structureMutations) {
-    mutationObserver.observe(structureMutations);
-}
-</script>
-
-<script>
-// Animate invariant checking - cycle through cards
-const invariantCards = ['inv-1', 'inv-2', 'inv-3', 'inv-4'];
-let currentCheckingIndex = 3; // Start with inv-4 already checking
-
-function cycleInvariantChecking() {
-    // Reset current checking card to passing
-    const currentCard = document.getElementById(invariantCards[currentCheckingIndex]);
-    if (currentCard) {
-        const statusEl = currentCard.querySelector('.invariant-status');
-        statusEl.textContent = '✓ Passing';
-        statusEl.classList.remove('checking');
-    }
-
-    // Move to next card
-    currentCheckingIndex = (currentCheckingIndex + 1) % invariantCards.length;
-
-    // Set new card to checking
-    const nextCard = document.getElementById(invariantCards[currentCheckingIndex]);
-    if (nextCard) {
-        const statusEl = nextCard.querySelector('.invariant-status');
-        statusEl.textContent = '⟳ Checking';
-        statusEl.classList.add('checking');
-    }
-}
-
-// Use Intersection Observer to start invariant checking animation when visible
-let invariantInterval;
-const invariantObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && !invariantInterval) {
-            invariantInterval = setInterval(cycleInvariantChecking, 2500);
-        }
-    });
-}, { threshold: 0.2 });
-
-const invariantViz = document.querySelector('.invariant-visualization');
-if (invariantViz) {
-    invariantObserver.observe(invariantViz);
-}
-</script>
-
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Full-Spectrum <span class="gradient-text">Web3</span> Security</h1>
+        <p class="hero-tagline">Security audits and tooling development</p>
+        <p class="hero-subtitle">Smart contract audits, infrastructure security, and custom security tooling</p>
+
+        <!-- Blockchain Logos -->
+        <div class="blockchain-logos">
+            <div class="logo-item">
+                <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=035" alt="Solana" class="chain-logo chain-logo-solana">
+            </div>
+            <div class="logo-item">
+                <img src="https://ethereum.org/_next/static/media/eth-diamond-purple.7929ed26.png" alt="Ethereum" class="chain-logo chain-logo-ethereum">
+            </div>
+            <div class="logo-item">
+                <img src="https://cryptologos.cc/logos/sui-sui-logo.svg?v=035" alt="Sui" class="chain-logo">
+            </div>
+            <div class="logo-item">
+                <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/21794.png" alt="Aptos" class="chain-logo chain-logo-aptos">
+            </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="cta-buttons" style="margin-top: 3rem;">
+            <a href="/contact/" class="cta-button cta-button-primary">Request Audit</a>
+            <a href="/services/" class="cta-button cta-button-secondary">View All Services</a>
+        </div>
+    </div>
+</section>
 
 
     </main>

@@ -79,13 +79,8 @@ body::before {
     }
 }
 
-/* Hide dot grid on home page (vortex shader will show instead) */
-body.home-page::before {
-    display: none;
-}
-
-/* Show dot grid on all other pages */
-body:not(.home-page)::before {
+/* Show dot grid on all pages including home page */
+body::before {
     display: block;
 }
 
@@ -150,21 +145,9 @@ body:not(.home-page) {
     /* Black background to match the dot grid */
 }
 
-/* Show vortex shader only on home page with fade-in animation */
-body.home-page .shader-canvas {
-    display: block !important;
-    /* Opacity is controlled by JS for smooth fade-in */
-    /* Default target opacity: 0.6 */
-}
-
-/* Hide shader canvas on all other pages (dot grid will show instead) */
-body:not(.home-page) .shader-canvas {
-    display: none !important;
-}
-
-/* Ensure smooth transitions for shader canvas */
+/* Hide vortex shader on all pages - use dot grid everywhere */
 .shader-canvas {
-    transition: opacity 1.5s ease-in-out;
+    display: none !important;
 }
 
 
@@ -1331,19 +1314,19 @@ footer p {
 .hamburger-line {
     width: 20px;
     height: 2px;
-    background: linear-gradient(90deg, #10ebff, #b91aee);
+    background: #000;
     border-radius: 1px;
     transition: all 0.3s ease;
     transform-origin: center;
 }
 
 .hamburger:hover .hamburger-line {
-    background: linear-gradient(90deg, #b91aee, #ff1493);
+    background: #000;
 }
 
 .hamburger.active .hamburger-line:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
-    background: linear-gradient(90deg, #10ebff, #b91aee);
+    background: #000;
 }
 
 .hamburger.active .hamburger-line:nth-child(2) {
@@ -1353,7 +1336,7 @@ footer p {
 
 .hamburger.active .hamburger-line:nth-child(3) {
     transform: rotate(-45deg) translate(5px, -5px);
-    background: linear-gradient(90deg, #10ebff, #b91aee);
+    background: #000;
 }
 
 /* Scroll indicator */
@@ -3069,7 +3052,7 @@ body.menu-open {
         background: rgba(0, 0, 0, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        border-bottom: none;
+        border-bottom: 1px solid #000;
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
@@ -3657,10 +3640,10 @@ body.menu-open {
     line-height: 1.6;
 }
 
-/* Services Grid - Proper 2 Column Layout */
+/* Services Grid - Proper 3 Column Layout */
 .services-grid.sophisticated {
     display: grid;
-    grid-template-columns: repeat(2, minmax(300px, 450px));
+    grid-template-columns: repeat(3, minmax(280px, 400px));
     justify-content: center;
     gap: 1px;
     margin-top: 4rem;
@@ -3673,7 +3656,7 @@ body.menu-open {
 }
 
 .service-card-sophisticated {
-    background: linear-gradient(135deg, rgba(10, 10, 15, 0.98) 0%, rgba(8, 8, 12, 0.98) 100%);
+    background: linear-gradient(135deg, rgba(3, 3, 8, 0.98) 0%, rgba(2, 2, 6, 0.98) 100%);
     backdrop-filter: blur(20px);
     padding: 2.5rem;
     position: relative;
@@ -3684,11 +3667,11 @@ body.menu-open {
         border-color 1.2s ease-out;
     height: 100%;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 20px;
     box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.4),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        0 8px 32px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
     overflow: hidden;
 }
 
@@ -3718,12 +3701,13 @@ body.menu-open {
 .service-card-sophisticated:hover {
     transform: translateY(-6px);
     box-shadow:
-        0 0 15px rgba(16, 235, 255, 0.3),
-        0 0 30px rgba(185, 26, 238, 0.2),
-        inset 0 0 20px rgba(16, 235, 255, 0.08);
+        0 0 20px rgba(16, 235, 255, 0.25),
+        0 0 40px rgba(185, 26, 238, 0.15),
+        0 12px 40px rgba(0, 0, 0, 0.7),
+        inset 0 0 30px rgba(16, 235, 255, 0.06);
     border-color: transparent;
     background:
-        linear-gradient(135deg, rgba(25, 30, 45, 1) 0%, rgba(20, 25, 35, 1) 100%) padding-box,
+        linear-gradient(135deg, rgba(8, 12, 20, 1) 0%, rgba(6, 10, 16, 1) 100%) padding-box,
         linear-gradient(135deg, #10ebff, #b91aee) border-box;
 }
 
@@ -3888,7 +3872,7 @@ body.menu-open {
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.3s ease;
-    padding: 2.5rem 0 0 0;
+    padding: 1rem 0 0 0;
     margin-top: 0;
     font-family: 'Geist', 'Inter', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     position: relative;
@@ -4971,5 +4955,192 @@ body.menu-open {
 
     .deliverable-item-minimal {
         padding: 1.25rem;
+    }
+}
+/* New Hero Section */
+.hero-new {
+    padding: 12rem 0 8rem;
+    position: relative;
+    z-index: 10;
+}
+
+.hero-content-new {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.hero-title-new {
+    font-size: clamp(3rem, 8vw, 5rem);
+    font-weight: 200;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.hero-tagline {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.hero-subtitle {
+    font-size: clamp(0.95rem, 2vw, 1.1rem);
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    line-height: 1.6;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Blockchain Logos */
+.blockchain-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    margin: 4rem auto;
+    flex-wrap: wrap;
+    max-width: 800px;
+}
+
+.logo-item {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.logo-item:hover {
+    transform: translateY(-8px);
+}
+
+.chain-logo {
+    height: 48px;
+    width: auto;
+    filter: grayscale(100%) brightness(1.2) opacity(0.7);
+    transition: all 0.3s ease;
+}
+
+.logo-item:hover .chain-logo {
+    filter: grayscale(0%) brightness(1) opacity(1);
+}
+
+/* Services Highlight */
+.services-highlight {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 5rem auto 4rem;
+    max-width: 1100px;
+}
+
+.service-highlight-item {
+    background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(8, 8, 12, 0.95) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2.5rem;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.service-highlight-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16, 235, 255, 0.3);
+    box-shadow: 0 0 30px rgba(16, 235, 255, 0.2);
+    background: linear-gradient(135deg, rgba(15, 15, 20, 0.98) 0%, rgba(12, 12, 17, 0.98) 100%);
+}
+
+.highlight-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    filter: grayscale(30%);
+}
+
+.service-highlight-item h3 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 1rem;
+    font-family: 'Raleway', sans-serif;
+}
+
+.service-highlight-item p {
+    font-size: 0.95rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.6;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* Hero Actions */
+.hero-actions-new {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
+
+.cta-new-primary,
+.cta-new-secondary {
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-weight: 400;
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.cta-new-primary {
+    background: linear-gradient(135deg, rgba(16, 235, 255, 0.15) 0%, rgba(185, 26, 238, 0.15) 100%);
+    border: 1px solid rgba(16, 235, 255, 0.3);
+    color: rgba(16, 235, 255, 0.95);
+}
+
+.cta-new-primary:hover {
+    background: linear-gradient(135deg, rgba(16, 235, 255, 0.25) 0%, rgba(185, 26, 238, 0.25) 100%);
+    border-color: rgba(16, 235, 255, 0.5);
+    color: rgba(16, 235, 255, 1);
+    box-shadow: 0 0 30px rgba(16, 235, 255, 0.3);
+}
+
+.cta-new-secondary {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.cta-new-secondary:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 1);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .hero-new {
+        padding: 8rem 0 4rem;
+    }
+    
+    .blockchain-logos {
+        gap: 2rem;
+    }
+    
+    .chain-logo {
+        height: 36px;
+    }
+    
+    .services-highlight {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .service-highlight-item {
+        padding: 2rem;
     }
 }

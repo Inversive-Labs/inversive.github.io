@@ -240,12 +240,9 @@
             rgba(0, 0, 0, 0.3) 100%) !important;
         backdrop-filter: blur(12px) !important;
         -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(16, 235, 255, 0.3) !important;
+        border: 1px solid #000 !important;
         border-radius: 20px !important;
         box-shadow:
-            0 0 1px rgba(16, 235, 255, 0.5),
-            0 0 10px rgba(16, 235, 255, 0.2),
-            0 0 20px rgba(92, 92, 171, 0.15),
             0 8px 32px rgba(0, 0, 0, 0.6) !important;
         animation: slideDown 0.3s ease-out !important;
         z-index: 1000 !important;
@@ -315,8 +312,8 @@
                 <a href="/about/" >About</a>
                 <a href="/team/" >Team</a>
                 <a href="/services/" class="active">Services</a>
-                <a href="/products/" >Products</a>
-                <a href="/publications/" >Publications</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
                 <a href="/blog/" >Blog</a>
                 <a href="/contact/" >Contact</a>
             </div>
@@ -390,7 +387,7 @@
     <div class="container">
         <div class="section-header">
             <h2 class="section-title">Services</h2> 
-            <p class="section-subtitle">Security Solutions Engineered for Solana Protocols and Builders</p>
+            <p class="section-subtitle">Security Solutions Engineered for Blockchain Protocols and Builders</p>
         </div>
 
         <div class="services-grid sophisticated">
@@ -401,15 +398,15 @@
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                     </div>
-                    <h3 class="service-title">Embeded Security</h3>
-                    <p class="service-summary">Continuous security validation throughout your protocol's development lifecycle using custom Solana-specific tools and methodologies.</p>
+                    <h3 class="service-title">Infrastructure Security</h3>
+                    <p class="service-summary">Core blockchain infrastructure security including runtime environments, consensus mechanisms, and network-level protocol validation.</p>
 
                     <ul class="service-features-list">
-                        <li>Embedded Throughout Development</li>
-                        <li>Solana-Specific Testing Infrastructure</li>
-                        <li>Continuous Validation & Partnership</li>
+                        <li>Consensus Layer Security</li>
+                        <li>Runtime & VM Analysis</li>
+                        <li>Network Protocol Fuzzing</li>
                     </ul>
-                    <a href="/services/embedded-security/" class="service-link">
+                    <a href="/services/infrastructure-security/" class="service-link">
                         <span>Learn More</span>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -425,7 +422,7 @@
                             <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
                         </svg>
                     </div>
-                    <h3 class="service-title">Security Assessment</h3>
+                    <h3 class="service-title">Smart Contract Audits</h3>
                     <p class="service-summary">Protocol security reviews designed to uncover vulnerabilities through manual analysis and fuzzing campaigns.</p>
 
                     <ul class="service-features-list">
@@ -434,6 +431,30 @@
                         <li>Vulnerability Discovery & Remediation</li>
                     </ul>
                     <a href="/services/security-assessment/" class="service-link">
+                        <span>Learn More</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            <div class="service-card-sophisticated" id="web2-security">
+                <div class="service-content">
+                    <div style="color: rgba(16, 235, 255, 0.6); margin-bottom: 1.5rem; display: flex; justify-content: center;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 2a10 10 0 100 20 10 10 0 000-20zM2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">Web2 Penetration Testing</h3>
+                    <p class="service-summary">Traditional web security assessments for the off-chain infrastructure powering your blockchain applications.</p>
+
+                    <ul class="service-features-list">
+                        <li>Web Application Security Testing</li>
+                        <li>Infrastructure & API Assessment</li>
+                        <li>Web3 Integration Security Review</li>
+                    </ul>
+                    <a href="/services/web2-security/" class="service-link">
                         <span>Learn More</span>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                             <path d="M7 13L10 10L7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -613,7 +634,7 @@
                         <li><a href="/about/">About</a></li>
                         <li><a href="/team/">Team</a></li>
                         <li><a href="/services/">Services</a></li>
-                        <li><a href="/products/">Products</a></li>
+                        <li><a href="/tooling/">Products</a></li>
                     </ul>
                 </div>
                 <a href="/contact/" class="footer-contact-btn">Contact</a>

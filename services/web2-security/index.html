@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web2 Security for Web3 - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+        width: 100%;
+    }
+
+    .modern-nav .nav-container {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-nav .nav-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-nav .nav-container {
+            padding: 0 2rem;
+        }
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+        width: auto;
+        height: 3rem; /* 48px - equivalent to h-12 */
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(8px);
+        align-items: center;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+    }
+
+    .modern-nav-links a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .modern-nav-links a.home-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .modern-nav-links a.home-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .nav-indicator {
+        position: absolute;
+        border-radius: 9999px;
+        padding: 2px;
+        background: linear-gradient(90deg,
+            #10ebff 0%,
+            #3ac9e6 12.5%,
+            #65a8cd 25%,
+            #8f86b4 37.5%,
+            #b91aee 50%,
+            #8f86b4 62.5%,
+            #65a8cd 75%,
+            #3ac9e6 87.5%,
+            #10ebff 100%);
+        background-size: 400% 100%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: gradientRotate 15s linear infinite;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        box-sizing: border-box;
+    }
+
+    @keyframes gradientRotate {
+        0% {
+            background-position: 0% 0;
+        }
+        100% {
+            background-position: 400% 0;
+        }
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Hamburger menu button */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        gap: 5px;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 1px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+
+    .hamburger:hover .hamburger-line {
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid #000 !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 2rem; /* 32px */
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="nav-container">
+        <nav>
+            <a href="/">
+                <img src="/images/logo.svg" alt="Inversive Labs">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <div class="nav-indicator"></div>
+                <a href="/" >Home</a>
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
+                <a href="/services/" >Services</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
+                <a href="/blog/" >Blog</a>
+                <a href="/contact/" >Contact</a>
+            </div>
+
+            <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<script>
+    // Mobile menu functionality and nav indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+        const indicator = document.querySelector('.nav-indicator');
+        const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
+
+        // Position indicator on active link
+        function updateIndicator() {
+            const activeLink = document.querySelector('.modern-nav-links > a.active');
+            if (activeLink && indicator && window.innerWidth >= 768) {
+                // Calculate position using offsetLeft and offsetTop
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
+
+                indicator.style.left = left + 'px';
+                indicator.style.top = top + 'px';
+                indicator.style.width = width + 'px';
+                indicator.style.height = height + 'px';
+                indicator.style.opacity = '1';
+            } else if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }
+
+        // Initial positioning
+        updateIndicator();
+
+        // Update on window resize
+        window.addEventListener('resize', updateIndicator);
+
+        // Mobile menu toggle
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                mobileBtn.classList.toggle('active');
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    mobileBtn.classList.remove('active');
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
+
+    <main>
+        <section class="service-hero-minimal">
+    <div class="container">
+        <div class="hero-content-minimal">
+            <h1 class="hero-title-minimal">
+                Web2 Security<br/>
+                for Web3
+            </h1>
+            <p class="hero-description-minimal">
+                Traditional web security assessments for web3 infrastructure, protecting the critical off-chain components that power your blockchain applications.
+            </p>
+            <div class="hero-actions-minimal">
+                <a href="/contact/" class="cta-minimal-primary">Get Started</a>
+                <a href="#capabilities" class="cta-minimal-secondary">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-minimal section-first" id="capabilities">
+    <div class="container">
+        <h2 class="section-title-minimal">Capabilities</h2>
+        <p class="section-subtitle-minimal">
+            Web security testing for the infrastructure supporting your web3 applications
+        </p>
+
+        <div class="grid-minimal">
+            <div class="card-minimal">
+                <h3>Web Application Security Assessment</h3>
+                <p>Security testing of frontends, APIs, and backend services that interact with blockchain protocols.</p>
+            </div>
+
+            <div class="card-minimal">
+                <h3>Infrastructure Security Review</h3>
+                <p>Assessment of RPC endpoints, oracles, indexers, and off-chain infrastructure critical to protocol operations.</p>
+            </div>
+
+            <div class="card-minimal">
+                <h3>Authentication & Access Control</h3>
+                <p>Security evaluation of wallet integration, session management, and permission systems in web3 applications.</p>
+            </div>
+
+            <div class="card-minimal">
+                <h3>API & Integration Security</h3>
+                <p>Testing of REST/GraphQL APIs, WebSocket connections, and third-party integrations that bridge web2 and web3.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-minimal">
+    <div class="container">
+        <h2 class="section-title-minimal">Our Approach</h2>
+        <p class="section-subtitle-minimal">
+            Systematic web security assessment for blockchain infrastructure
+        </p>
+        <div class="timeline-minimal">
+            <div class="timeline-item-minimal">
+                <span class="timeline-number">01</span>
+                <div class="timeline-content-minimal">
+                    <h3>Infrastructure Mapping</h3>
+                    <p>Discovery and mapping of web infrastructure, APIs, and off-chain components</p>
+                </div>
+            </div>
+
+            <div class="timeline-item-minimal">
+                <span class="timeline-number">02</span>
+                <div class="timeline-content-minimal">
+                    <h3>Security Testing Campaign</h3>
+                    <p>Manual and automated testing for traditional web vulnerabilities including injection attacks, access control issues, and misconfigurations</p>
+                </div>
+            </div>
+
+            <div class="timeline-item-minimal">
+                <span class="timeline-number">03</span>
+                <div class="timeline-content-minimal">
+                    <h3>Web3 Integration Analysis</h3>
+                    <p>Security review of wallet integrations, transaction signing flows, and web2-web3 boundary interactions</p>
+                </div>
+            </div>
+
+            <div class="timeline-item-minimal">
+                <span class="timeline-number">04</span>
+                <div class="timeline-content-minimal">
+                    <h3>Security Report & Remediation</h3>
+                    <p>Detailed findings report with severity classifications and actionable remediation guidance</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-minimal">
+    <div class="container">
+        <h2 class="section-title-minimal">Deliverables</h2>
+        <p class="section-subtitle-minimal">
+            What you receive from our web security assessment
+        </p>
+        <div class="deliverables-grid-minimal">
+            <div class="deliverable-item-minimal">
+                <h3>Security Report</h3>
+                <p>Detailed documentation of identified vulnerabilities with CVSS scoring and technical analysis</p>
+            </div>
+            <div class="deliverable-item-minimal">
+                <h3>Infrastructure Assessment</h3>
+                <p>Analysis of security posture across your web infrastructure and off-chain components</p>
+            </div>
+            <div class="deliverable-item-minimal">
+                <h3>Exploit Demonstrations</h3>
+                <p>Proof-of-concept exploits demonstrating critical vulnerabilities and their potential impact</p>
+            </div>
+            <div class="deliverable-item-minimal">
+                <h3>Remediation Roadmap</h3>
+                <p>Prioritized recommendations for addressing vulnerabilities and hardening infrastructure</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section-minimal cta-section-minimal">
+    <div class="container">
+        <h2 class="section-title-minimal">Secure Your Web3 Infrastructure</h2>
+        <p class="section-subtitle-minimal">
+            Protect the critical web components powering your blockchain applications
+        </p>
+        <div class="cta-buttons-minimal">
+            <a href="/contact/" class="cta-minimal-primary">Get Started</a>
+            <a href="/services/" class="cta-minimal-secondary">View All Services</a>
+        </div>
+    </div>
+</section>
+
+    </main>
+
+    
+    <style>
+    .modern-footer {
+        border-top: 1px solid rgba(16, 235, 255, 0.15);
+        margin-top: 4rem;
+        position: relative;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 14, 20, 0.4) 100%);
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 1.75rem 1.5rem 1.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 2rem 2rem 1.5rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.7;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(16, 235, 255, 0.95);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.12) 0%,
+            rgba(92, 92, 171, 0.1) 50%,
+            rgba(185, 26, 238, 0.12) 100%);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        box-shadow: 0 0 5px rgba(16, 235, 255, 0.15);
+    }
+
+    .footer-contact-btn:hover {
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.18) 0%,
+            rgba(92, 92, 171, 0.15) 50%,
+            rgba(185, 26, 238, 0.18) 100%);
+        border-color: rgba(16, 235, 255, 0.5);
+        box-shadow: 0 0 10px rgba(16, 235, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(16, 235, 255, 0.1);
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Geist', sans-serif;
+        margin: 0;
+    }
+</style>
+
+<footer class="modern-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/team/">Team</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/tooling/">Products</a></li>
+                    </ul>
+                </div>
+                <a href="/contact/" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Inversive Labs. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>
