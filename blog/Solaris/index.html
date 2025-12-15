@@ -1668,7 +1668,7 @@ window.addEventListener('DOMContentLoaded', function() {
 </pre></td><td class="rouge-code"><pre><span class="n">edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">previous_pc</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="n">current_pc</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>When multiple programs share the same virtual address space, identical control flow transitions (same <code class="language-plaintext highlighter-rouge">previous_pc</code> and <code class="language-plaintext highlighter-rouge">current_pc</code> values) in different programs produce the same edge ID, even though they represent completely different code executing in different programs.</p>
+<p>When multiple programs share the same virtual address layout, identical control flow transitions (same <code class="language-plaintext highlighter-rouge">previous_pc</code> and <code class="language-plaintext highlighter-rouge">current_pc</code> values) in different programs produce the same edge ID, even though they represent completely different code executing in different programs.</p>
 
 <p>For example, a transition from 0x100000080 → 0x100000100 in the target program has the same edge ID as the identical transition in a dependency program, despite executing entirely different instructions at those addresses. This causes edge coverage pollution where the fuzzer cannot distinguish which program generated which coverage, leading to:</p>
 
