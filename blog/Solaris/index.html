@@ -1652,7 +1652,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 <h2 id="program-scoped-sbpf-edge-tracking">Program-Scoped sBPF Edge Tracking</h2>
 
-<p>Coverage feedback is fundamental to effective fuzzing. By tracking which code paths have been executed, the fuzzer can identify test cases that explore new program behavior and prioritize them for further mutation. However, obtaining accurate coverage in Solana’s execution environment presents unique challenges due to how the SVM maps programs to its address space.</p>
+<p>Coverage feedback is fundamental to effective fuzzing. By tracking which code paths have been executed, the fuzzer can identify test cases that explore new program behavior and prioritize them for further mutation. However, obtaining accurate coverage in Solana’s execution environment presents unique challenges because while each program executes in an isolated VM instance with its own host memory mappings, the SVM uses a fixed virtual address layout for all programs.</p>
 
 <h3 id="the-collision-problem-in-sbpf-coverage">The Collision Problem in sBPF Coverage</h3>
 
