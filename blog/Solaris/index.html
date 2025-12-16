@@ -1652,11 +1652,11 @@ window.addEventListener('DOMContentLoaded', function() {
 
 <h2 id="program-scoped-sbpf-edge-tracking">Program-Scoped sBPF Edge Tracking</h2>
 
-<p>Coverage feedback is fundamental to effective fuzzing. By tracking which code paths have been executed, the fuzzer can identify test cases that explore new program behavior and prioritize them for further mutation. However, obtaining accurate coverage in Solana’s execution environment presents unique challenges due to how the BPF Loader maps programs to its address space.</p>
+<p>Coverage feedback is fundamental to effective fuzzing. By tracking which code paths have been executed, the fuzzer can identify test cases that explore new program behavior and prioritize them for further mutation. However, obtaining accurate coverage in Solana’s execution environment presents unique challenges because while each program executes in an isolated VM instance with its own host memory mappings, the SVM uses a fixed virtual address layout for all programs.</p>
 
 <h3 id="the-collision-problem-in-sbpf-coverage">The Collision Problem in sBPF Coverage</h3>
 
-<p>The BPF Loader maps sBPF programs to the same base address:</p>
+<p>The SVM maps sBPF programs to the same base address:</p>
 <ul>
   <li><strong>sBPF v0-v2</strong>: Programs are mapped at <code class="language-plaintext highlighter-rouge">0x100000000</code></li>
   <li><strong>sBPF v3+</strong>: Programs are linked on compile-time and use zero-based addressing, mapped at <code class="language-plaintext highlighter-rouge">0x0</code></li>
@@ -1668,7 +1668,7 @@ window.addEventListener('DOMContentLoaded', function() {
 </pre></td><td class="rouge-code"><pre><span class="n">edge</span> <span class="o">=</span> <span class="p">(</span><span class="n">previous_pc</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="n">current_pc</span>
 </pre></td></tr></tbody></table></code></pre></div></div>
 
-<p>When multiple programs share the same virtual address space, identical control flow transitions (same <code class="language-plaintext highlighter-rouge">previous_pc</code> and <code class="language-plaintext highlighter-rouge">current_pc</code> values) in different programs produce the same edge ID, even though they represent completely different code executing in different programs.</p>
+<p>When multiple programs share the same virtual address layout, identical control flow transitions (same <code class="language-plaintext highlighter-rouge">previous_pc</code> and <code class="language-plaintext highlighter-rouge">current_pc</code> values) in different programs produce the same edge ID, even though they represent completely different code executing in different programs.</p>
 
 <p>For example, a transition from 0x100000080 → 0x100000100 in the target program has the same edge ID as the identical transition in a dependency program, despite executing entirely different instructions at those addresses. This causes edge coverage pollution where the fuzzer cannot distinguish which program generated which coverage, leading to:</p>
 
@@ -1796,7 +1796,7 @@ Beyond aggregate statistics, Solaris provides detailed Control Flow Graph (CFG) 
 
 <p>The Protocol Buffer-based approach allows Solaris to generate syntactically valid transactions while still exploring the full input space.</p>
 
-<p>The collision-resistant hash algorithm solves the edge attribution problem caused by SVM’s BPF Loader memory model.</p>
+<p>The collision-resistant hash algorithm solves the edge attribution problem caused by SVM’s memory model.</p>
 
 <p>Together, these techniques enable systematic exploration of program state space without hardcoding specific instruction sequences or constraints.</p>
 
