@@ -3656,46 +3656,39 @@ body.menu-open {
 }
 
 .service-card-sophisticated {
-    background: linear-gradient(135deg, rgba(3, 3, 8, 0.98) 0%, rgba(2, 2, 6, 0.98) 100%);
-    backdrop-filter: blur(20px);
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
     padding: 2.5rem;
     position: relative;
-    transition:
-        background 0.3s ease-in,
-        transform 0.3s ease-in,
-        box-shadow 1.2s ease-out,
-        border-color 1.2s ease-out;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.6),
-        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 16px;
     overflow: hidden;
 }
 
 .service-card-sophisticated::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg,
-        transparent 0%,
-        rgba(16, 235, 255, 0.03) 50%,
-        rgba(185, 26, 238, 0.03) 100%);
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(16, 235, 255, 0.3), transparent);
     opacity: 0;
-    transition: opacity 0.5s ease-in, opacity 1.5s ease-out;
-    pointer-events: none;
+    transition: opacity 0.4s ease;
 }
 
 .service-card-sophisticated::after {
     content: '';
     position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at top right, rgba(16, 235, 255, 0.1) 0%, transparent 50%);
-    opacity: 0;
-    transition: opacity 0.5s ease-in, opacity 1.5s ease-out;
-    pointer-events: none;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(16, 235, 255, 0.6), rgba(185, 26, 238, 0.6));
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .service-card-sophisticated:hover {
@@ -3711,9 +3704,12 @@ body.menu-open {
         linear-gradient(135deg, #10ebff, #b91aee) border-box;
 }
 
-.service-card-sophisticated:hover::before,
-.service-card-sophisticated:hover::after {
+.service-card-sophisticated:hover::before {
     opacity: 1;
+}
+
+.service-card-sophisticated:hover::after {
+    width: 100%;
 }
 
 .service-card-sophisticated .service-content {
@@ -3764,8 +3760,8 @@ body.menu-open {
 }
 
 .service-card-sophisticated .service-title {
-    font-size: clamp(1.35rem, 2.75vw, 2rem);
-    font-weight: 500 !important;
+    font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+    font-weight: 400 !important;
     color: rgba(255, 255, 255, 0.95);
     margin-bottom: 3rem;
     font-family: 'Space Grotesk', 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -3795,11 +3791,11 @@ body.menu-open {
 .service-card-sophisticated .service-features-list {
     list-style: none;
     padding: 0;
-    margin: 2rem 0;
+    margin: 2rem 0 0.5rem 0;
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    height: 150px;
+    height: auto;
     align-items: flex-start;
 }
 
@@ -3828,7 +3824,7 @@ body.menu-open {
 }
 
 .service-card-sophisticated .service-features-list {
-    flex-grow: 1;
+    flex-grow: 0;
 }
 
 .service-card-sophisticated .service-stats {
@@ -3872,7 +3868,7 @@ body.menu-open {
     font-size: 0.875rem;
     font-weight: 500;
     transition: all 0.3s ease;
-    padding: 1rem 0 0 0;
+    padding: 0;
     margin-top: 0;
     font-family: 'Geist', 'Inter', 'Raleway', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     position: relative;
@@ -3948,6 +3944,15 @@ body.menu-open {
     color: rgba(255, 255, 255, 0.8);
     border-color: rgba(16, 235, 255, 0.3);
     background: rgba(16, 235, 255, 0.05);
+}
+
+/* Products grid specific overrides to restore original spacing */
+.services-grid.sophisticated.products-grid .service-features-list {
+    flex-grow: 1;
+}
+
+.services-grid.sophisticated.products-grid .service-link {
+    padding: 1rem 0 0 0;
 }
 
 /* Service Landing Page Minimal Styles */
