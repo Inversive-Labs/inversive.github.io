@@ -65,7 +65,7 @@
     .modern-nav nav > a img {
         display: block;
         width: auto;
-        height: 3rem; /* 48px - equivalent to h-12 */
+        height: 2.5rem; /* 40px */
     }
 
     .modern-nav-links {
@@ -294,7 +294,7 @@
     /* Mobile logo sizing */
     @media (max-width: 767px) {
         .modern-nav nav > a img {
-            height: 2rem; /* 32px */
+            height: 1.5rem; /* 24px */
         }
     }
 </style>
@@ -427,58 +427,261 @@
     font-family: 'Raleway', sans-serif;
 }
 
-/* Blockchain Logos */
+/* Blockchain Logos - Infinite Scroller */
 .blockchain-logos {
+    margin: 4rem auto 0;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    padding: 2rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.logo-scroll-wrapper {
     display: flex;
-    justify-content: center;
+    width: fit-content;
+    animation: scroll 71s linear infinite;
+    will-change: transform;
+}
+
+.logo-scroll-wrapper:hover {
+    animation-play-state: paused;
+}
+
+.logo-track {
+    display: flex;
+    gap: 4rem;
     align-items: center;
-    gap: 3rem;
-    margin: 4rem auto;
-    flex-wrap: wrap;
+    padding: 0 2rem;
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-33.333%);
+    }
 }
 
 .logo-item {
     position: relative;
-    transition: opacity 0.3s ease;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem;
+    border-radius: 12px;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.logo-item:nth-child(1) { animation-delay: 0.1s; }
+.logo-item:nth-child(2) { animation-delay: 0.2s; }
+.logo-item:nth-child(3) { animation-delay: 0.3s; }
+.logo-item:nth-child(4) { animation-delay: 0.4s; }
+.logo-item:nth-child(5) { animation-delay: 0.5s; }
+.logo-item:nth-child(6) { animation-delay: 0.6s; }
+.logo-item:nth-child(7) { animation-delay: 0.7s; }
+.logo-item:nth-child(8) { animation-delay: 0.8s; }
+.logo-item:nth-child(9) { animation-delay: 0.9s; }
+.logo-item:nth-child(10) { animation-delay: 1.0s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.logo-item:hover {
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 0 20px rgba(16, 235, 255, 0.15);
 }
 
 .chain-logo {
-    height: 60px;
-    width: 60px;
+    height: 40px;
+    width: 40px;
     object-fit: contain;
     opacity: 0.7;
-    transition: opacity 0.3s ease, filter 0.3s ease;
+    transition: opacity 0.3s ease, filter 0.3s ease, transform 0.3s ease;
 }
 
 .logo-item:hover .chain-logo {
     opacity: 1;
+    transform: scale(1.15);
 }
 
 .chain-logo-solana {
-    height: 50px;
-    width: 50px;
-}
-
-.chain-logo-ethereum {
-    height: 60px;
-    width: 60px;
-    filter: grayscale(1);
-}
-
-.logo-item:hover .chain-logo-ethereum {
-    filter: grayscale(0);
-    opacity: 1;
+    height: 40px;
+    width: 40px;
 }
 
 .chain-logo-aptos {
-    height: 55px;
-    width: 55px;
+    height: 35px;
+    width: 35px;
     filter: brightness(0) invert(1) opacity(0.7);
     transition: filter 0.3s ease;
 }
 
 .logo-item:hover .chain-logo-aptos {
     filter: brightness(0) invert(1) opacity(1);
+}
+
+.chain-logo-move {
+    height: 40px;
+    width: 40px;
+    opacity: 0.7;
+}
+
+.logo-item:hover .chain-logo-move {
+    opacity: 1;
+}
+
+.chain-logo-rust {
+    height: 50px;
+    width: 50px;
+    filter: invert(1) opacity(0.7);
+    transition: filter 0.3s ease;
+}
+
+.logo-item:hover .chain-logo-rust {
+    filter: invert(1) opacity(1);
+}
+
+.chain-logo-anchor {
+    height: 40px;
+    width: 40px;
+    opacity: 0.7;
+}
+
+.logo-item:hover .chain-logo-anchor {
+    opacity: 1;
+}
+
+.chain-logo-pinocchio {
+    height: 60px;
+    width: 60px;
+    opacity: 0.7;
+}
+
+.logo-item:hover .chain-logo-pinocchio {
+    opacity: 1;
+}
+
+.chain-logo-ethereum {
+    height: 40px;
+    width: 40px;
+    opacity: 0.7;
+}
+
+.logo-item:hover .chain-logo-ethereum {
+    opacity: 1;
+}
+
+.chain-logo-solidity {
+    height: 40px;
+    width: 40px;
+    filter: invert(1) opacity(0.7);
+    transition: filter 0.3s ease;
+}
+
+.logo-item:hover .chain-logo-solidity {
+    filter: invert(1) opacity(1);
+}
+
+.chain-logo-circom {
+    height: 75px;
+    width: 75px;
+    filter: invert(1) opacity(0.7);
+    transition: filter 0.3s ease;
+}
+
+.logo-item:hover .chain-logo-circom {
+    filter: invert(1) opacity(1);
+}
+
+/* Mobile responsive logo sizes */
+@media (max-width: 768px) {
+    .blockchain-logos {
+        padding: 1rem 0;
+        max-width: 90%;
+        -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+
+    .logo-scroll-wrapper {
+        animation-duration: 58s;
+    }
+
+    .logo-track {
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+
+    /* Default logos (Solana, Sui, Move, Anchor) - 40px on desktop, scale to 26px mobile */
+    .chain-logo {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    .chain-logo-solana {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    .chain-logo-move {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    .chain-logo-anchor {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    /* Aptos - 35px on desktop, scale to 23px mobile (proportionally smaller) */
+    .chain-logo-aptos {
+        height: 23px !important;
+        width: 23px !important;
+    }
+
+    /* Rust - 50px on desktop, scale to 33px mobile (proportionally larger) */
+    .chain-logo-rust {
+        height: 33px !important;
+        width: 33px !important;
+    }
+
+    /* Pinocchio - 60px on desktop, scale to 39px mobile (proportionally largest) */
+    .chain-logo-pinocchio {
+        height: 39px !important;
+        width: 39px !important;
+    }
+
+    /* Ethereum - 40px on desktop, scale to 26px mobile */
+    .chain-logo-ethereum {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    /* Solidity - 40px on desktop, scale to 26px mobile */
+    .chain-logo-solidity {
+        height: 26px !important;
+        width: 26px !important;
+    }
+
+    /* Circom - 75px on desktop, scale to 49px mobile */
+    .chain-logo-circom {
+        height: 49px !important;
+        width: 49px !important;
+    }
 }
 
 .gradient-text {
@@ -705,26 +908,6 @@
         min-width: 120px;
     }
 
-    .chain-logo {
-        height: 45px;
-        width: 45px;
-    }
-
-    .chain-logo-solana {
-        height: 35px !important;
-        width: 35px !important;
-    }
-
-    .chain-logo-ethereum {
-        height: 50px !important;
-        width: 50px !important;
-    }
-
-    .chain-logo-aptos {
-        height: 37px !important;
-        width: 37px !important;
-    }
-
     .services-showcase {
         padding: 4rem 1rem;
     }
@@ -757,27 +940,77 @@
 <section class="hero-section">
     <div class="hero-content">
         <h1 class="hero-title">Full-Spectrum <span class="gradient-text">Web3</span> Security</h1>
-        <p class="hero-tagline">Security audits and tooling development</p>
+        <p class="hero-tagline">Securing emerging blockchain ecosystems</p>
         <p class="hero-subtitle">Smart contract audits, infrastructure security, and custom security tooling</p>
 
         <!-- Blockchain Logos -->
         <div class="blockchain-logos">
-            <div class="logo-item">
-                <img src="https://cryptologos.cc/logos/solana-sol-logo.svg?v=035" alt="Solana" class="chain-logo chain-logo-solana">
-            </div>
-            <div class="logo-item">
-                <img src="https://ethereum.org/_next/static/media/eth-diamond-purple.7929ed26.png" alt="Ethereum" class="chain-logo chain-logo-ethereum">
-            </div>
-            <div class="logo-item">
-                <img src="https://cryptologos.cc/logos/sui-sui-logo.svg?v=035" alt="Sui" class="chain-logo">
-            </div>
-            <div class="logo-item">
-                <img src="https://s2.coinmarketcap.com/static/img/coins/64x64/21794.png" alt="Aptos" class="chain-logo chain-logo-aptos">
+            <div class="logo-scroll-wrapper" id="logo-scroller">
+                <div class="logo-track">
+                    <div class="logo-item">
+                        <img src="/images/solana-logo.svg" alt="Solana" class="chain-logo chain-logo-solana">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/ethereum-logo.svg" alt="Ethereum" class="chain-logo chain-logo-ethereum">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/sui-logo.svg" alt="Sui" class="chain-logo">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/aptos-logo.png" alt="Aptos" class="chain-logo chain-logo-aptos">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/move-logo.png" alt="Move Language" class="chain-logo chain-logo-move">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/solidity-logo.svg" alt="Solidity" class="chain-logo chain-logo-solidity">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/rust-logo.svg" alt="Rust" class="chain-logo chain-logo-rust">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/circom-logo.png" alt="Circom" class="chain-logo chain-logo-circom">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/anchor-logo.png" alt="Anchor" class="chain-logo chain-logo-anchor">
+                    </div>
+                    <div class="logo-item">
+                        <img src="/images/pinocchio.png" alt="Pinocchio" class="chain-logo chain-logo-pinocchio">
+                    </div>
+                </div>
             </div>
         </div>
 
+        <script>
+            // True infinite scroll implementation
+            (function() {
+                function initScroller() {
+                    const wrapper = document.querySelector('.logo-scroll-wrapper');
+                    const track = wrapper.querySelector('.logo-track');
+
+                    // Clear any existing clones
+                    const existingClones = wrapper.querySelectorAll('.logo-track[aria-hidden="true"]');
+                    existingClones.forEach(clone => clone.remove());
+
+                    // Clone the track multiple times to fill the screen and ensure seamless loop
+                    for (let i = 0; i < 2; i++) {
+                        const clone = track.cloneNode(true);
+                        clone.setAttribute('aria-hidden', 'true');
+                        wrapper.appendChild(clone);
+                    }
+                }
+
+                // Initialize on DOM ready
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', initScroller);
+                } else {
+                    initScroller();
+                }
+            })();
+        </script>
+
         <!-- CTA Buttons -->
-        <div class="cta-buttons" style="margin-top: 3rem;">
+        <div class="cta-buttons" style="margin-top: 0;">
             <a href="/contact/" class="cta-button cta-button-primary">Request Audit</a>
             <a href="/services/" class="cta-button cta-button-secondary">View All Services</a>
         </div>

@@ -39,7 +39,7 @@ body::before {
         /* Enhanced color gradients like home page */
         radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.15), transparent 50%),
         radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.15), transparent 50%),
-        radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.12), transparent 50%);
+        radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.18), transparent 50%);
     background-size:
         var(--dot-space) var(--dot-space),
         200% 200%,
@@ -75,7 +75,7 @@ body::before {
             ),
             radial-gradient(circle at 50% 50%, rgba(16, 235, 255, 0.15), transparent 50%),
             radial-gradient(circle at 50% 50%, rgba(185, 26, 238, 0.15), transparent 50%),
-            radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.12), transparent 50%);
+            radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.18), transparent 50%);
     }
 }
 
@@ -635,9 +635,16 @@ nav {
 /* First section on landing pages needs more top padding to avoid navbar overlap */
 /* Also make it immediately visible */
 main > .section:first-child {
-    padding-top: 8rem;
+    padding-top: 3rem;
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Reduced padding on mobile for first section */
+@media (max-width: 768px) {
+    main > .section:first-child {
+        padding-top: 1rem;
+    }
 }
 
 /* Hero section doesn't need extra padding */
@@ -3583,10 +3590,16 @@ body.menu-open {
 
 /* Clean Minimalist Services Page */
 #services {
-    padding: 8rem 0;
+    padding: 2rem 0;
     background: transparent;
     min-height: 100vh;
     position: relative;
+}
+
+@media (max-width: 768px) {
+    #services {
+        padding: 0 !important;
+    }
 }
 
 #services .section-header {
@@ -3643,16 +3656,24 @@ body.menu-open {
 /* Services Grid - Proper 3 Column Layout */
 .services-grid.sophisticated {
     display: grid;
-    grid-template-columns: repeat(3, minmax(280px, 400px));
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
-    gap: 1px;
+    gap: 1.5rem;
     margin-top: 4rem;
     background: transparent;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Products Grid - 3 Column Layout */
 .services-grid.sophisticated.products-grid {
-    grid-template-columns: repeat(3, minmax(280px, 400px));
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* Make card links in grid display properly */
+.services-grid.sophisticated > a.service-card-sophisticated {
+    display: block;
 }
 
 .service-card-sophisticated {
@@ -3662,6 +3683,7 @@ body.menu-open {
     position: relative;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
+    width: 100%;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;

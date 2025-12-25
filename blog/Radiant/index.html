@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radiant: Concolic Execution for Solana Programs - Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+<body>
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Background removed -->
+
+    <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+        width: 100%;
+    }
+
+    .modern-nav .nav-container {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-nav .nav-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-nav .nav-container {
+            padding: 0 2rem;
+        }
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+        width: auto;
+        height: 2.5rem; /* 40px */
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(8px);
+        align-items: center;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+    }
+
+    .modern-nav-links a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .modern-nav-links a.home-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .modern-nav-links a.home-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .nav-indicator {
+        position: absolute;
+        border-radius: 9999px;
+        padding: 2px;
+        background: linear-gradient(90deg,
+            #10ebff 0%,
+            #3ac9e6 12.5%,
+            #65a8cd 25%,
+            #8f86b4 37.5%,
+            #b91aee 50%,
+            #8f86b4 62.5%,
+            #65a8cd 75%,
+            #3ac9e6 87.5%,
+            #10ebff 100%);
+        background-size: 400% 100%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: gradientRotate 15s linear infinite;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        box-sizing: border-box;
+    }
+
+    @keyframes gradientRotate {
+        0% {
+            background-position: 0% 0;
+        }
+        100% {
+            background-position: 400% 0;
+        }
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Hamburger menu button */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        gap: 5px;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 1px;
+        transition: all 0.3s ease;
+        transform-origin: center;
+    }
+
+    .hamburger:hover .hamburger-line {
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background: #ffffff;
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background: #ffffff;
+    }
+
+    @media (max-width: 767px) {
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid #000 !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 1.5rem; /* 24px */
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="nav-container">
+        <nav>
+            <a href="/">
+                <img src="/images/logo.svg" alt="Inversive Labs">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <div class="nav-indicator"></div>
+                <a href="/" >Home</a>
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
+                <a href="/services/" >Services</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
+                <a href="/blog/" class="active">Blog</a>
+                <a href="/contact/" >Contact</a>
+            </div>
+
+            <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<script>
+    // Mobile menu functionality and nav indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+        const indicator = document.querySelector('.nav-indicator');
+        const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
+
+        // Position indicator on active link
+        function updateIndicator() {
+            const activeLink = document.querySelector('.modern-nav-links > a.active');
+            if (activeLink && indicator && window.innerWidth >= 768) {
+                // Calculate position using offsetLeft and offsetTop
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
+
+                indicator.style.left = left + 'px';
+                indicator.style.top = top + 'px';
+                indicator.style.width = width + 'px';
+                indicator.style.height = height + 'px';
+                indicator.style.opacity = '1';
+            } else if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }
+
+        // Initial positioning
+        updateIndicator();
+
+        // Update on window resize
+        window.addEventListener('resize', updateIndicator);
+
+        // Mobile menu toggle
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                mobileBtn.classList.toggle('active');
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    mobileBtn.classList.remove('active');
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
+
+    <main>
+        <div class="container">
+    <article style="max-width: 900px; margin: 0 auto; padding: 5rem 2rem; position: relative; z-index: auto;">
+        <!-- Enhanced title with gradient effect -->
+        <h1 style="
+            background: linear-gradient(90deg, #ffffff 0%, #10ebff 50%, #ffffff 100%);
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            animation: shimmerTitle 3s ease-in-out infinite;
+            font-size: 2.5rem;
+            font-weight: 800;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            letter-spacing: -0.025em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 2rem;
+        ">Radiant: Concolic Execution for Solana Programs</h1>
+
+        <!-- Enhanced post meta -->
+        <div style="
+            color: #35e4f4;
+            position: relative;
+            font-size: 1rem;
+            font-weight: 500;
+            font-family: 'Raleway', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 1rem;
+        ">
+            December 22, 2025
+             • inversive
+            <div style="
+                content: '';
+                position: absolute;
+                bottom: -1px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60px;
+                height: 2px;
+                background: linear-gradient(90deg, transparent, #35e4f4, transparent);
+                border-radius: 1px;
+            "></div>
+        </div>
+
+        <!-- Enhanced content area -->
+        <div style="
+            color: #d1d5db;
+            line-height: 1.7;
+            font-size: 1.1rem;
+            text-align: left;
+        ">
+            <p>This article introduces <strong>Radiant</strong>, a binary-level concolic execution framework for Solana programs.</p>
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+<ul>
+  <li><a href="#introduction">Introduction</a></li>
+  <li><a href="#motivation">Motivation</a></li>
+  <li><a href="#how-it-works">How it works</a></li>
+  <li><a href="#architecture">Architecture</a></li>
+  <li><a href="#example-walkthrough">Example Walkthrough</a></li>
+  <li><a href="#cross-cpi-concolic-execution">Cross-CPI Concolic Execution</a></li>
+  <li><a href="#additional-capabilities">Additional Capabilities</a></li>
+  <li><a href="#conclusion">Conclusion</a></li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Radiant is an advanced testing framework for Solana programs that leverages concolic execution, a hybrid approach combining concrete and symbolic execution.</p>
+
+<p>Radiant models program input fields and account states as either concrete values or symbolic variables. Given a target code location, it uses symbolic execution to determine which input values enable execution paths that reach that location.</p>
+
+<h2 id="motivation">Motivation</h2>
+
+<p>Security auditors combine multiple techniques when analyzing smart contracts, ranging from manual code review to understand program logic, fuzzing to systematically test the code base, and formal verification for critical properties. Each technique has distinct strengths. Manual review leverages human insight and reasoning, fuzzing explores behavior empirically while formal methods provide mathematical rigor.</p>
+
+<p>Radiant augments this toolkit with concolic execution, a technique that combines concrete execution with symbolic execution. But why concolic execution instead of purely symbolic execution?</p>
+
+<p>Solana’s architecture presents a unique challenge, programs are stateless and operate on accounts passed as input. A transaction can include dozens of accounts, each with arbitrary data and state. Making everything symbolic, can quickly become impractical. The high number of symbolic variables can overwhelm the constraint solver, and make analysis intractable.</p>
+
+<p>Radiant’s concolic approach solves this by starting with a concrete execution context representing a deployment with actual account data, balances, and program state. From this concrete baseline, one can selectively mark specific values as symbolic. Perhaps just the instruction parameters, or specific fields within an account’s data. This selective symbolization keeps the analysis focused and tractable while still enabling targeted path exploration.</p>
+
+<p>This approach is particularly powerful when combined with fuzzing. Fuzzers excel at exploring the program state space at scale but struggle to reach deep nested code paths fenced by conditional statements. Radiant addresses this by solving constraints on the symbolized values to generate precise inputs that reach specific code locations.</p>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>Understanding Radiant’s approach requires first recognizing the limitations of traditional testing methods. Consider a typical testing scenario applied to given Solana program:</p>
+
+<p><img src="/images/blog/Radiant/1.png" style="display: block; width: 100%; max-width: 400px; height: auto; margin: 14px auto;" /></p>
+
+<p>The control flow graph (CFG) above shows the execution paths taken when running different tests. Each test explores certain branches and basic blocks within a given program’s logic.</p>
+
+<p><img src="/images/blog/Radiant/2.png" style="display: block; width: 100%; max-width: 400px; height: auto; margin: 14px auto;" /></p>
+
+<p>While multiple tests increase code coverage, they still follow predictable paths determined by the specific test inputs. This approach often misses edge cases that lurk in unexplored execution paths.</p>
+
+<p><img src="/images/blog/Radiant/3.png" style="display: block; width: 100%; max-width: 400px; height: auto; margin: 14px auto;" /></p>
+
+<p>Consider a scenario where a bug manifests in a specific basic block due to miscalculations caused by a previous block due to unexpected state changes.</p>
+
+<h3 id="targeted-symbolic-execution">Targeted Symbolic Execution</h3>
+
+<p>Radiant addresses this by enabling <strong>targeted basic block exploration</strong>. Following a bottom-up approach, instead of hoping random inputs will stumble upon problematic code paths, Radiant can explicitly target specific basic blocks to reach.</p>
+
+<p>Target basic blocks can be selected through multiple approaches:</p>
+
+<ul>
+  <li><strong>Manual Analysis</strong>: Security auditors identify suspicious code patterns and target those blocks directly</li>
+  <li><strong>Automated Approaches</strong>: Heuristics or static analysis tools identify potentially vulnerable blocks</li>
+  <li><strong>Hybrid Strategies</strong>: Automatically explore multiple targets while excluding regions of code that are known to be safe or irrelevant</li>
+</ul>
+
+<p>Once a target basic block is selected, Radiant performs symbolic execution to discover the conditions needed to reach it:</p>
+
+<p><img src="/images/blog/Radiant/4.png" style="display: block; width: 100%; max-width: 560px; height: auto; margin: 14px auto;" /></p>
+
+<ol>
+  <li>
+    <p><strong>Symbolic Variable Introduction</strong>: Radiant treats selected input fields and account states as symbolic variables rather than concrete values</p>
+  </li>
+  <li>
+    <p><strong>Path Exploration</strong>: As execution progresses, whenever a <strong>symbolic program counter (PC)</strong> is encountered, typically a branch instruction representing a conditional statement that depends on symbolic variables, the control flow diverges</p>
+  </li>
+  <li>
+    <p><strong>Parallel Path Analysis</strong>: Each divergent path is explored symbolically in parallel, building path constraints that capture the conditions required to reach each branch</p>
+  </li>
+  <li>
+    <p><strong>Target Achievement</strong>: When the symbolic execution reaches the target basic block, Radiant has accumulated all the path constraints necessary to reach that code</p>
+  </li>
+  <li>
+    <p><strong>Concretization</strong>: Finally, Radiant solves these constraints and concretizes the symbolic values, producing concrete input values that will deterministically trigger the target basic block</p>
+  </li>
+</ol>
+
+<p>This is fundamentally how binary-level symbolic execution frameworks like <a href="https://angr.io/">angr</a> and <a href="https://github.com/trailofbits/manticore">Manticore</a> operate on traditional binaries.</p>
+
+<p>These tools enable security researchers and developers to analyze complex execution paths, and generate concrete inputs that trigger specific code paths.</p>
+
+<h2 id="architecture">Architecture</h2>
+
+<p>Radiant’s architecture consists of two parallel execution engines coordinated through a debugger bridge:</p>
+
+<p><img src="/images/blog/Radiant/5.png" style="display: block; width: 100%; max-width: 560px; height: auto; margin: 14px auto;" /></p>
+
+<h3 id="solana-runtime-emulator">Solana Runtime Emulator</h3>
+
+<p>The left side of the architecture provides concrete execution through the <strong>Solana Runtime Emulator</strong>. Radiant leverages <a href="https://github.com/LiteSVM/litesvm"><strong>LiteSVM</strong></a>, a lightweight Solana Virtual Machine that executes programs in their native sBPF (Solana Berkeley Packet Filter) bytecode format. This component runs actual program instructions with concrete values while maintaining accurate runtime state, including account data, instruction context, and program execution flow.</p>
+
+<h3 id="symbolic-execution-engine">Symbolic Execution Engine</h3>
+
+<p>The right side contains the <strong>Symbolic Execution Engine</strong>, built around a <strong>Taint Tracking Engine</strong>. This engine includes an <strong>IL Interpreter</strong> (Intermediate Language Interpreter) that operates on a lifted representation of the program.</p>
+
+<p>Radiant is built on top of a modified version of <a href="https://github.com/aemmitt-ns/radius"><strong>radius2</strong></a>, a powerful symbolic execution framework that leverages <a href="https://rada.re/n/"><strong>radare2</strong></a>’s ESIL (Evaluable Strings Intermediate Language) as its intermediate language.</p>
+
+<p>This work builds directly on our sBPF architecture contributions to radare2, which we developed specifically to enable advanced binary analysis for Solana programs. We presented this work at <a href="https://www.youtube.com/watch?v=IAt-HgKPN88"><strong>r2con 2025</strong></a>, showcasing the process of implementing sBPF support in radare2.</p>
+
+<h3 id="debugger-bridge">Debugger Bridge</h3>
+
+<p>The <strong>Debugger Bridge</strong> serves as the coordination layer between both engines, implemented through a <strong>GDB stub server</strong> integrated into a modified version of <code class="language-plaintext highlighter-rouge">solana-sbpf</code>. This implementation enables standard GDB Remote Serial Protocol communication between the Solana VM and the symbolic execution engine.</p>
+
+<p>The bridge operates using a two-stage architecture:</p>
+
+<ul>
+  <li><strong>Deployment</strong>: Runs an instance of <code class="language-plaintext highlighter-rouge">LiteSVM</code> with an embedded GDB server listening for connections.</li>
+  <li><strong>Symbolic Execution</strong>: Uses <code class="language-plaintext highlighter-rouge">radare2</code> to attach to the GDB server, read concrete context from memory, and pass it to <code class="language-plaintext highlighter-rouge">radius2</code> for symbolic execution. This process repeats intermittently whenever <code class="language-plaintext highlighter-rouge">radius2</code> needs additional concrete context.</li>
+</ul>
+
+<p>Through the GDB protocol, Radiant can:</p>
+
+<ul>
+  <li>Set breakpoints at specific program counter locations</li>
+  <li>Control execution flow</li>
+  <li>Read memory and register state on-demand</li>
+  <li>Synchronize concrete execution with symbolic execution context</li>
+</ul>
+
+<p>This dual-engine architecture enables concolic execution. The modified <code class="language-plaintext highlighter-rouge">solana-sbpf</code> runtime provides program and transaction concrete context through its GDB interface, while <code class="language-plaintext highlighter-rouge">radare2</code> extracts this context and <code class="language-plaintext highlighter-rouge">radius2</code> leverages it to build symbolic constraints necessary for path exploration.</p>
+
+<p><img src="/images/blog/Radiant/11.svg" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>Ideally, symbolic execution would leverage compiler-based intermediate representations like LLVM IR, which provide well-defined semantics and strong tooling support. However, existing LLVM-based symbolic execution frameworks lack mature support for sBPF’s ISA and SIMD extensions. Rather than building sBPF support from scratch in an LLVM-based framework, we chose to use ESIL (Evaluable Strings Intermediate Language) from radare2, which already had the foundation for sBPF analysis through our prior contributions.</p>
+
+<p>This choice required validation. We needed to ensure our ESIL instruction models accurately represent sBPF semantics. To achieve this, we leveraged the debugger bridge to implement a differential fuzzer that compared execution traces between the ESIL interpreter and live debugger sessions.</p>
+
+<p><img src="/images/blog/Radiant/13.svg" style="display: block; width: 100%; max-width: 850px; height: auto; margin: 14px auto;" /></p>
+
+<p>By fuzzing instructions and comparing their effects on registers and memory in both environments, we were able to validate with a reasonable degree of confidence, that our ESIL models correctly capture sBPF semantics, providing higher confidence in the symbolic execution results despite not using a compiler IR.</p>
+
+<h2 id="example-walkthrough">Example Walkthrough</h2>
+
+<p>Let’s demonstrate Radiant with a practical example: discovering the exact input values that trigger a panic condition in a Solana program.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: This example uses a simplified program to clearly illustrate Radiant’s symbolic execution capabilities. Real-world Solana programs involve significantly more complex logic, but the same methodology applies.</p>
+</blockquote>
+
+<h3 id="the-target-program">The Target Program</h3>
+
+<p>Consider the follwing Solana program:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+</pre></td><td class="rouge-code"><pre><span class="nd">#[program]</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">hello_world</span> <span class="p">{</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">initialize_fn</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">InitializeContext</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">input</span><span class="p">:</span> <span class="nb">u8</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="nd">msg!</span><span class="p">(</span>
+            <span class="s">"Hello World address: {}"</span><span class="p">,</span>
+            <span class="n">ctx</span><span class="py">.accounts.hello_world_account</span><span class="nf">.key</span><span class="p">()</span>
+        <span class="p">);</span>
+        <span class="k">let</span> <span class="n">hello_world_store</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">ctx</span><span class="py">.accounts.hello_world_account</span><span class="p">;</span>
+        <span class="n">hello_world_store</span><span class="py">.input</span> <span class="o">=</span> <span class="n">input</span><span class="p">;</span>
+
+        <span class="k">if</span> <span class="n">input</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">input</span> <span class="o">&lt;</span> <span class="mi">210</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"This number is magic"</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The program accepts a <code class="language-plaintext highlighter-rouge">u8</code> input parameter and panics only when the value falls within the narrow range of 201-209. Traditional fuzzing would eventually discover this, but symbolic execution can find all valid inputs systematically.</p>
+
+<h3 id="understanding-snapshot_pc-and-target_pc">Understanding snapshot_pc and target_pc</h3>
+
+<p>Before running Radiant, we need to identify two critical program counter locations:</p>
+
+<p><img src="/images/blog/Radiant/6.png" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<ul>
+  <li>
+    <p><strong>snapshot_pc</strong>: The program counter where Radiant takes a snapshot of the program state and begins symbolic execution.</p>
+  </li>
+  <li>
+    <p><strong>target_pc</strong>: The specific basic block we want to reach, in this case, the panic statement. All execution paths explored by Radiant aim to satisfy the constraints necessary to reach this target.</p>
+  </li>
+</ul>
+
+<blockquote>
+  <p><strong>Note</strong>: If <code class="language-plaintext highlighter-rouge">snapshot_pc</code> its set to 0, Radiant will automatically populate this to the instruction function entry point or program entry point, making it completely deterministic without manual binary analysis.</p>
+</blockquote>
+
+<p>The diagram illustrates how symbolic execution starts from the snapshot point and explores multiple paths within the symbolic context until reaching the target basic block.</p>
+
+<h3 id="radiant-test-configuration">Radiant Test Configuration</h3>
+
+<p>The test setup involves two main components:</p>
+
+<p><strong>1. Radiant Test Configuration</strong> (<code class="language-plaintext highlighter-rouge">tests/test.rs</code>):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+</pre></td><td class="rouge-code"><pre><span class="k">use</span> <span class="nn">radiant_test</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">std</span><span class="p">::</span><span class="nn">collections</span><span class="p">::</span><span class="n">HashSet</span><span class="p">;</span>
+<span class="k">use</span> <span class="k">crate</span><span class="p">::</span><span class="nn">setup</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+<span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">test_example</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="n">snapshot_pc</span> <span class="o">=</span> <span class="mi">0x100007018</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">target_pc</span> <span class="o">=</span> <span class="mi">0x1000078d8</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">deployment_thread</span><span class="p">)</span> <span class="o">=</span> <span class="nn">setup</span><span class="p">::</span><span class="nf">config</span><span class="p">(</span>
+        <span class="n">snapshot_pc</span><span class="p">,</span>
+        <span class="n">target_pc</span><span class="p">,</span>
+        <span class="mi">20</span><span class="p">,</span>
+        <span class="k">true</span><span class="p">,</span>
+        <span class="k">false</span>
+    <span class="p">);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">test</span> <span class="o">=</span> <span class="nn">RadiantTest</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">test</span><span class="nf">.run</span><span class="p">(</span><span class="nn">SymbolizeSpec</span><span class="p">::</span><span class="n">InstructionData</span> <span class="p">{</span>
+        <span class="n">length</span><span class="p">:</span> <span class="mi">1</span>
+    <span class="p">})</span><span class="o">?</span><span class="p">;</span>
+
+    <span class="k">let</span> <span class="n">solutions</span> <span class="o">=</span> <span class="n">result</span><span class="nf">.into_bytes</span><span class="p">();</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[+] Found {} solutions"</span><span class="p">,</span> <span class="n">solutions</span><span class="nf">.len</span><span class="p">());</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="k">in</span> <span class="n">solutions</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">value</span> <span class="o">=</span> <span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="nd">println!</span><span class="p">(</span><span class="s">"   Solution #{}: {} (0x{:02x})"</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+
+        <span class="nd">assert!</span><span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">200</span> <span class="o">&amp;&amp;</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="mi">210</span><span class="p">,</span>
+            <span class="s">"Solution {} is outside valid range (201-209)"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The test specifies the snapshot and target program counters, then symbolizes the last byte of instruction data (the <code class="language-plaintext highlighter-rouge">u8</code> input parameter), taking into account the displacement that would account for the instruction discriminator.</p>
+
+<p><strong>2. Program Deployment</strong> (<code class="language-plaintext highlighter-rouge">src/deployment.rs</code>):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+</pre></td><td class="rouge-code"><pre><span class="k">pub</span> <span class="k">fn</span> <span class="nf">call_initialize_fn</span><span class="p">(</span><span class="o">&amp;</span><span class="k">mut</span> <span class="k">self</span><span class="p">,</span> <span class="n">input</span><span class="p">:</span> <span class="nb">u8</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[*] Calling initialize_fn..."</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="p">(</span><span class="n">hello_world_account_pda</span><span class="p">,</span> <span class="n">_bump</span><span class="p">)</span> <span class="o">=</span> <span class="k">self</span><span class="py">.deployed</span><span class="nf">.find_pda</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="s">b"hello_world_seed"</span><span class="p">]);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">data</span> <span class="o">=</span> <span class="nd">vec!</span><span class="p">[</span><span class="mi">0x12</span><span class="p">,</span> <span class="mi">0xbb</span><span class="p">,</span> <span class="mi">0xa9</span><span class="p">,</span> <span class="mi">0xd5</span><span class="p">,</span> <span class="mi">0x5e</span><span class="p">,</span> <span class="mi">0xb4</span><span class="p">,</span> <span class="mi">0x56</span><span class="p">,</span> <span class="mi">0x98</span><span class="p">];</span>
+    <span class="n">data</span><span class="nf">.push</span><span class="p">(</span><span class="mi">0u8</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="n">instruction</span> <span class="o">=</span> <span class="n">Instruction</span> <span class="p">{</span>
+        <span class="n">program_id</span><span class="p">:</span> <span class="k">self</span><span class="py">.deployed.program_id</span><span class="p">,</span>
+        <span class="n">accounts</span><span class="p">:</span> <span class="nd">vec!</span><span class="p">[</span>
+            <span class="nn">AccountMeta</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="k">self</span><span class="py">.deployed</span><span class="nf">.payer_pubkey</span><span class="p">(),</span> <span class="kc">true</span><span class="p">),</span>
+            <span class="nn">AccountMeta</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">hello_world_account_pda</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+            <span class="nn">AccountMeta</span><span class="p">::</span><span class="nf">new_readonly</span><span class="p">(</span><span class="nn">system_program</span><span class="p">::</span><span class="n">ID</span><span class="p">,</span> <span class="kc">false</span><span class="p">),</span>
+        <span class="p">],</span>
+        <span class="n">data</span><span class="p">,</span>
+    <span class="p">};</span>
+
+    <span class="k">let</span> <span class="n">recent_blockhash</span> <span class="o">=</span> <span class="k">self</span><span class="py">.deployed.svm.inner</span><span class="nf">.latest_blockhash</span><span class="p">();</span>
+    <span class="k">let</span> <span class="n">message</span> <span class="o">=</span> <span class="nn">Message</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="n">instruction</span><span class="p">],</span> <span class="nf">Some</span><span class="p">(</span><span class="o">&amp;</span><span class="k">self</span><span class="py">.deployed</span><span class="nf">.payer_pubkey</span><span class="p">()));</span>
+    <span class="k">let</span> <span class="n">tx</span> <span class="o">=</span> <span class="nn">Transaction</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="o">&amp;</span><span class="p">[</span><span class="o">&amp;</span><span class="k">self</span><span class="py">.deployed.payer</span><span class="p">],</span> <span class="n">message</span><span class="p">,</span> <span class="n">recent_blockhash</span><span class="p">);</span>
+
+    <span class="k">self</span><span class="py">.deployed</span><span class="nf">.enable_debug</span><span class="p">();</span>
+
+    <span class="k">match</span> <span class="k">self</span><span class="py">.deployed.svm.inner</span><span class="nf">.send_transaction</span><span class="p">(</span><span class="n">tx</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nf">Ok</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="p">{</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"[+] initialize_fn successful!"</span><span class="p">);</span>
+            <span class="k">for</span> <span class="k">log</span> <span class="k">in</span> <span class="o">&amp;</span><span class="n">result</span><span class="py">.logs</span> <span class="p">{</span>
+                <span class="nd">println!</span><span class="p">(</span><span class="s">"   {}"</span><span class="p">,</span> <span class="k">log</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="nf">Ok</span><span class="p">(())</span>
+        <span class="p">}</span>
+        <span class="nf">Err</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="k">=&gt;</span> <span class="nf">Err</span><span class="p">(</span><span class="nn">anyhow</span><span class="p">::</span><span class="nd">anyhow!</span><span class="p">(</span><span class="s">"initialize_fn failed: {:?}"</span><span class="p">,</span> <span class="n">e</span><span class="p">)),</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The deployment code constructs the transaction, enables the debugger interface, and executes the program to the point where its passed to Radiant for symbolic execution.</p>
+
+<h3 id="binary-analysis-with-radare2">Binary Analysis with radare2</h3>
+
+<p>Finding the correct <code class="language-plaintext highlighter-rouge">snapshot_pc</code> and <code class="language-plaintext highlighter-rouge">target_pc</code> values, at the moment requires binary-level analysis. We extended <a href="https://rada.re/">radare2</a>, a popular reverse engineering framework, to support sBPF architecture with enhanced disassembly features:</p>
+
+<p><img src="/images/blog/Radiant/7.png" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>The screenshot demonstrates some of the enchancements we implemented in radare2:</p>
+
+<ul>
+  <li><strong>Left panel</strong>: sBPF disassembly showing bytecode instructions with their corresponding addresses in the binary</li>
+  <li><strong>Right panel</strong>: Intermediate Language (IL) representation with aggregated Rust source strings embedded directly in the disassembly</li>
+</ul>
+
+<p>Notice how the IL output includes Rust string and pointer references, in which we can spot the panic message string (<code class="language-plaintext highlighter-rouge">"This number is magic"</code>), making it trivial to locate the target basic block in the binary. The IL also shows the conditional logic translated from sBPF, revealing the comparison <code class="language-plaintext highlighter-rouge">if (r6 &lt;= 0x8)</code> that corresponds to the source-level range check.</p>
+
+<p>Although there is yet a lot to be improved, these enhancements bridge the gap between high-level Rust source code and low-level sBPF bytecode, enabling identification of program counter locations.</p>
+
+<p>As mentioned earlier, we presented this work at <a href="https://www.youtube.com/watch?v=IAt-HgKPN88"><strong>r2con 2025</strong></a>, showcasing the process of implementing these features in radare2 for Solana program analysis.</p>
+
+<h3 id="demo">Demo</h3>
+
+<p><img src="/images/products/radiant/gif_radiant_demo.gif" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>The demo above shows Radiant discovering all input values in the range 201-209 that trigger the panic condition. Rather than relying on random fuzzing to eventually hit this narrow window, Radiant’s constraint solver deterministically generates all valid solutions.</p>
+
+<h3 id="results">Results</h3>
+
+<p>When executed, Radiant outputs:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="rouge-code"><pre><span class="p">[</span><span class="o">+</span><span class="p">]</span> <span class="nx">Found</span> <span class="mi">9</span> <span class="nx">solutions</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">1</span><span class="p">:</span> <span class="mi">201</span> <span class="p">(</span><span class="mh">0xc9</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">2</span><span class="p">:</span> <span class="mi">202</span> <span class="p">(</span><span class="mh">0xca</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">3</span><span class="p">:</span> <span class="mi">203</span> <span class="p">(</span><span class="mh">0xcb</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">4</span><span class="p">:</span> <span class="mi">204</span> <span class="p">(</span><span class="mh">0xcc</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">5</span><span class="p">:</span> <span class="mi">205</span> <span class="p">(</span><span class="mh">0xcd</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">6</span><span class="p">:</span> <span class="mi">206</span> <span class="p">(</span><span class="mh">0xce</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">7</span><span class="p">:</span> <span class="mi">207</span> <span class="p">(</span><span class="mh">0xcf</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">8</span><span class="p">:</span> <span class="mi">208</span> <span class="p">(</span><span class="mh">0xd0</span><span class="p">)</span>
+   <span class="nx">Solution</span> <span class="err">#</span><span class="mi">9</span><span class="p">:</span> <span class="mi">209</span> <span class="p">(</span><span class="mh">0xd1</span><span class="p">)</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>Radiant has systematically identified all nine values that satisfy the constraint <code class="language-plaintext highlighter-rouge">input &gt; 200 &amp;&amp; input &lt; 210</code>, providing complete coverage of this specific execution path without manual guesswork or exhaustive fuzzing.</p>
+
+<h2 id="cross-cpi-concolic-execution">Cross-CPI Concolic Execution</h2>
+
+<p>One of Radiant’s advanced capabilities is cross-program invocation (CPI) concolic execution. In Solana’s composable architecture, programs frequently invoke other programs through CPI, creating complex execution flows.</p>
+
+<blockquote>
+  <p><strong>Note</strong>: The following example uses a simplified two-program interaction to demonstrate the cross-CPI technique. Real-world protocols typically involve more complex interactions.</p>
+</blockquote>
+
+<h3 id="targeting-code-reachable-only-via-cpi">Targeting Code Reachable Only via CPI</h3>
+
+<p>Consider a scenario where your target basic block exists in a callee program but can only be reached through a caller program’s CPI invocation:</p>
+
+<p><img src="/images/blog/Radiant/8.png" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>The diagram illustrates this problem. On the left, we have the caller program’s control flow graph, and on the right, the callee program’s CFG. The target basic block (marked with a star) resides within the callee program’s execution paths, only reachable after a <code class="language-plaintext highlighter-rouge">sol_invoke_signed_*</code> CPI call from the caller.</p>
+
+<p>Traditional symbolic execution frameworks would struggle here, they typically analyze single programs in isolation. To reach the target in the callee, you need to understand how values are transformed through the CPI boundary and propagate constraints backward through both programs.</p>
+
+<h3 id="example">Example</h3>
+
+<p>Let’s examine a concrete example with two programs. A caller that transforms inputs before invoking a callee.</p>
+
+<p><strong>Callee Program</strong> (<code class="language-plaintext highlighter-rouge">cpi_callee</code>):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+</pre></td><td class="rouge-code"><pre><span class="nd">#[program]</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">cpi_callee</span> <span class="p">{</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">increment</span><span class="p">(</span><span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">Modify</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">amount</span><span class="p">:</span> <span class="nb">u64</span><span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="o">&amp;</span><span class="k">mut</span> <span class="n">ctx</span><span class="py">.accounts.counter</span><span class="p">;</span>
+
+        <span class="nd">require!</span><span class="p">(</span>
+            <span class="n">counter</span><span class="py">.authority</span> <span class="o">==</span> <span class="n">ctx</span><span class="py">.accounts.authority</span><span class="nf">.key</span><span class="p">(),</span>
+            <span class="nn">ErrorCode</span><span class="p">::</span><span class="n">Unauthorized</span>
+        <span class="p">);</span>
+
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;=</span> <span class="mi">660</span> <span class="o">&amp;&amp;</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">666</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"TARGET REACHED: amount falls in bounds"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">amount</span> <span class="o">&gt;=</span> <span class="mi">666</span> <span class="o">&amp;&amp;</span> <span class="n">amount</span> <span class="o">&lt;</span> <span class="mi">700</span> <span class="p">{</span>
+            <span class="nd">panic!</span><span class="p">(</span><span class="s">"TARGET REACHED: amount falls in bounds 2"</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="n">counter</span><span class="py">.count</span> <span class="o">=</span> <span class="n">counter</span><span class="py">.count</span><span class="nf">.checked_add</span><span class="p">(</span><span class="n">amount</span><span class="p">)</span>
+            <span class="nf">.ok_or</span><span class="p">(</span><span class="nn">ErrorCode</span><span class="p">::</span><span class="n">Overflow</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+        <span class="n">counter</span><span class="py">.operation_count</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+
+        <span class="nd">msg!</span><span class="p">(</span><span class="s">"Counter incremented by {}. New value: {}"</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">counter</span><span class="py">.count</span><span class="p">);</span>
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The callee has two panic conditions: when <code class="language-plaintext highlighter-rouge">amount</code> is in [660, 666) or [666, 700). <strong>For this example, we target the second panic condition</strong> at line checking <code class="language-plaintext highlighter-rouge">if amount &gt;= 666 &amp;&amp; amount &lt; 700</code>.</p>
+
+<p><strong>Caller Program</strong> (<code class="language-plaintext highlighter-rouge">cpi_caller</code>):</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+</pre></td><td class="rouge-code"><pre><span class="nd">#[program]</span>
+<span class="k">pub</span> <span class="k">mod</span> <span class="n">cpi_caller</span> <span class="p">{</span>
+    <span class="k">use</span> <span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
+
+    <span class="k">pub</span> <span class="k">fn</span> <span class="nf">cpi_increment_counter</span><span class="p">(</span>
+        <span class="n">ctx</span><span class="p">:</span> <span class="n">Context</span><span class="o">&lt;</span><span class="n">CpiModifyCounter</span><span class="o">&gt;</span><span class="p">,</span>
+        <span class="n">amount</span><span class="p">:</span> <span class="nb">u64</span><span class="p">,</span>
+    <span class="p">)</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">let</span> <span class="n">transformed_amount</span> <span class="o">=</span> <span class="n">amount</span><span class="nf">.checked_add</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span><span class="nf">.unwrap</span><span class="p">();</span>
+
+        <span class="k">let</span> <span class="n">cpi_program</span> <span class="o">=</span> <span class="n">ctx</span><span class="py">.accounts.callee_program</span><span class="nf">.to_account_info</span><span class="p">();</span>
+        <span class="k">let</span> <span class="n">cpi_accounts</span> <span class="o">=</span> <span class="nn">cpi_callee</span><span class="p">::</span><span class="nn">cpi</span><span class="p">::</span><span class="nn">accounts</span><span class="p">::</span><span class="n">Modify</span> <span class="p">{</span>
+            <span class="n">authority</span><span class="p">:</span> <span class="n">ctx</span><span class="py">.accounts.authority</span><span class="nf">.to_account_info</span><span class="p">(),</span>
+            <span class="n">counter</span><span class="p">:</span> <span class="n">ctx</span><span class="py">.accounts.counter</span><span class="nf">.to_account_info</span><span class="p">(),</span>
+        <span class="p">};</span>
+        <span class="k">let</span> <span class="n">cpi_ctx</span> <span class="o">=</span> <span class="nn">CpiContext</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">cpi_program</span><span class="p">,</span> <span class="n">cpi_accounts</span><span class="p">);</span>
+
+        <span class="nn">cpi_callee</span><span class="p">::</span><span class="nn">cpi</span><span class="p">::</span><span class="nf">increment</span><span class="p">(</span><span class="n">cpi_ctx</span><span class="p">,</span> <span class="n">transformed_amount</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+        <span class="nf">Ok</span><span class="p">(())</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The caller transforms the input by adding the value <code class="language-plaintext highlighter-rouge">123</code> before passing it to the callee via CPI.</p>
+
+<h3 id="radiants-cross-cpi-solution">Radiant’s Cross-CPI Solution</h3>
+
+<p><img src="/images/blog/Radiant/9.png" style="display: block; width: 100%; max-width: 700px; height: auto; margin: 14px auto;" /></p>
+
+<p>Radiant’s cross-CPI concolic execution works by tracking symbolic values across program boundaries:</p>
+
+<ol>
+  <li>
+    <p><strong>Symbolic Value Propagation</strong>: When symbolic execution reaches a CPI invocation point in the caller, Radiant identifies the symbolic variables being passed as arguments.</p>
+  </li>
+  <li>
+    <p><strong>CPI Boundary Translation</strong>: At the <code class="language-plaintext highlighter-rouge">sol_invoke_signed_*</code> boundary, Radiant translates the symbolic values from the caller’s context into the callee’s execution context.</p>
+  </li>
+  <li>
+    <p><strong>Callee Exploration</strong>: Symbolic execution continues in the callee program, exploring paths with the translated symbolic values.</p>
+  </li>
+  <li>
+    <p><strong>Constraint Propagation</strong>: When the target basic block is reached in the callee (marked with a star), Radiant has accumulated constraints from the callee. These constraints are then propagated backward through the CPI boundary to the original caller inputs.</p>
+  </li>
+  <li>
+    <p><strong>Unified Constraint Solving</strong>: The constraint solver evaluates the combined constraints from both programs, generating concrete input values that satisfy the entire cross-program execution path.</p>
+  </li>
+</ol>
+
+<h3 id="implementation">Implementation</h3>
+
+<p>When a Solana program executes a CPI syscall (<code class="language-plaintext highlighter-rouge">sol_invoke_signed_c</code> or <code class="language-plaintext highlighter-rouge">sol_invoke_signed_rust</code>), the Solana VM spawns a new VM instance for the callee program. Radiant leverages this architecture by connecting to consecutive VM instances through multiple debugging sessions:</p>
+
+<p><img src="/images/blog/Radiant/12.svg" style="display: block; width: 100%; max-width: 800px; height: auto; margin: 14px auto;" /></p>
+
+<p>Both caller and callee programs are deployed in the same LiteSVM instance. When the caller VM executes, a GDB server starts on port 9999. During symbolic execution, when radius2 detects the CPI syscall, a second VM instance is spawned for the callee with its own GDB server on port 10000. Radiant creates a nested concolic execution session for the callee, and solutions satisfying constraints in both programs are propagated back through the CPI boundary.</p>
+
+<h3 id="cross-cpi-test-configuration">Cross-CPI Test Configuration</h3>
+
+<p>Radiant’s cross-CPI mode requires specifying program counter locations in both programs:</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+</pre></td><td class="rouge-code"><pre><span class="nd">#[test]</span>
+<span class="k">fn</span> <span class="nf">test_cross_cpi</span><span class="p">()</span> <span class="k">-&gt;</span> <span class="nb">Result</span><span class="o">&lt;</span><span class="p">()</span><span class="o">&gt;</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="p">((</span><span class="n">caller_program_path</span><span class="p">,</span> <span class="n">callee_program_path</span><span class="p">),</span> <span class="n">deployment_thread</span><span class="p">)</span> <span class="o">=</span>
+        <span class="nn">setup</span><span class="p">::</span><span class="nf">setup_deployment</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="n">config</span> <span class="o">=</span> <span class="nn">RadiantTestConfig</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">caller_program_path</span><span class="p">)</span>
+       <span class="nf">.cross_cpi_state</span><span class="p">(</span>
+            <span class="mi">0x100007ae0</span><span class="p">,</span>
+            <span class="nf">Some</span><span class="p">(</span><span class="mi">0x100007d90</span><span class="p">),</span>
+            <span class="mi">0x100007c88</span><span class="p">,</span>
+            <span class="mi">0x100008bf8</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="nf">.callee_avoid</span><span class="p">(</span><span class="nd">vec!</span><span class="p">[])</span>
+        <span class="nf">.max_solutions</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+        <span class="nf">.verbose</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
+
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">test</span> <span class="o">=</span> <span class="nn">RadiantTest</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="n">test</span><span class="nf">.run</span><span class="p">(</span><span class="nn">SymbolizeSpec</span><span class="p">::</span><span class="n">InstructionData</span> <span class="p">{</span> <span class="n">length</span><span class="p">:</span> <span class="mi">8</span> <span class="p">})</span><span class="o">?</span><span class="p">;</span>
+    <span class="k">let</span> <span class="n">solutions</span> <span class="o">=</span> <span class="n">result</span><span class="nf">.into_bytes</span><span class="p">();</span>
+
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">[CROSS CPI] Found {} solutions"</span><span class="p">,</span> <span class="n">solutions</span><span class="nf">.len</span><span class="p">());</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">sol</span><span class="p">)</span> <span class="k">in</span> <span class="n">solutions</span><span class="nf">.iter</span><span class="p">()</span><span class="nf">.enumerate</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="n">sol</span><span class="nf">.len</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">8</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="n">amount</span> <span class="o">=</span> <span class="nn">u64</span><span class="p">::</span><span class="nf">from_le_bytes</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="mi">0</span><span class="o">..</span><span class="mi">8</span><span class="p">]</span><span class="nf">.try_into</span><span class="p">()</span><span class="nf">.unwrap</span><span class="p">());</span>
+            <span class="nd">println!</span><span class="p">(</span><span class="s">"  Solution #{}: amount = {} (0x{:x})"</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">amount</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+            <span class="nd">assert!</span><span class="p">(</span><span class="n">amount</span> <span class="o">+</span> <span class="mi">123</span> <span class="o">&gt;=</span> <span class="mi">666</span> <span class="o">&amp;&amp;</span> <span class="n">amount</span> <span class="o">+</span> <span class="mi">123</span> <span class="o">&lt;</span> <span class="mi">700</span><span class="p">,</span>
+                <span class="s">"Callee solution {} is not in [666, 700)"</span><span class="p">,</span> <span class="n">amount</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="nf">Ok</span><span class="p">(())</span>
+<span class="p">}</span>
+</pre></td></tr></tbody></table></code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">cross_cpi_state</code> configuration specifies:</p>
+<ul>
+  <li><strong>caller_snapshot_pc</strong> (0x100007ae0): Where to snapshot the caller’s state before CPI. Setting this to 0 will automatically use the caller’s instruction entry point.</li>
+  <li><strong>caller_target_pc</strong> (0x100007d90): Optional target in the caller (or None)</li>
+  <li><strong>callee_snapshot_pc</strong> (0x100007c88): Where to snapshot the callee’s state after CPI entry. Setting this to 0 will automatically use the callee’s instruction entry point.</li>
+  <li><strong>callee_target_pc</strong> (0x100008bf8): The target basic block in the callee (panic location)</li>
+</ul>
+
+<h3 id="cross-cpi-results">Cross-CPI Results</h3>
+
+<p>When executed, Radiant discovers all input values that trigger the callee’s panic condition:</p>
+
+<p><img src="/images/blog/Radiant/10.png" style="display: block; width: 100%; max-width: 500px; height: auto; margin: 14px auto;" /></p>
+
+<p>The output shows the complete cross-CPI analysis process:</p>
+
+<ol>
+  <li><strong>Deployment Phase</strong>: Both caller and callee programs are deployed to the same SVM instance, with the counter PDA initialized via CPI</li>
+  <li><strong>Transaction Preparation</strong>: The increment transaction is prepared with symbolic instruction data</li>
+  <li><strong>Cross-Program Symbolic Execution</strong>: Radiant tracks symbolic values as they propagate from caller to callee through the CPI boundary</li>
+  <li><strong>Solution Generation</strong>: Twenty concrete solutions are discovered, all satisfying the constraint that <code class="language-plaintext highlighter-rouge">amount + 123</code> falls within [666, 700)</li>
+</ol>
+
+<p>The solutions include values like:</p>
+<ul>
+  <li>Solution #1: amount = 569 (0x239), transforms to 692</li>
+  <li>Solution #11: amount = 557 (0x22d), transforms to 680</li>
+  <li>Solution #20: amount = 564 (0x234), transforms to 687</li>
+</ul>
+
+<p>Each solution satisfies the constraint that <code class="language-plaintext highlighter-rouge">amount + 123</code> falls within [666, 700), demonstrating how Radiant automatically accounts for the caller’s transformation logic.</p>
+
+<p>This capability becomes valuable when auditing composable protocols where vulnerabilities emerge from the interaction of multiple programs.</p>
+
+<h2 id="additional-capabilities">Additional Capabilities</h2>
+
+<p>Beyond the core symbolic execution features demonstrated above, Radiant supports:</p>
+
+<ul>
+  <li>
+    <p><strong>Solana Syscalls</strong>: Radiant handles Solana syscalls during symbolic execution, enabling analysis of programs that rely on runtime features like account validation, cryptographic operations, and program-derived addresses.</p>
+  </li>
+  <li>
+    <p><strong>Cross-Transaction Composability</strong>: Symbolic solutions from one transaction can be used in subsequent transactions with additional symbolic values, enabling analysis of multi-transaction workflows.</p>
+  </li>
+  <li>
+    <p><strong>Cross-CPI Symbolic Execution</strong>: Radiant consumes symbolic solutions with translated constraint contexts across CPI boundaries, allowing evaluation of invariants involving program composition.</p>
+  </li>
+  <li>
+    <p><strong>Future Open Source</strong>: We plan to open-source Radiant once it reaches higher maturity and we’ve refined its functionality.</p>
+  </li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Radiant brings concolic execution to Solana program security testing. By combining concrete and symbolic execution through its dual-engine architecture.</p>
+
+<p>The framework’s capabilities, from targeted basic block exploration to cross-CPI symbolic execution, address the unique challenges of analyzing composable Solana programs symbolically.</p>
+
+<p>As Solana’s ecosystem continues to grow in complexity, with protocols increasingly relying on multi-program interactions and intricate state machines, tools like Radiant become relevant for security research. The examples presented here demonstrate the foundation, but the methodology scales to real-world protocol auditing.</p>
+
+<p>We’re continuing to develop and refine Radiant, and we look forward to open-sourcing it in the future.</p>
+
+        </div>
+
+        <style>
+        /* Text formatting and indentation */
+        .container article p {
+            margin-bottom: 1.5rem !important;
+            text-indent: 0 !important;
+            white-space: pre-wrap !important;
+            word-wrap: break-word !important;
+        }
+
+        .container article blockquote {
+            border-left: 4px solid #10ebff !important;
+            padding-left: 1.5rem !important;
+            margin: 1.5rem 0 !important;
+            font-style: italic !important;
+            opacity: 0.9 !important;
+        }
+
+        .container article ul {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+
+        .container article ol {
+            margin: 1.5rem 0 !important;
+            padding-left: 2rem !important;
+        }
+
+        .container article ol li {
+            padding-left: 0.5rem !important;
+        }
+
+        .container article ul li {
+            padding-left: 0.5rem !important;
+        }
+
+        .container article li {
+            margin-bottom: 0.5rem !important;
+            line-height: 1.6 !important;
+        }
+
+        .container article h2, .container article h3, .container article h4 {
+            margin-top: 2.5rem !important;
+            margin-bottom: 1rem !important;
+            color: #10ebff !important;
+        }
+
+        /* Better hyperlink colors for blog content */
+        .container article a {
+            color: #10ebff !important;
+            text-decoration: none !important;
+            transition: all 0.3s ease !important;
+            border-bottom: 1px solid rgba(16, 235, 255, 0.3) !important;
+        }
+
+        .container article a:hover {
+            color: #35e4f4 !important;
+            border-bottom-color: rgba(53, 228, 244, 0.8) !important;
+            text-shadow: 0 0 8px rgba(16, 235, 255, 0.3) !important;
+        }
+
+        .container article a:visited {
+            color: #8b5cf6 !important;
+            border-bottom-color: rgba(139, 92, 246, 0.3) !important;
+        }
+
+        .container article a:visited:hover {
+            color: #a78bfa !important;
+            border-bottom-color: rgba(167, 139, 250, 0.8) !important;
+        }
+
+        /* Override link styles specifically for back button */
+        .container article .back-to-blog-button,
+        .container article .back-to-blog-button:link,
+        .container article .back-to-blog-button:visited,
+        .container article .back-to-blog-button:active,
+        .container article .back-to-blog-button:hover {
+            color: #ffffff !important;
+            border-bottom: none !important;
+        }
+
+        /* Back to blog button with gradient theme */
+        .back-to-blog-button,
+        .back-to-blog-button:link,
+        .back-to-blog-button:visited,
+        .back-to-blog-button:active {
+            display: inline-block !important;
+            margin-top: 4rem !important;
+            padding: 12px 24px !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.1) 0%, rgba(185, 26, 238, 0.1) 100%) !important;
+            color: #ffffff !important;
+            text-decoration: none !important;
+            border-radius: 8px !important;
+            font-weight: 400 !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            font-size: 0.95rem !important;
+            border: 1px solid transparent !important;
+            position: relative !important;
+            overflow: hidden !important;
+            font-family: 'Raleway', system-ui, sans-serif !important;
+            border-bottom: none !important;
+        }
+
+        .back-to-blog-button::before {
+            content: '' !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            background: linear-gradient(90deg, #10ebff, #b91aee) !important;
+            opacity: 0 !important;
+            transition: opacity 0.3s ease !important;
+            border-radius: 8px !important;
+            z-index: -1 !important;
+            padding: 1px !important;
+            margin: -1px !important;
+        }
+
+        .back-to-blog-button:hover::before {
+            opacity: 0.6 !important;
+        }
+
+        .back-to-blog-button:hover,
+        .back-to-blog-button:hover:link,
+        .back-to-blog-button:hover:visited,
+        .back-to-blog-button:hover:active {
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(16, 235, 255, 0.2), 0 0 20px rgba(185, 26, 238, 0.1) !important;
+            background: linear-gradient(135deg, rgba(16, 235, 255, 0.15) 0%, rgba(185, 26, 238, 0.15) 100%) !important;
+            border-bottom: none !important;
+        }
+        </style>
+
+        <!-- Enhanced back button with gradient theme -->
+        <a href="/blog/" class="back-to-blog-button">← Back to Blog</a>
+    </article>
+</div>
+
+<style>
+@keyframes shimmerTitle {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+/* Enhanced code block styling */
+.container article code {
+    background: rgba(16, 235, 255, 0.1) !important;
+    border: 1px solid rgba(16, 235, 255, 0.2) !important;
+    color: #10ebff !important;
+    padding: 0.2rem 0.4rem !important;
+    border-radius: 4px !important;
+    font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace !important;
+    font-size: 0.9rem !important;
+    font-weight: 500 !important;
+}
+
+.container article pre {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.2) !important;
+    border-radius: 8px !important;
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+    overflow-x: auto !important;
+    font-size: 0.9rem !important;
+    line-height: 1.5 !important;
+}
+
+.container article pre code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+.container article .highlight {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(59, 130, 246, 0.25) !important;
+    border-radius: 8px !important;
+    margin: 2rem 0 !important;
+    overflow: hidden !important;
+    font-size: 0.9rem !important;
+}
+
+.container article .highlight pre {
+    background: none !important;
+    border: none !important;
+    padding: 1.5rem !important;
+    margin: 0 !important;
+    overflow-x: auto !important;
+}
+
+.container article .highlight code {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+    color: #e5e7eb !important;
+    font-size: inherit !important;
+}
+
+/* Hide line numbers */
+.container article .highlight .lineno,
+.container article .highlight .gutter,
+.container article .highlight .gutter .lineno {
+    display: none !important;
+}
+
+.container article .highlight table {
+    border: none !important;
+    background: none !important;
+}
+
+.container article .highlight table td {
+    border: none !important;
+    background: none !important;
+    padding: 0 !important;
+}
+
+.container article .highlight table .code {
+    padding: 0 !important;
+}
+
+/* Custom scrollbar styling for code blocks - black theme */
+.container article pre::-webkit-scrollbar,
+.container article .highlight::-webkit-scrollbar {
+    height: 8px !important;
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb,
+.container article .highlight::-webkit-scrollbar-thumb {
+    background: rgba(40, 40, 40, 0.9) !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(80, 80, 80, 0.5) !important;
+}
+
+.container article pre::-webkit-scrollbar-thumb:hover,
+.container article .highlight::-webkit-scrollbar-thumb:hover {
+    background: rgba(60, 60, 60, 0.9) !important;
+    border-color: rgba(100, 100, 100, 0.7) !important;
+}
+
+.container article pre::-webkit-scrollbar-track,
+.container article .highlight::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.9) !important;
+    border-radius: 4px !important;
+}
+
+/* Firefox scrollbar styling - black theme */
+.container article pre,
+.container article .highlight {
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(40, 40, 40, 0.9) rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Responsive styles for mobile */
+@media (max-width: 768px) {
+    /* Post title - add top padding and reduce size */
+    .container article h1 {
+        font-size: 2rem !important;
+        padding-top: 2rem !important;
+        margin-bottom: 1rem !important;
+    }
+
+    /* Force all code elements to same size - very aggressive approach */
+    .container article pre *,
+    .container article .highlight *,
+    .container article code,
+    .container article pre,
+    .container article .highlight,
+    .container article .highlight pre,
+    .container article .highlight code,
+    .container article .highlight table *,
+    .container article .highlight .gutter *,
+    .container article .highlight .code *,
+    .container article p code,
+    .container article li code,
+    .container article td code,
+    .container article h1 code,
+    .container article h2 code,
+    .container article h3 code,
+    .container article h4 code {
+        font-size: 0.7rem !important;
+        line-height: 1.3 !important;
+    }
+
+    /* Code block containers - uniform padding */
+    .container article pre,
+    .container article .highlight {
+        padding: 0.8rem !important;
+        margin: 1rem 0 !important;
+    }
+}
+</style>
+
+<script>
+// Nuclear option - force ALL code to be uniform on mobile
+function fixMobileCodeFonts() {
+    if (window.innerWidth <= 768) {
+        // Get EVERY element that might contain code
+        const allElements = document.querySelectorAll('*');
+
+        allElements.forEach(element => {
+            // Check if element is code-related
+            if (element.tagName === 'CODE' ||
+                element.tagName === 'PRE' ||
+                element.classList.contains('highlight') ||
+                element.classList.contains('language-plaintext') ||
+                element.classList.contains('highlighter-rouge') ||
+                element.className.includes('language-') ||
+                element.className.includes('highlight')) {
+
+                // Force the font size
+                element.style.setProperty('font-size', '0.6rem', 'important');
+                element.style.setProperty('line-height', '1.2', 'important');
+
+                // Also check all children
+                const children = element.querySelectorAll('*');
+                children.forEach(child => {
+                    child.style.setProperty('font-size', '0.6rem', 'important');
+                    child.style.setProperty('line-height', '1.2', 'important');
+                });
+            }
+        });
+    }
+}
+
+// Run on page load
+document.addEventListener('DOMContentLoaded', fixMobileCodeFonts);
+
+// Run on window resize
+window.addEventListener('resize', fixMobileCodeFonts);
+
+// Run again after a short delay to catch any dynamically loaded content
+setTimeout(fixMobileCodeFonts, 100);
+
+// Image zoom modal functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Wait a bit for all images to load
+    setTimeout(function() {
+        // Find all images in the blog post content
+        const images = document.querySelectorAll('.container article img');
+        console.log('Found images:', images.length);
+
+        // Create modal HTML
+        const modal = document.createElement('div');
+        modal.id = 'image-modal';
+        modal.innerHTML = `
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <img class="modal-image" src="" alt="">
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        const modalElement = document.getElementById('image-modal');
+        const modalImage = modalElement.querySelector('.modal-image');
+        const closeBtn = modalElement.querySelector('.modal-close');
+        const backdrop = modalElement.querySelector('.modal-backdrop');
+
+        // Wrap each image in a clickable container
+        images.forEach((img, index) => {
+            const isSVG = img.src && img.src.toLowerCase().endsWith('.svg');
+            console.log(`Image ${index}: ${img.src} (SVG: ${isSVG})`);
+
+            // Create wrapper div
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-zoom-wrapper';
+            wrapper.style.cssText = 'display: inline-block; cursor: pointer; width: 100%; position: relative;';
+
+            // Store the image source on the wrapper
+            wrapper.dataset.imageSrc = img.src;
+            wrapper.dataset.imageAlt = img.alt || '';
+
+            // Wrap the image
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+
+            // Make image non-interactive to prevent event conflicts
+            img.style.pointerEvents = 'none';
+            img.style.userSelect = 'none';
+            img.style.webkitUserSelect = 'none';
+            img.setAttribute('draggable', 'false');
+
+            // Add click handler to wrapper
+            const openModal = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const imageSrc = wrapper.dataset.imageSrc;
+                const imageAlt = wrapper.dataset.imageAlt;
+
+                console.log('Opening modal for image:', imageSrc);
+
+                // Set the image source
+                modalImage.src = imageSrc;
+                modalImage.alt = imageAlt;
+                modalImage.style.display = 'block';
+
+                // Show modal
+                modalElement.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                console.log('Modal opened');
+            };
+
+            wrapper.addEventListener('click', openModal);
+            wrapper.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openModal(e);
+            });
+        });
+
+        // Close modal handlers
+        function closeModal() {
+            modalElement.classList.remove('active');
+            document.body.style.overflow = '';
+            modalImage.src = '';
+        }
+
+        closeBtn.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalElement.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }, 500);
+});
+</script>
+
+<style>
+/* Image zoom modal styles */
+#image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+}
+
+#image-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+#image-modal .modal-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .modal-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    display: block;
+    background: transparent;
+}
+
+#image-modal .modal-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+    z-index: 10002;
+}
+
+#image-modal .modal-close:hover {
+    color: #10ebff;
+    transform: scale(1.1);
+}
+
+/* Image zoom wrapper and images */
+.image-zoom-wrapper {
+    display: inline-block;
+    cursor: pointer !important;
+    width: 100%;
+    position: relative;
+}
+
+.container article img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+}
+
+.image-zoom-wrapper:hover img {
+    transform: scale(1.02);
+    box-shadow: 0 8px 20px rgba(16, 235, 255, 0.3);
+    filter: brightness(1.05);
+}
+
+/* Additional modal image styles */
+#image-modal .modal-image {
+    background: transparent;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* SVG container styles */
+#image-modal .svg-container {
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .svg-container svg {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 768px) {
+    #image-modal .modal-close {
+        top: 20px;
+        right: 20px;
+        font-size: 30px;
+    }
+}
+</style>
+    </main>
+
+    
+    <style>
+    .modern-footer {
+        border-top: 1px solid rgba(16, 235, 255, 0.15);
+        margin-top: 4rem;
+        position: relative;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(10, 14, 20, 0.4) 100%);
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 1rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 1.75rem 1.5rem 1.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 2rem 2rem 1.5rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.7;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1.25rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8125rem;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(16, 235, 255, 0.95);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-size: 0.8125rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.12) 0%,
+            rgba(92, 92, 171, 0.1) 50%,
+            rgba(185, 26, 238, 0.12) 100%);
+        border: 1px solid rgba(16, 235, 255, 0.3);
+        border-radius: 9999px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        box-shadow: 0 0 5px rgba(16, 235, 255, 0.15);
+    }
+
+    .footer-contact-btn:hover {
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.18) 0%,
+            rgba(92, 92, 171, 0.15) 50%,
+            rgba(185, 26, 238, 0.18) 100%);
+        border-color: rgba(16, 235, 255, 0.5);
+        box-shadow: 0 0 10px rgba(16, 235, 255, 0.25);
+        transform: translateY(-1px);
+    }
+
+    .footer-bottom {
+        margin-top: 1.25rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(16, 235, 255, 0.1);
+        text-align: center;
+    }
+
+    .footer-bottom p {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        font-family: 'Geist', sans-serif;
+        margin: 0;
+    }
+</style>
+
+<footer class="modern-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/team/">Team</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/tooling/">Products</a></li>
+                    </ul>
+                </div>
+                <a href="/contact/" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Inversive Labs. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+    
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>

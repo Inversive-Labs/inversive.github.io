@@ -65,7 +65,7 @@
     .modern-nav nav > a img {
         display: block;
         width: auto;
-        height: 3rem; /* 48px - equivalent to h-12 */
+        height: 2.5rem; /* 40px */
     }
 
     .modern-nav-links {
@@ -294,7 +294,7 @@
     /* Mobile logo sizing */
     @media (max-width: 767px) {
         .modern-nav nav > a img {
-            height: 2rem; /* 32px */
+            height: 1.5rem; /* 24px */
         }
     }
 </style>
@@ -2145,52 +2145,98 @@ setTimeout(fixMobileCodeFonts, 100);
 
 // Image zoom modal functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Find all images in the blog post content
-    const images = document.querySelectorAll('.container article img');
+    // Wait a bit for all images to load
+    setTimeout(function() {
+        // Find all images in the blog post content
+        const images = document.querySelectorAll('.container article img');
+        console.log('Found images:', images.length);
 
-    // Create modal HTML
-    const modal = document.createElement('div');
-    modal.id = 'image-modal';
-    modal.innerHTML = `
-        <div class="modal-backdrop"></div>
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <img class="modal-image" src="" alt="">
-        </div>
-    `;
-    document.body.appendChild(modal);
+        // Create modal HTML
+        const modal = document.createElement('div');
+        modal.id = 'image-modal';
+        modal.innerHTML = `
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <img class="modal-image" src="" alt="">
+            </div>
+        `;
+        document.body.appendChild(modal);
 
-    const modalElement = document.getElementById('image-modal');
-    const modalImage = modalElement.querySelector('.modal-image');
-    const closeBtn = modalElement.querySelector('.modal-close');
-    const backdrop = modalElement.querySelector('.modal-backdrop');
+        const modalElement = document.getElementById('image-modal');
+        const modalImage = modalElement.querySelector('.modal-image');
+        const closeBtn = modalElement.querySelector('.modal-close');
+        const backdrop = modalElement.querySelector('.modal-backdrop');
 
-    // Add click handler to each image
-    images.forEach(img => {
-        img.style.cursor = 'pointer';
-        img.addEventListener('click', function() {
-            modalImage.src = this.src;
-            modalImage.alt = this.alt;
-            modalElement.classList.add('active');
-            document.body.style.overflow = 'hidden';
+        // Wrap each image in a clickable container
+        images.forEach((img, index) => {
+            const isSVG = img.src && img.src.toLowerCase().endsWith('.svg');
+            console.log(`Image ${index}: ${img.src} (SVG: ${isSVG})`);
+
+            // Create wrapper div
+            const wrapper = document.createElement('div');
+            wrapper.className = 'image-zoom-wrapper';
+            wrapper.style.cssText = 'display: inline-block; cursor: pointer; width: 100%; position: relative;';
+
+            // Store the image source on the wrapper
+            wrapper.dataset.imageSrc = img.src;
+            wrapper.dataset.imageAlt = img.alt || '';
+
+            // Wrap the image
+            img.parentNode.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+
+            // Make image non-interactive to prevent event conflicts
+            img.style.pointerEvents = 'none';
+            img.style.userSelect = 'none';
+            img.style.webkitUserSelect = 'none';
+            img.setAttribute('draggable', 'false');
+
+            // Add click handler to wrapper
+            const openModal = function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const imageSrc = wrapper.dataset.imageSrc;
+                const imageAlt = wrapper.dataset.imageAlt;
+
+                console.log('Opening modal for image:', imageSrc);
+
+                // Set the image source
+                modalImage.src = imageSrc;
+                modalImage.alt = imageAlt;
+                modalImage.style.display = 'block';
+
+                // Show modal
+                modalElement.classList.add('active');
+                document.body.style.overflow = 'hidden';
+
+                console.log('Modal opened');
+            };
+
+            wrapper.addEventListener('click', openModal);
+            wrapper.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                openModal(e);
+            });
         });
-    });
 
-    // Close modal handlers
-    function closeModal() {
-        modalElement.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-
-    closeBtn.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', closeModal);
-
-    // Close on escape key
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && modalElement.classList.contains('active')) {
-            closeModal();
+        // Close modal handlers
+        function closeModal() {
+            modalElement.classList.remove('active');
+            document.body.style.overflow = '';
+            modalImage.src = '';
         }
-    });
+
+        closeBtn.addEventListener('click', closeModal);
+        backdrop.addEventListener('click', closeModal);
+
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && modalElement.classList.contains('active')) {
+                closeModal();
+            }
+        });
+    }, 500);
 });
 </script>
 
@@ -2224,8 +2270,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 #image-modal .modal-content {
     position: relative;
-    max-width: 95%;
-    max-height: 95vh;
+    max-width: 90vw;
+    max-height: 90vh;
     z-index: 10001;
     display: flex;
     align-items: center;
@@ -2233,11 +2279,15 @@ document.addEventListener('DOMContentLoaded', function() {
 }
 
 #image-modal .modal-image {
-    max-width: 100%;
-    max-height: 95vh;
+    max-width: 90vw;
+    max-height: 90vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
     border-radius: 8px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+    display: block;
+    background: transparent;
 }
 
 #image-modal .modal-close {
@@ -2257,14 +2307,51 @@ document.addEventListener('DOMContentLoaded', function() {
     transform: scale(1.1);
 }
 
-/* Make images look clickable */
-.container article img {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+/* Image zoom wrapper and images */
+.image-zoom-wrapper {
+    display: inline-block;
+    cursor: pointer !important;
+    width: 100%;
+    position: relative;
 }
 
-.container article img:hover {
+.container article img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+}
+
+.image-zoom-wrapper:hover img {
     transform: scale(1.02);
     box-shadow: 0 8px 20px rgba(16, 235, 255, 0.3);
+    filter: brightness(1.05);
+}
+
+/* Additional modal image styles */
+#image-modal .modal-image {
+    background: transparent;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* SVG container styles */
+#image-modal .svg-container {
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#image-modal .svg-container svg {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    width: auto !important;
+    height: auto !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
 }
 
 @media (max-width: 768px) {
