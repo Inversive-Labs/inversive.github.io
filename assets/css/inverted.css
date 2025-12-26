@@ -22,22 +22,21 @@ body:not(.dark-mode) .nav-indicator {
 /* Mobile menu dropdown styling for light mode - double invert to cancel parent */
 body:not(.dark-mode) .modern-nav-links.mobile-open {
     filter: invert(1) hue-rotate(180deg) !important;
-    /* Fallback for browsers without backdrop-filter support */
-    background: rgba(255, 255, 255, 0.85) !important;
-    /* Modern blur effect for supported browsers */
+    /* Solid white background for light mode since backdrop-filter doesn't work with filter inversion */
     background: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.7) 0%,
-        rgba(250, 250, 252, 0.7) 50%,
-        rgba(255, 255, 255, 0.7) 100%) !important;
-    backdrop-filter: blur(20px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(250, 250, 252, 0.95) 50%,
+        rgba(255, 255, 255, 0.95) 100%) !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15) !important;
 }
 
-/* Feature detection for backdrop-filter in light mode */
-@supports not (backdrop-filter: blur(20px)) {
-    body:not(.dark-mode) .modern-nav-links.mobile-open {
-        background: rgba(255, 255, 255, 0.95) !important;
-    }
+body:not(.dark-mode) .modern-nav-links.mobile-open a {
+    color: rgba(0, 0, 0, 0.8) !important;
+}
+
+body:not(.dark-mode) .modern-nav-links.mobile-open a:hover {
+    color: rgba(16, 100, 255, 0.9) !important;
 }
 
 /* Blockchain logo icons should be slightly lighter gray in light mode */
@@ -73,9 +72,20 @@ body:not(.dark-mode) svg:not(.theme-icon) {
     filter: none !important;
 }
 
-/* Theme toggle icons should NOT be inverted at all */
+/* Theme toggle should NOT be inverted at all - double invert to cancel parent */
+body:not(.dark-mode) .theme-toggle {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
+/* But the icons themselves should not have hue-rotate to preserve colors */
 body:not(.dark-mode) .theme-icon {
-    filter: none !important;
+    filter: invert(1) !important;
+}
+
+/* Override border and background for light mode - white background with thin black border */
+body:not(.dark-mode) .theme-switch {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 0.5px solid rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Progress bar styling for light mode - since it's outside .filterable-content, it's not inverted */

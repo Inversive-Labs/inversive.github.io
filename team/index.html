@@ -38,6 +38,7 @@
         max-width: 80rem;
         margin: 0 auto;
         padding: 0 1rem;
+        position: relative;
     }
 
     @media (min-width: 640px) {
@@ -55,15 +56,18 @@
     .modern-nav nav {
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         margin-top: 1.5rem;
         min-height: 4rem;
+        position: relative;
     }
 
     .modern-nav nav > a {
         display: flex;
         align-items: center;
         gap: 0.5rem;
+        position: absolute;
+        left: 0;
     }
 
     .modern-nav nav > a img {
@@ -313,29 +317,31 @@
         }
     }
 
-    /* Theme toggle button - compact and stylish */
+    /* Theme toggle button - desktop version */
     .theme-toggle {
-        margin-left: 1rem;
+        position: absolute;
+        right: 0;
+        display: flex;
+        align-items: center;
     }
 
     .theme-switch {
         position: relative;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
-        width: 32px;
-        height: 32px;
+        gap: 0.75rem;
         cursor: pointer;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        border-radius: 8px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        overflow: hidden;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.5rem 0.75rem;
+        backdrop-filter: blur(12px);
+        transition: all 0.3s ease;
     }
 
     .theme-switch:hover {
-        background: rgba(255, 255, 255, 0.1);
-        border-color: rgba(16, 235, 255, 0.3);
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(16, 235, 255, 0.4);
         transform: translateY(-1px);
     }
 
@@ -347,50 +353,90 @@
     }
 
     .theme-icon {
-        width: 16px;
-        height: 16px;
-        color: rgba(255, 255, 255, 0.7);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: absolute;
+        width: 20px;
+        height: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        flex-shrink: 0;
     }
 
     .theme-icon.sun-icon {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
+        color: #ffffff;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
     }
 
     .theme-icon.moon-icon {
-        opacity: 0;
-        transform: rotate(180deg) scale(0);
+        color: rgba(255, 255, 255, 0.4);
     }
 
     .theme-switch input:checked ~ .sun-icon {
-        opacity: 0;
-        transform: rotate(-180deg) scale(0);
+        color: rgba(255, 255, 255, 0.4);
+        filter: none;
     }
 
     .theme-switch input:checked ~ .moon-icon {
-        opacity: 1;
-        transform: rotate(0deg) scale(1);
         color: #10ebff;
+        filter: drop-shadow(0 0 6px rgba(16, 235, 255, 0.6));
     }
 
     @media (max-width: 767px) {
+        .modern-nav nav > a {
+            left: 1rem;
+        }
+
         .theme-toggle {
-            position: absolute;
             right: 3.5rem;
-            margin: 0;
-            display: flex;
-            align-items: center;
-            height: 28px;
         }
 
         .theme-switch {
+            width: 28px;
             height: 28px;
+            padding: 0;
+            gap: 0;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+        }
+
+        .theme-switch:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-icon {
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            position: absolute;
+            background: transparent !important;
+        }
+
+        .theme-icon.sun-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .theme-icon.moon-icon {
+            opacity: 0;
+            transform: rotate(180deg) scale(0);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .theme-switch input:checked ~ .sun-icon {
+            opacity: 0;
+            transform: rotate(-180deg) scale(0);
+        }
+
+        .theme-switch input:checked ~ .moon-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: #10ebff;
         }
 
         .hamburger {
-            position: relative;
+            position: absolute;
+            right: 1rem;
             z-index: 1003;
         }
     }
