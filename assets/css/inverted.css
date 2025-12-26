@@ -88,6 +88,42 @@ body:not(.dark-mode) .theme-switch {
     border: 0.5px solid rgba(0, 0, 0, 0.3) !important;
 }
 
+/* Service and tooling cards - white background in mobile light mode */
+@media (max-width: 767px) {
+    body:not(.dark-mode) .service-card,
+    body:not(.dark-mode) .service-card-sophisticated {
+        filter: invert(1) hue-rotate(180deg) !important;
+        background: rgba(255, 255, 255, 0.95) !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    }
+
+    body:not(.dark-mode) .service-card:hover,
+    body:not(.dark-mode) .service-card-sophisticated:hover {
+        background: rgba(255, 255, 255, 1) !important;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    body:not(.dark-mode) .service-card h3,
+    body:not(.dark-mode) .service-card-sophisticated h3,
+    body:not(.dark-mode) .service-card-sophisticated .service-title {
+        color: rgba(0, 0, 0, 0.9) !important;
+    }
+
+    body:not(.dark-mode) .service-card p,
+    body:not(.dark-mode) .service-card-sophisticated p,
+    body:not(.dark-mode) .service-card-sophisticated .service-summary {
+        color: rgba(0, 0, 0, 0.7) !important;
+    }
+
+    body:not(.dark-mode) .service-card li,
+    body:not(.dark-mode) .service-card-sophisticated li,
+    body:not(.dark-mode) .service-features-list li,
+    body:not(.dark-mode) .service-card *,
+    body:not(.dark-mode) .service-card-sophisticated * {
+        color: rgba(0, 0, 0, 0.7) !important;
+    }
+}
+
 /* Progress bar styling for light mode - since it's outside .filterable-content, it's not inverted */
 /* Keep the same colors as dark mode */
 body:not(.dark-mode) .scroll-indicator {
