@@ -122,6 +122,13 @@ body:not(.dark-mode) .theme-switch {
     body:not(.dark-mode) .service-card-sophisticated * {
         color: rgba(0, 0, 0, 0.7) !important;
     }
+
+    /* Tags in tooling cards - black outline in light mode */
+    body:not(.dark-mode) .service-card-sophisticated .product-tag,
+    body:not(.dark-mode) .product-tag {
+        border: 1px solid rgba(0, 0, 0, 0.2) !important;
+        color: rgba(0, 0, 0, 0.8) !important;
+    }
 }
 
 /* Progress bar styling for light mode - since it's outside .filterable-content, it's not inverted */
