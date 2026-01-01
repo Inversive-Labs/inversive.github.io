@@ -88,47 +88,68 @@ body:not(.dark-mode) .theme-switch {
     border: 0.5px solid rgba(0, 0, 0, 0.3) !important;
 }
 
-/* Service and tooling cards - white background in mobile light mode */
-@media (max-width: 767px) {
-    body:not(.dark-mode) .service-card,
-    body:not(.dark-mode) .service-card-sophisticated {
-        filter: invert(1) hue-rotate(180deg) !important;
-        background: rgba(255, 255, 255, 0.95) !important;
-        border: 1px solid rgba(0, 0, 0, 0.1) !important;
-    }
+/* Service and tooling cards - white background in light mode (all screen sizes) */
+body:not(.dark-mode) .service-card,
+body:not(.dark-mode) .service-card-sophisticated {
+    filter: invert(1) hue-rotate(180deg) !important;
+    background: rgba(255, 255, 255, 1) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    opacity: 1 !important;
+}
 
-    body:not(.dark-mode) .service-card:hover,
-    body:not(.dark-mode) .service-card-sophisticated:hover {
-        background: rgba(255, 255, 255, 1) !important;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
-    }
+body:not(.dark-mode) .service-card:hover,
+body:not(.dark-mode) .service-card-sophisticated:hover {
+    background: rgba(255, 255, 255, 1) !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important;
+}
 
-    body:not(.dark-mode) .service-card h3,
-    body:not(.dark-mode) .service-card-sophisticated h3,
-    body:not(.dark-mode) .service-card-sophisticated .service-title {
-        color: rgba(0, 0, 0, 0.9) !important;
-    }
+body:not(.dark-mode) .service-card h3,
+body:not(.dark-mode) .service-card-sophisticated h3,
+body:not(.dark-mode) .service-card-sophisticated .service-title {
+    color: rgba(0, 0, 0, 0.9) !important;
+}
 
-    body:not(.dark-mode) .service-card p,
-    body:not(.dark-mode) .service-card-sophisticated p,
-    body:not(.dark-mode) .service-card-sophisticated .service-summary {
-        color: rgba(0, 0, 0, 0.7) !important;
-    }
+body:not(.dark-mode) .service-card p,
+body:not(.dark-mode) .service-card-sophisticated p,
+body:not(.dark-mode) .service-card-sophisticated .service-summary {
+    color: rgba(0, 0, 0, 0.7) !important;
+}
 
-    body:not(.dark-mode) .service-card li,
-    body:not(.dark-mode) .service-card-sophisticated li,
-    body:not(.dark-mode) .service-features-list li,
-    body:not(.dark-mode) .service-card *,
-    body:not(.dark-mode) .service-card-sophisticated * {
-        color: rgba(0, 0, 0, 0.7) !important;
-    }
+body:not(.dark-mode) .service-card li,
+body:not(.dark-mode) .service-card-sophisticated li,
+body:not(.dark-mode) .service-features-list li,
+body:not(.dark-mode) .service-card *,
+body:not(.dark-mode) .service-card-sophisticated * {
+    color: rgba(0, 0, 0, 0.7) !important;
+}
 
-    /* Tags in tooling cards - black outline in light mode */
-    body:not(.dark-mode) .service-card-sophisticated .product-tag,
-    body:not(.dark-mode) .product-tag {
-        border: 1px solid rgba(0, 0, 0, 0.2) !important;
-        color: rgba(0, 0, 0, 0.8) !important;
-    }
+/* Tags in tooling cards - black outline in light mode */
+body:not(.dark-mode) .service-card-sophisticated .product-tag,
+body:not(.dark-mode) .product-tag {
+    border: 1px solid rgba(0, 0, 0, 0.2) !important;
+    color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Neon highlight for centered card in light mode */
+body:not(.dark-mode) .service-card-sophisticated.card-centered {
+    filter: invert(1) hue-rotate(180deg) !important;
+    box-shadow:
+        0 0 20px rgba(16, 235, 255, 0.3),
+        0 0 40px rgba(185, 26, 238, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.7),
+        inset 0 0 30px rgba(16, 235, 255, 0.08) !important;
+    border-color: transparent !important;
+    background:
+        linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 252, 1) 100%) padding-box,
+        linear-gradient(135deg, #10ebff, #b91aee) border-box !important;
+}
+
+body:not(.dark-mode) .service-card-sophisticated.card-centered::before {
+    opacity: 1 !important;
+}
+
+body:not(.dark-mode) .service-card-sophisticated.card-centered::after {
+    width: 100% !important;
 }
 
 /* Progress bar styling for light mode - since it's outside .filterable-content, it's not inverted */
@@ -139,6 +160,21 @@ body:not(.dark-mode) .scroll-indicator {
 
 body:not(.dark-mode) .scroll-progress {
     background: linear-gradient(90deg, #10ebff, #b91aee) !important;
+}
+
+/* Remove shadows from cards on mobile in light mode */
+@media (max-width: 767px) {
+    body:not(.dark-mode) .service-card,
+    body:not(.dark-mode) .service-card-sophisticated,
+    body:not(.dark-mode) .service-card-sophisticated.card-centered {
+        box-shadow: none !important;
+    }
+
+    body:not(.dark-mode) .service-card:hover,
+    body:not(.dark-mode) .service-card-sophisticated:hover,
+    body:not(.dark-mode) .service-card-sophisticated.card-centered:hover {
+        box-shadow: none !important;
+    }
 }
 
 /* Smooth transition for theme changes */

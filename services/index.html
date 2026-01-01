@@ -565,28 +565,20 @@
             <section class="section" id="services">
     <div class="container">
         <div class="section-header">
-            <h2 class="section-title">Services</h2> 
+            <h2 class="section-title">Services</h2>
             <p class="section-subtitle">Security Solutions Engineered for Blockchain Protocols and Builders</p>
         </div>
 
-        <div class="services-grid sophisticated">
-            <a href="/services/infrastructure-security/" class="service-card-sophisticated" id="continuous-security" style="text-decoration: none; color: inherit; display: block;">
-                <div class="service-content">
-                    <div class="product-icon" style="display: flex; justify-content: center;">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
-                    <h3 class="service-title" style="text-align: center;">Infrastructure Security</h3>
-                    <p class="service-summary">Core blockchain infrastructure security including runtime environments, consensus mechanisms, and network-level protocol validation.</p>
+        <div class="carousel-dots"></div>
 
-                    <ul class="service-features-list">
-                        <li>Consensus Layer Security</li>
-                        <li>Runtime & VM Analysis</li>
-                        <li>Network Protocol Fuzzing</li>
-                    </ul>
-                </div>
-            </a>
+        <div class="services-carousel-wrapper">
+            <button class="carousel-nav carousel-nav-prev" aria-label="Previous service">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+
+            <div class="services-grid sophisticated">
             <a href="/services/security-assessment/" class="service-card-sophisticated" id="protocol-security-assessment" style="text-decoration: none; color: inherit; display: block;">
                 <div class="service-content">
                     <div class="product-icon" style="display: flex; justify-content: center;">
@@ -601,6 +593,24 @@
                         <li>Adversarial Testing Campaigns</li>
                         <li>Security Architecture Analysis</li>
                         <li>Vulnerability Discovery & Remediation</li>
+                    </ul>
+                </div>
+            </a>
+            <a href="/services/secure-development/" class="service-card-sophisticated" id="secure-development" style="text-decoration: none; color: inherit; display: block;">
+                <div class="service-content">
+                    <div class="product-icon" style="display: flex; justify-content: center;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M9 12l2 2 4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title" style="text-align: center;">Secure Development</h3>
+                    <p class="service-summary">End-to-end secure protocol development from architecture design to production deployment with security-first engineering practices.</p>
+
+                    <ul class="service-features-list">
+                        <li>Security-Focused Protocol Development</li>
+                        <li>Threat Modeling & Architecture Review</li>
+                        <li>Continuous Security Integration</li>
                     </ul>
                 </div>
             </a>
@@ -621,9 +631,223 @@
                     </ul>
                 </div>
             </a>
+            <a href="/services/infrastructure-security/" class="service-card-sophisticated" id="continuous-security" style="text-decoration: none; color: inherit; display: block;">
+                <div class="service-content">
+                    <div class="product-icon" style="display: flex; justify-content: center;">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title" style="text-align: center;">Infrastructure Security</h3>
+                    <p class="service-summary">Core blockchain infrastructure security including runtime environments, consensus mechanisms, and network-level protocol validation.</p>
+
+                    <ul class="service-features-list">
+                        <li>Consensus Layer Security</li>
+                        <li>Runtime & VM Analysis</li>
+                        <li>Network Protocol Fuzzing</li>
+                    </ul>
+                </div>
+            </a>
         </div>
+
+        <button class="carousel-nav carousel-nav-next" aria-label="Next service">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
     </div>
+</div>
 </section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.services-grid.sophisticated');
+    const prevBtn = document.querySelector('.carousel-nav-prev');
+    const nextBtn = document.querySelector('.carousel-nav-next');
+    const dotsContainer = document.querySelector('.carousel-dots');
+    const cards = carousel.querySelectorAll('.service-card-sophisticated');
+
+    // Create dots
+    cards.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.classList.add('carousel-dot');
+        if (index === 0) dot.classList.add('active');
+        dot.setAttribute('aria-label', `Go to service ${index + 1}`);
+        dot.addEventListener('click', () => scrollToCard(index));
+        dotsContainer.appendChild(dot);
+    });
+
+    const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+    // Smooth scroll with easing
+    function easeInOutCubic(t) {
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
+    function smoothScrollTo(element, target, duration = 600) {
+        const start = element.scrollLeft;
+        const change = target - start;
+        const startTime = performance.now();
+
+        function animateScroll(currentTime) {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const easedProgress = easeInOutCubic(progress);
+
+            element.scrollLeft = start + change * easedProgress;
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+
+        requestAnimationFrame(animateScroll);
+    }
+
+    function scrollToCard(index) {
+        const card = cards[index];
+        // Use scrollIntoView for more precise positioning
+        card.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center'
+        });
+    }
+
+    function getCurrentIndex() {
+        // Find which card is closest to the center
+        const carouselRect = carousel.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
+        let closestIndex = 0;
+        let closestDistance = Infinity;
+
+        cards.forEach((card, index) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const distance = Math.abs(cardCenter - carouselCenter);
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        return closestIndex;
+    }
+
+    function updateActiveDot() {
+        const activeIndex = getCurrentIndex();
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === activeIndex);
+        });
+    }
+
+    prevBtn.addEventListener('click', () => {
+        const currentIndex = getCurrentIndex();
+        const prevIndex = Math.max(0, currentIndex - 1);
+        scrollToCard(prevIndex);
+    });
+
+    nextBtn.addEventListener('click', () => {
+        const currentIndex = getCurrentIndex();
+        const nextIndex = Math.min(cards.length - 1, currentIndex + 1);
+        scrollToCard(nextIndex);
+    });
+
+    // Debounce scroll event for better performance
+    let scrollTimeout;
+    carousel.addEventListener('scroll', () => {
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+        scrollTimeout = setTimeout(updateActiveDot, 50);
+    });
+
+    // Handle keyboard navigation
+    carousel.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevBtn.click();
+        } else if (e.key === 'ArrowRight') {
+            nextBtn.click();
+        }
+    });
+
+    // Smooth card entrance animations
+    function updateCardAnimations() {
+        const carouselRect = carousel.getBoundingClientRect();
+        const carouselCenter = carouselRect.left + carouselRect.width / 2;
+
+        let centerCardIndex = 0;
+        let minDistance = Infinity;
+
+        cards.forEach((card, index) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+
+            // Calculate distance from center (normalized -1 to 1)
+            const distanceFromCenter = (cardCenter - carouselCenter) / (carouselRect.width / 2);
+            const absDistance = Math.abs(distanceFromCenter);
+
+            // Track which card is closest to center
+            const pixelDistance = Math.abs(cardCenter - carouselCenter);
+            if (pixelDistance < minDistance) {
+                minDistance = pixelDistance;
+                centerCardIndex = index;
+            }
+
+            // Apply smooth transforms based on distance
+            // Cards closer to center are larger and more opaque
+            const scale = Math.max(0.92, 1 - (absDistance * 0.08));
+            const opacity = Math.max(0.6, 1 - (absDistance * 0.4));
+            const translateY = absDistance * 8; // Subtle vertical offset
+
+            card.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            card.style.opacity = opacity;
+
+            // Remove centered class from all cards
+            card.classList.remove('card-centered');
+        });
+
+        // Add centered class to the card closest to center
+        cards[centerCardIndex].classList.add('card-centered');
+    }
+
+    // Update animations on scroll
+    let animationFrame;
+    carousel.addEventListener('scroll', () => {
+        if (animationFrame) {
+            cancelAnimationFrame(animationFrame);
+        }
+        animationFrame = requestAnimationFrame(updateCardAnimations);
+    });
+
+    // Initial animation and position on second card (index 1)
+    // Only center on second card on desktop, not mobile
+    if (window.innerWidth > 767) {
+        const secondCard = cards[1];
+        if (secondCard) {
+            secondCard.scrollIntoView({
+                behavior: 'auto',
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
+    }
+
+    // On mobile, add card-centered class to all cards for highlight effect
+    function updateMobileHighlights() {
+        if (window.innerWidth <= 767) {
+            cards.forEach(card => card.classList.add('card-centered'));
+        } else {
+            updateCardAnimations();
+        }
+    }
+
+    updateMobileHighlights();
+    window.addEventListener('resize', updateMobileHighlights);
+});
+</script>
         </main>
 
         

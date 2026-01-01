@@ -3264,6 +3264,11 @@ body.menu-open {
         margin-bottom: 3rem;
     }
 
+    #services .section-header,
+    #tooling .section-header {
+        margin-bottom: 1.5rem;
+    }
+
     .section-header .section-subtitle {
         padding-bottom: 2rem;
     }
@@ -3589,22 +3594,25 @@ body.menu-open {
 }
 
 /* Clean Minimalist Services Page */
-#services {
-    padding: 2rem 0;
+#services,
+#tooling {
+    padding: 0.5rem 0;
     background: transparent;
     min-height: 100vh;
     position: relative;
 }
 
 @media (max-width: 768px) {
-    #services {
+    #services,
+    #tooling {
         padding: 0 !important;
     }
 }
 
-#services .section-header {
+#services .section-header,
+#tooling .section-header {
     text-align: center;
-    margin-bottom: 6rem;
+    margin-bottom: 1.5rem;
 }
 
 #services .section-title,
@@ -3653,27 +3661,142 @@ body.menu-open {
     line-height: 1.6;
 }
 
-/* Services Grid - Proper 3 Column Layout */
+/* Services Grid - Horizontal Carousel Layout */
 .services-grid.sophisticated {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 4rem;
+    display: flex;
+    gap: 2rem;
+    margin-top: 1rem;
     background: transparent;
-    max-width: 1400px;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scroll-padding: calc(50vw - 190px); /* Center cards: 50% viewport - half card width (380px/2) */
+    padding: 2rem calc(50vw - 190px);
+    -webkit-overflow-scrolling: touch;
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+    /* Smooth momentum scrolling */
+    scroll-snap-stop: normal;
+    /* Blur edges with gradient mask */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+}
+
+.services-grid.sophisticated::-webkit-scrollbar {
+    display: none;
 }
 
 /* Products Grid - 3 Column Layout */
 .services-grid.sophisticated.products-grid {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    padding: 0;
 }
 
-/* Make card links in grid display properly */
+/* Make card links in carousel display properly */
 .services-grid.sophisticated > a.service-card-sophisticated {
-    display: block;
+    flex: 0 0 auto;
+    width: min(380px, 85vw);
+    scroll-snap-align: center;
+}
+
+/* Products grid cards keep their block display */
+.services-grid.sophisticated.products-grid > a.service-card-sophisticated {
+    width: 100%;
+}
+
+/* Carousel wrapper */
+.services-carousel-wrapper {
+    position: relative;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+/* Carousel navigation buttons */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.carousel-nav:hover {
+    background: rgba(16, 235, 255, 0.2);
+    border-color: rgba(16, 235, 255, 0.4);
+    color: #10ebff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-nav-prev {
+    left: 0;
+}
+
+.carousel-nav-next {
+    right: 0;
+}
+
+/* Carousel dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.carousel-dot:hover {
+    background: rgba(16, 235, 255, 0.4);
+    border-color: rgba(16, 235, 255, 0.6);
+}
+
+.carousel-dot.active {
+    background: linear-gradient(135deg, #10ebff, #b91aee);
+    border-color: #10ebff;
+    width: 24px;
+    border-radius: 5px;
+}
+
+/* Mobile responsiveness for carousel */
+@media (max-width: 767px) {
+    /* Hide carousel navigation on mobile */
+    .carousel-nav,
+    .carousel-dots {
+        display: none !important;
+    }
+
+    .services-grid.sophisticated {
+        padding: 2rem 1rem;
+    }
 }
 
 .service-card-sophisticated {
@@ -3681,13 +3804,17 @@ body.menu-open {
     backdrop-filter: blur(10px);
     padding: 2.5rem;
     position: relative;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1),
+                opacity 1s cubic-bezier(0.19, 1, 0.22, 1),
+                box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     width: 100%;
     cursor: pointer;
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 16px;
     overflow: hidden;
+    will-change: transform, opacity;
 }
 
 .service-card-sophisticated::before {
@@ -3731,6 +3858,27 @@ body.menu-open {
 }
 
 .service-card-sophisticated:hover::after {
+    width: 100%;
+}
+
+/* Neon highlight for centered card in carousel */
+.service-card-sophisticated.card-centered {
+    box-shadow:
+        0 0 20px rgba(16, 235, 255, 0.3),
+        0 0 40px rgba(185, 26, 238, 0.2),
+        0 12px 40px rgba(0, 0, 0, 0.7),
+        inset 0 0 30px rgba(16, 235, 255, 0.08);
+    border-color: transparent;
+    background:
+        linear-gradient(135deg, rgba(8, 12, 20, 1) 0%, rgba(6, 10, 16, 1) 100%) padding-box,
+        linear-gradient(135deg, #10ebff, #b91aee) border-box;
+}
+
+.service-card-sophisticated.card-centered::before {
+    opacity: 1;
+}
+
+.service-card-sophisticated.card-centered::after {
     width: 100%;
 }
 
@@ -4589,10 +4737,23 @@ body.menu-open {
 
     .services-grid.sophisticated,
     .services-grid.sophisticated.products-grid {
+        display: flex;
+        flex-direction: column;
         grid-template-columns: 1fr;
         gap: 2rem;
         margin: 2rem 1rem;
+        padding: 0 1rem;
         background: transparent;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .services-grid.sophisticated > a.service-card-sophisticated {
+        width: 100%;
+        max-width: none;
+        scroll-snap-align: none;
     }
 
     .service-card-sophisticated {
@@ -4692,8 +4853,21 @@ body.menu-open {
 
     .services-grid.sophisticated,
     .services-grid.sophisticated.products-grid {
+        display: flex;
+        flex-direction: column;
         margin: 1rem 0.5rem;
+        padding: 0 0.5rem;
         gap: 1.5rem;
+        overflow-x: visible;
+        scroll-snap-type: none;
+        -webkit-mask-image: none;
+        mask-image: none;
+    }
+
+    .services-grid.sophisticated > a.service-card-sophisticated {
+        width: 100%;
+        max-width: none;
+        scroll-snap-align: none;
     }
 
     .service-card-sophisticated {
