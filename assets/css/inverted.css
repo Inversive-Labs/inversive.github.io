@@ -162,18 +162,26 @@ body:not(.dark-mode) .scroll-progress {
     background: linear-gradient(90deg, #10ebff, #b91aee) !important;
 }
 
-/* Remove shadows from cards on mobile in light mode */
+/* Remove shadows and gradient highlighting from cards on mobile in light mode */
 @media (max-width: 767px) {
     body:not(.dark-mode) .service-card,
     body:not(.dark-mode) .service-card-sophisticated,
     body:not(.dark-mode) .service-card-sophisticated.card-centered {
         box-shadow: none !important;
+        border: 1px solid rgba(0, 0, 0, 0.1) !important;
+        background: rgba(255, 255, 255, 1) !important;
     }
 
     body:not(.dark-mode) .service-card:hover,
     body:not(.dark-mode) .service-card-sophisticated:hover,
     body:not(.dark-mode) .service-card-sophisticated.card-centered:hover {
         box-shadow: none !important;
+    }
+
+    body:not(.dark-mode) .service-card-sophisticated.card-centered::before,
+    body:not(.dark-mode) .service-card-sophisticated.card-centered::after {
+        opacity: 0 !important;
+        width: 0 !important;
     }
 }
 

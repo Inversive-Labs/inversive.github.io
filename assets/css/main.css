@@ -4761,6 +4761,19 @@ body.menu-open {
         border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
+    /* Remove gradient highlighting from all cards on mobile */
+    .service-card-sophisticated.card-centered {
+        box-shadow: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, rgba(10, 10, 15, 0.98) 0%, rgba(8, 8, 12, 0.98) 100%);
+    }
+
+    .service-card-sophisticated.card-centered::before,
+    .service-card-sophisticated.card-centered::after {
+        opacity: 0;
+        width: 0;
+    }
+
     .service-card-sophisticated .service-number {
         font-size: 0.7rem;
         margin-bottom: 1.5rem;
@@ -4873,6 +4886,19 @@ body.menu-open {
     .service-card-sophisticated {
         padding: 1.5rem;
         border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Remove gradient highlighting from all cards on mobile */
+    .service-card-sophisticated.card-centered {
+        box-shadow: none;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: linear-gradient(135deg, rgba(10, 10, 15, 0.98) 0%, rgba(8, 8, 12, 0.98) 100%);
+    }
+
+    .service-card-sophisticated.card-centered::before,
+    .service-card-sophisticated.card-centered::after {
+        opacity: 0;
+        width: 0;
     }
 
     .service-card-sophisticated .service-title {
