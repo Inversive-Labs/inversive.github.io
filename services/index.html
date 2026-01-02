@@ -491,7 +491,7 @@
         const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
         const themeToggle = document.getElementById('themeToggle');
 
-        // Theme toggle functionality - default is light mode (inverted)
+        // Theme toggle functionality - default is dark mode
         function setTheme(isDark) {
             if (isDark) {
                 document.body.classList.add('dark-mode');
@@ -502,9 +502,9 @@
             }
         }
 
-        // Check for saved theme preference, default to light mode
+        // Check for saved theme preference, default to dark mode
         const savedTheme = localStorage.getItem('theme');
-        const prefersDark = savedTheme === 'dark';
+        const prefersDark = savedTheme !== 'light'; // Default to dark unless explicitly set to light
 
         themeToggle.checked = prefersDark;
         setTheme(prefersDark);
@@ -596,7 +596,7 @@
                     </ul>
                 </div>
             </a>
-            <a href="/services/secure-development/" class="service-card-sophisticated" id="secure-development" style="text-decoration: none; color: inherit; display: block;">
+            <a href="/services/development/" class="service-card-sophisticated" id="secure-development" style="text-decoration: none; color: inherit; display: block;">
                 <div class="service-content">
                     <div class="product-icon" style="display: flex; justify-content: center;">
                         <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
