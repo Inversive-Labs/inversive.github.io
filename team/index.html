@@ -7,12 +7,24 @@
     <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
 
+    <!-- Theme initialization - prevents flicker by applying class before CSS loads -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            // Default to dark mode if no preference is saved
+            const isDark = savedTheme !== 'light';
+            if (isDark) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+
     <!-- Main stylesheet -->
     <link rel="stylesheet" href="/assets/css/main.css">
     <!-- Color inversion -->
     <link rel="stylesheet" href="/assets/css/inverted.css">
 </head>
-<body>
+<body class="dark-mode">
     <!-- Scroll progress indicator -->
     <div class="scroll-indicator">
         <div class="scroll-progress"></div>
@@ -463,7 +475,7 @@
 
             <div class="theme-toggle">
                 <label class="theme-switch">
-                    <input type="checkbox" id="themeToggle">
+                    <input type="checkbox" id="themeToggle" checked>
                     <svg class="theme-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
                     </svg>
@@ -495,9 +507,11 @@
         function setTheme(isDark) {
             if (isDark) {
                 document.body.classList.add('dark-mode');
+                document.documentElement.classList.add('dark-mode');
                 localStorage.setItem('theme', 'dark');
             } else {
                 document.body.classList.remove('dark-mode');
+                document.documentElement.classList.remove('dark-mode');
                 localStorage.setItem('theme', 'light');
             }
         }
@@ -507,7 +521,11 @@
         const prefersDark = savedTheme !== 'light'; // Default to dark unless explicitly set to light
 
         themeToggle.checked = prefersDark;
-        setTheme(prefersDark);
+
+        // Only update theme if explicitly set to light mode (dark mode is already applied by default)
+        if (savedTheme === 'light') {
+            setTheme(false);
+        }
 
         // Theme toggle event listener
         themeToggle.addEventListener('change', function() {
