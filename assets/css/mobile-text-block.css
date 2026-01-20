@@ -1,0 +1,62 @@
+/* Mobile Text Block Styling - Clean blocky text without justify gaps */
+
+@media screen and (max-width: 767px) {
+    /* Main paragraph and text content */
+    .paragraph-4,
+    .tab-text,
+    .about-paragraph,
+    .service-card-sophisticated p,
+    .service-card-sophisticated .service-description,
+    .blog-excerpt,
+    .post-summary,
+    .section p:not(.copyright):not(.footer-text),
+    .team-member-bio,
+    .member-description {
+        text-align: left !important;
+        line-height: 1.5 !important; /* Tighter line spacing for blockier look */
+        letter-spacing: -0.01em !important; /* Slightly tighter letter spacing */
+        word-spacing: -0.05em !important; /* Slightly tighter word spacing */
+        font-weight: 400 !important; /* Ensure consistent weight */
+    }
+
+    /* Hero text specific adjustments */
+    #hero .paragraph-4,
+    .section.first .paragraph-4 {
+        line-height: 1.45 !important;
+        letter-spacing: -0.015em !important;
+    }
+
+    /* Service tabs for more compact, blocky appearance */
+    .tab-text {
+        line-height: 1.48 !important;
+        padding-right: 0.25rem !important;
+    }
+
+    /* Lists in tabs - more compact */
+    .tab-list {
+        line-height: 1.4 !important;
+        padding-left: 1.25rem !important;
+    }
+
+    .tab-list li {
+        margin-bottom: 0.4rem !important;
+        line-height: 1.4 !important;
+    }
+}
+
+/* Small mobile devices - even tighter */
+@media screen and (max-width: 479px) {
+    .paragraph-4,
+    .tab-text,
+    .section p:not(.copyright):not(.footer-text) {
+        line-height: 1.45 !important;
+        letter-spacing: -0.02em !important;
+        word-spacing: -0.08em !important;
+    }
+
+    /* Make text appear more uniform and blocky */
+    #hero .paragraph-4,
+    .section.first .paragraph-4 {
+        line-height: 1.42 !important;
+    }
+}

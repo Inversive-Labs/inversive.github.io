@@ -1,0 +1,77 @@
+/* Text Justify Alignment for Landing Page */
+
+/* Hero section paragraph */
+.paragraph-4 {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* Service tabs text content */
+.tab-text {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* About section paragraph */
+.about-paragraph {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* Service cards text */
+.service-card-sophisticated p,
+.service-card-sophisticated .service-description {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* Blog post excerpts on landing page */
+.blog-excerpt,
+.post-summary {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* General paragraph text throughout the landing page */
+.section p:not(.copyright):not(.footer-text) {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* Team member descriptions */
+.team-member-bio,
+.member-description {
+    text-align: justify !important;
+    text-justify: inter-word;
+}
+
+/* Keep list items left-aligned for better readability */
+.tab-list,
+.tab-list li,
+ul.tab-list,
+ul.tab-list li {
+    text-align: left !important;
+}
+
+/* Keep titles and headers centered or left-aligned as designed */
+.service-title,
+h1, h2, h3, h4, h5, h6 {
+    /* Preserve original alignment */
+}
+
+/* Mobile responsive - use left align for better readability */
+@media screen and (max-width: 767px) {
+    .paragraph-4,
+    .tab-text,
+    .about-paragraph,
+    .service-card-sophisticated p,
+    .service-card-sophisticated .service-description,
+    .blog-excerpt,
+    .post-summary,
+    .section p:not(.copyright):not(.footer-text),
+    .team-member-bio,
+    .member-description {
+        text-align: left !important;
+        text-justify: none !important;
+    }
+}

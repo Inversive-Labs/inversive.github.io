@@ -1,0 +1,176 @@
+/* Markdown Table Styles for Blog Posts */
+
+/* Base table styles for markdown content */
+.container article table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 0.9rem;
+}
+
+/* Table header */
+.container article table thead {
+    background: rgba(0, 0, 0, 0.6);
+    border-bottom: 2px solid rgba(128, 128, 128, 0.4);
+}
+
+.container article table th {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: rgba(229, 231, 235, 0.95);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+/* Table body */
+.container article table tbody tr {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+    transition: background-color 0.2s ease;
+}
+
+.container article table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.container article table tbody tr:hover {
+    background: rgba(128, 128, 128, 0.1);
+}
+
+/* Table cells */
+.container article table td {
+    padding: 0.75rem 1rem;
+    color: rgba(209, 213, 219, 0.9);
+    line-height: 1.5;
+}
+
+/* First column emphasis */
+.container article table td:first-child {
+    font-weight: 500;
+    color: rgba(229, 231, 235, 0.95);
+}
+
+/* Code inside tables */
+.container article table code {
+    background: rgba(0, 0, 0, 0.6);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-size: 0.85em;
+    color: #64b5f6;
+    border: 1px solid rgba(100, 181, 246, 0.2);
+}
+
+/* Links in tables */
+.container article table a {
+    color: #64b5f6;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.container article table a:hover {
+    color: #90caf9;
+    text-decoration: underline;
+}
+
+/* Striped rows for better readability */
+.container article table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive table design */
+@media (max-width: 768px) {
+    .container article table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        margin: 1rem 0;
+        font-size: 0.85rem;
+    }
+
+    .container article table thead {
+        background: rgba(0, 0, 0, 0.7);
+    }
+
+    .container article table th,
+    .container article table td {
+        padding: 0.5rem 0.75rem;
+        white-space: nowrap;
+        min-width: 100px;
+    }
+
+    .container article table th {
+        font-size: 0.75rem;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: rgba(0, 0, 0, 0.9);
+    }
+
+    .container article table code {
+        font-size: 0.8em;
+        padding: 0.15rem 0.3rem;
+    }
+
+    /* Allow wrapping for description columns */
+    .container article table td:last-child {
+        white-space: normal;
+        min-width: 200px;
+    }
+}
+
+/* Table scrollbar styling to match code blocks */
+.container article table::-webkit-scrollbar {
+    height: 8px;
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+}
+
+.container article table::-webkit-scrollbar-thumb {
+    background: rgba(40, 40, 40, 0.9);
+    border-radius: 4px;
+    border: 1px solid rgba(80, 80, 80, 0.5);
+}
+
+.container article table::-webkit-scrollbar-thumb:hover {
+    background: rgba(60, 60, 60, 0.9);
+    border-color: rgba(100, 100, 100, 0.7);
+}
+
+.container article table::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.9);
+    border-radius: 4px;
+}
+
+/* Firefox scrollbar */
+.container article table {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(40, 40, 40, 0.9) rgba(0, 0, 0, 0.9);
+}
+
+/* Special handling for .highlight tables (code blocks with line numbers) */
+.container article .highlight table {
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+}
+
+.container article .highlight table th,
+.container article .highlight table td {
+    background: none !important;
+    border: none !important;
+    padding: 0 !important;
+}
+
+.container article .highlight table tbody tr:hover {
+    background: none !important;
+}
+
+.container article .highlight table tbody tr:nth-child(even) {
+    background: none !important;
+}

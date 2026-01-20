@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inversive Labs</title>
+    <link rel="shortcut icon" href="/images/favicon.ico" title="Favicon" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Theme initialization - prevents flicker by applying class before CSS loads -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            // Default to dark mode if no preference is saved
+            const isDark = savedTheme !== 'light';
+            if (isDark) {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <!-- Color inversion -->
+    <link rel="stylesheet" href="/assets/css/inverted.css">
+</head>
+<body class="dark-mode">
+    <!-- Scroll progress indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-progress"></div>
+    </div>
+
+    <!-- Filterable content wrapper -->
+    <div class="filterable-content">
+        <!-- Background removed -->
+
+        <style>
+    .font-geist {
+        font-family: 'Geist', sans-serif !important;
+    }
+
+    /* Modern navbar styles */
+    .modern-nav {
+        position: relative;
+        z-index: 50;
+        width: 100%;
+    }
+
+    .modern-nav .nav-container {
+        max-width: 80rem;
+        margin: 0 auto;
+        padding: 0 1rem;
+        position: relative;
+    }
+
+    @media (min-width: 640px) {
+        .modern-nav .nav-container {
+            padding: 0 1.5rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-nav .nav-container {
+            padding: 0 2rem;
+        }
+    }
+
+    .modern-nav nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 1.5rem;
+        min-height: 4rem;
+        position: relative;
+    }
+
+    .modern-nav nav > a {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        position: absolute;
+        left: 0;
+    }
+
+    .modern-nav nav > a img {
+        display: block;
+        width: auto;
+        height: 2.5rem; /* Default */
+    }
+
+    /* Desktop logo sizing - bigger on desktop only */
+    @media (min-width: 768px) {
+        .modern-nav nav > a img {
+            height: 5rem !important; /* 80px for desktop */
+        }
+    }
+
+    .modern-nav-links {
+        display: none;
+        gap: 0.5rem;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.25rem;
+        backdrop-filter: blur(8px);
+        align-items: center;
+        position: relative;
+    }
+
+    @media (min-width: 768px) {
+        .modern-nav-links {
+            display: flex;
+        }
+    }
+
+    .modern-nav-links a {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.6);
+        text-decoration: none;
+        transition: color 0.2s;
+        position: relative;
+    }
+
+    .modern-nav-links a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .modern-nav-links a.home-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .modern-nav-links a.home-icon svg {
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .nav-indicator {
+        position: absolute;
+        border-radius: 9999px;
+        padding: 2px;
+        background: linear-gradient(90deg,
+            #10ebff 0%,
+            #3ac9e6 12.5%,
+            #65a8cd 25%,
+            #8f86b4 37.5%,
+            #b91aee 50%,
+            #8f86b4 62.5%,
+            #65a8cd 75%,
+            #3ac9e6 87.5%,
+            #10ebff 100%);
+        background-size: 400% 100%;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        mask-composite: exclude;
+        animation: gradientRotate 15s linear infinite;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        opacity: 0;
+        box-sizing: border-box;
+    }
+
+    @keyframes gradientRotate {
+        0% {
+            background-position: 0% 0;
+        }
+        100% {
+            background-position: 400% 0;
+        }
+    }
+
+    .modern-nav-cta {
+        position: relative;
+        display: inline-block;
+        border-radius: 9999px;
+    }
+
+    .modern-nav-cta span {
+        position: relative;
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: #ffffff;
+        background: rgba(0, 0, 0, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 9999px;
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        transition: transform 0.15s ease-out;
+    }
+
+    .modern-nav-cta span:active {
+        transform: scale(0.98);
+    }
+
+    /* Hamburger menu button */
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 4px;
+        gap: 5px;
+        z-index: 1002;
+    }
+
+    .hamburger-line {
+        width: 20px;
+        height: 2px;
+        background: #ffffff;
+        border-radius: 2px;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform-origin: center;
+        box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    }
+
+    .hamburger:hover .hamburger-line {
+        background: #10ebff;
+        box-shadow: 0 0 12px rgba(16, 235, 255, 0.6);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+        background: #10ebff;
+        box-shadow: 0 0 15px rgba(16, 235, 255, 0.8);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(2) {
+        opacity: 0;
+        transform: scaleX(0) rotate(180deg);
+    }
+
+    .hamburger.active .hamburger-line:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+        background: #10ebff;
+        box-shadow: 0 0 15px rgba(16, 235, 255, 0.8);
+    }
+
+    @media (max-width: 767px) {
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Mobile menu dropdown styling */
+    .modern-nav-links.mobile-open {
+        display: flex !important;
+        position: fixed !important;
+        top: 5rem !important;
+        left: 1rem !important;
+        right: 1rem !important;
+        flex-direction: column !important;
+        padding: 1.5rem !important;
+        gap: 0.5rem !important;
+        /* Fallback for browsers without backdrop-filter support */
+        background: rgba(0, 0, 0, 0.85) !important;
+        /* Modern blur effect for supported browsers */
+        background: linear-gradient(135deg,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(5, 5, 8, 0.3) 50%,
+            rgba(0, 0, 0, 0.3) 100%) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        border-radius: 20px !important;
+        box-shadow:
+            0 8px 32px rgba(0, 0, 0, 0.6),
+            inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        animation: slideDown 0.3s ease-out !important;
+        z-index: 1000 !important;
+    }
+
+    /* Feature detection for backdrop-filter */
+    @supports not (backdrop-filter: blur(20px)) {
+        .modern-nav-links.mobile-open {
+            background: rgba(0, 0, 0, 0.95) !important;
+        }
+    }
+
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modern-nav-links.mobile-open a {
+        padding: 0.75rem 1rem !important;
+        font-size: 1rem !important;
+        border-radius: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+
+    .modern-nav-links.mobile-open a:hover {
+        background: rgba(16, 235, 255, 0.1) !important;
+        color: rgba(16, 235, 255, 0.95) !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta {
+        width: 100% !important;
+        margin-top: 0.5rem !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta a {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .modern-nav-links.mobile-open .modern-nav-cta span {
+        width: 100% !important;
+        justify-content: center !important;
+        background: linear-gradient(135deg,
+            rgba(16, 235, 255, 0.15) 0%,
+            rgba(92, 92, 171, 0.12) 50%,
+            rgba(185, 26, 238, 0.15) 100%) !important;
+        border-color: rgba(16, 235, 255, 0.4) !important;
+    }
+
+    /* Mobile logo sizing */
+    @media (max-width: 767px) {
+        .modern-nav nav > a img {
+            height: 1.5rem; /* 24px */
+        }
+    }
+
+    /* Theme toggle button - desktop version */
+    .theme-toggle {
+        position: absolute;
+        right: 0;
+        display: flex;
+        align-items: center;
+    }
+
+    .theme-switch {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem;
+        cursor: pointer;
+        background: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 9999px;
+        padding: 0.5rem 0.75rem;
+        backdrop-filter: blur(12px);
+        transition: all 0.3s ease;
+    }
+
+    .theme-switch:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(16, 235, 255, 0.4);
+        transform: translateY(-1px);
+    }
+
+    .theme-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+    }
+
+    .theme-icon {
+        width: 20px;
+        height: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .theme-icon.sun-icon {
+        color: #ffffff;
+        filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+    }
+
+    .theme-icon.moon-icon {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .theme-switch input:checked ~ .sun-icon {
+        color: rgba(255, 255, 255, 0.4);
+        filter: none;
+    }
+
+    .theme-switch input:checked ~ .moon-icon {
+        color: #10ebff;
+        filter: drop-shadow(0 0 6px rgba(16, 235, 255, 0.6));
+    }
+
+    @media (max-width: 767px) {
+        .modern-nav nav > a {
+            left: 1rem;
+        }
+
+        .theme-toggle {
+            right: 3.5rem;
+        }
+
+        .theme-switch {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            gap: 0;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+        }
+
+        .theme-switch:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-icon {
+            width: 16px;
+            height: 16px;
+            padding: 0;
+            position: absolute;
+            background: transparent !important;
+        }
+
+        .theme-icon.sun-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .theme-icon.moon-icon {
+            opacity: 0;
+            transform: rotate(180deg) scale(0);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .theme-switch input:checked ~ .sun-icon {
+            opacity: 0;
+            transform: rotate(-180deg) scale(0);
+        }
+
+        .theme-switch input:checked ~ .moon-icon {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+            color: #10ebff;
+        }
+
+        .hamburger {
+            position: absolute;
+            right: 1rem;
+            z-index: 1003;
+        }
+    }
+</style>
+
+<header class="modern-nav">
+    <div class="nav-container">
+        <nav>
+            <a href="/">
+                <img src="/images/logo.svg" alt="Inversive Labs">
+            </a>
+
+            <div class="modern-nav-links font-geist">
+                <div class="nav-indicator"></div>
+                <a href="/" >Home</a>
+                <a href="/about/" >About</a>
+                <a href="/team/" >Team</a>
+                <a href="/services/" >Services</a>
+                <a href="/tooling/" >Tooling</a>
+                <a href="/portfolio/" >Portfolio</a>
+                <a href="/blog/" >Blog</a>
+                <a href="/contact/" >Contact</a>
+            </div>
+
+            <div class="theme-toggle">
+                <label class="theme-switch">
+                    <input type="checkbox" id="themeToggle" checked>
+                    <svg class="theme-icon sun-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg class="theme-icon moon-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </label>
+            </div>
+
+            <button class="hamburger" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<script>
+    // Mobile menu functionality and nav indicator
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileBtn = document.getElementById('mobileMenuToggle');
+        const navLinks = document.querySelector('.modern-nav-links');
+        const indicator = document.querySelector('.nav-indicator');
+        const navItems = document.querySelectorAll('.modern-nav-links > a:not([href="/contact/"])');
+        const themeToggle = document.getElementById('themeToggle');
+
+        // Theme toggle functionality - default is dark mode
+        function setTheme(isDark) {
+            if (isDark) {
+                document.body.classList.add('dark-mode');
+                document.documentElement.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                document.documentElement.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        // Check for saved theme preference, default to dark mode
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = savedTheme !== 'light'; // Default to dark unless explicitly set to light
+
+        themeToggle.checked = prefersDark;
+
+        // Only update theme if explicitly set to light mode (dark mode is already applied by default)
+        if (savedTheme === 'light') {
+            setTheme(false);
+        }
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('change', function() {
+            setTheme(this.checked);
+        });
+
+        // Position indicator on active link
+        function updateIndicator() {
+            const activeLink = document.querySelector('.modern-nav-links > a.active');
+            if (activeLink && indicator && window.innerWidth >= 768) {
+                // Calculate position using offsetLeft and offsetTop
+                // Subtract padding to center the border around the element
+                const borderWidth = 2;
+                const left = activeLink.offsetLeft - borderWidth;
+                const top = activeLink.offsetTop - borderWidth;
+                const width = activeLink.offsetWidth + (borderWidth * 2);
+                const height = activeLink.offsetHeight + (borderWidth * 2);
+
+                indicator.style.left = left + 'px';
+                indicator.style.top = top + 'px';
+                indicator.style.width = width + 'px';
+                indicator.style.height = height + 'px';
+                indicator.style.opacity = '1';
+            } else if (indicator) {
+                indicator.style.opacity = '0';
+            }
+        }
+
+        // Initial positioning
+        updateIndicator();
+
+        // Update on window resize
+        window.addEventListener('resize', updateIndicator);
+
+        // Mobile menu toggle
+        if (mobileBtn && navLinks) {
+            mobileBtn.addEventListener('click', function() {
+                mobileBtn.classList.toggle('active');
+                navLinks.classList.toggle('mobile-open');
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mobileBtn.contains(event.target) && !navLinks.contains(event.target)) {
+                    mobileBtn.classList.remove('active');
+                    navLinks.classList.remove('mobile-open');
+                }
+            });
+        }
+    });
+</script>
+
+
+        <main>
+            <style>
+/* Reset and Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Hero Section */
+.hero-section {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10rem 2rem 6rem;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    font-weight: 400;
+    color: #a0a0a0;
+    margin-bottom: 3rem;
+    line-height: 1.8;
+    font-family: 'Inter', sans-serif;
+}
+
+.cta-primary {
+    display: inline-block;
+    padding: 0.9rem 2rem;
+    background: rgba(16, 235, 255, 0.1);
+    color: #10ebff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    border: 1px solid rgba(16, 235, 255, 0.3);
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s ease;
+}
+
+.cta-primary:hover {
+    background: rgba(16, 235, 255, 0.15);
+    border-color: rgba(16, 235, 255, 0.5);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Blockchain Technologies Grid */
+.tech-grid-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 2rem;
+    align-items: center;
+    justify-items: center;
+}
+
+.tech-item {
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tech-item:hover {
+    opacity: 1;
+}
+
+.tech-logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* Services Section */
+.services-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 4rem;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+}
+
+.service-card {
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(16, 235, 255, 0.15);
+    border-radius: 12px;
+    padding: 2.5rem;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    border-color: rgba(16, 235, 255, 0.4);
+    background: rgba(30, 30, 30, 0.7);
+    transform: translateY(-4px);
+}
+
+.service-card h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.service-card p {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: #b0b0b0;
+    line-height: 1.7;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Statistics Section */
+.stats-section {
+    padding: 4rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    text-align: center;
+}
+
+.stat-item h4 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #10ebff;
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.stat-item p {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Case Studies Section */
+.case-studies-section {
+    padding: 6rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.case-study-card {
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.case-study-card:hover {
+    border-color: rgba(16, 235, 255, 0.3);
+    background: rgba(30, 30, 30, 0.7);
+}
+
+.case-study-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.case-study-header h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.case-study-date {
+    font-size: 0.85rem;
+    color: #808080;
+    font-family: 'Inter', sans-serif;
+}
+
+.case-study-desc {
+    font-size: 0.95rem;
+    color: #b0b0b0;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.case-study-tags {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    padding: 0.4rem 0.8rem;
+    background: rgba(16, 235, 255, 0.1);
+    color: #10ebff;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.case-study-link {
+    color: #10ebff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.case-study-link:hover {
+    text-decoration: underline;
+}
+
+/* Process Timeline Section */
+.process-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.process-timeline {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    margin-top: 3rem;
+}
+
+.process-phase {
+    text-align: center;
+}
+
+.process-phase h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.process-steps {
+    text-align: left;
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.process-step {
+    margin-bottom: 1.5rem;
+}
+
+.process-step:last-child {
+    margin-bottom: 0;
+}
+
+.process-step h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #10ebff;
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.process-step p {
+    font-size: 0.9rem;
+    color: #b0b0b0;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* FAQ Section */
+.faq-section {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+    background: rgba(30, 30, 30, 0.7);
+}
+
+.faq-question h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+}
+
+.faq-answer {
+    padding: 0 2rem 1.5rem;
+    display: none;
+}
+
+.faq-answer p {
+    font-size: 0.95rem;
+    color: #b0b0b0;
+    line-height: 1.7;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Contact Section */
+.contact-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    margin-top: 3rem;
+}
+
+.contact-info h3 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.contact-info p {
+    font-size: 0.95rem;
+    color: #b0b0b0;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.contact-email {
+    color: #10ebff;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+}
+
+.contact-form {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: #d0d0d0;
+    margin-bottom: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 0.9rem 1.2rem;
+    background: rgba(30, 30, 30, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: rgba(16, 235, 255, 0.4);
+    background: rgba(30, 30, 30, 0.7);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.submit-btn {
+    padding: 0.9rem 2rem;
+    background: rgba(16, 235, 255, 0.1);
+    color: #10ebff;
+    border: 1px solid rgba(16, 235, 255, 0.3);
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    justify-self: start;
+}
+
+.submit-btn:hover {
+    background: rgba(16, 235, 255, 0.15);
+    border-color: rgba(16, 235, 255, 0.5);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .process-timeline {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title">Security Auditing, Research, and Advisory for the Decentralized Web</h1>
+        <p class="hero-subtitle">Web3 is the modern standard for transparent financial transactions, trustless accessible banking, and the global economy. But to build a competent, tamper-proof network and safeguard your users' assets, you need comprehensive security services.</p>
+        <a href="/contact/" class="cta-primary">Request a service</a>
+    </div>
+</section>
+
+<!-- Blockchain Technologies Grid -->
+<section class="tech-grid-section">
+    <div class="tech-grid">
+        <div class="tech-item">
+            <img src="/images/ethereum-logo.svg" alt="Ethereum" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/solana-logo.svg" alt="Solana" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/sui-logo.svg" alt="Sui" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/aptos-logo.png" alt="Aptos" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/move-logo.png" alt="Move" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/solidity-logo.svg" alt="Solidity" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/rust-logo.svg" alt="Rust" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/anchor-logo.png" alt="Anchor" class="tech-logo">
+        </div>
+        <div class="tech-item">
+            <img src="/images/circom-logo.png" alt="Circom" class="tech-logo">
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="services-section">
+    <h2 class="section-title">Our Services</h2>
+    <div class="services-grid">
+        <div class="service-card">
+            <h3>Security Auditing</h3>
+            <p>Comprehensive smart contract audits to identify vulnerabilities and ensure the security of your decentralized applications.</p>
+        </div>
+        <div class="service-card">
+            <h3>Interoperability Research</h3>
+            <p>Deep analysis and research into cross-chain protocols and bridge security to ensure seamless multi-chain operations.</p>
+        </div>
+        <div class="service-card">
+            <h3>Smart Contract Development</h3>
+            <p>Expert development of secure, efficient, and scalable smart contracts tailored to your project's needs.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="stats-section">
+    <div class="stats-grid">
+        <div class="stat-item">
+            <h4>4000+</h4>
+            <p>Hours of Auditing</p>
+        </div>
+        <div class="stat-item">
+            <h4>560</h4>
+            <p>Vulnerabilities Found</p>
+        </div>
+        <div class="stat-item">
+            <h4>200k+</h4>
+            <p>Lines of Code Reviewed</p>
+        </div>
+        <div class="stat-item">
+            <h4>16</h4>
+            <p>Projects Secured</p>
+        </div>
+    </div>
+</section>
+
+<!-- Case Studies Section -->
+<section class="case-studies-section">
+    <h2 class="section-title">Case Studies</h2>
+
+    <div class="case-study-card">
+        <div class="case-study-header">
+            <h3>Project Alpha</h3>
+            <span class="case-study-date">March 2024</span>
+        </div>
+        <p class="case-study-desc">Comprehensive security audit of DeFi protocol with cross-chain capabilities.</p>
+        <div class="case-study-tags">
+            <span class="tag">Solana</span>
+            <span class="tag">DeFi</span>
+            <span class="tag">Cross-chain</span>
+        </div>
+        <a href="#" class="case-study-link">View Report →</a>
+    </div>
+
+    <div class="case-study-card">
+        <div class="case-study-header">
+            <h3>Project Beta</h3>
+            <span class="case-study-date">February 2024</span>
+        </div>
+        <p class="case-study-desc">Smart contract audit for NFT marketplace with advanced trading features.</p>
+        <div class="case-study-tags">
+            <span class="tag">Ethereum</span>
+            <span class="tag">NFT</span>
+        </div>
+        <a href="#" class="case-study-link">View Report →</a>
+    </div>
+
+    <div class="case-study-card">
+        <div class="case-study-header">
+            <h3>Project Gamma</h3>
+            <span class="case-study-date">January 2024</span>
+        </div>
+        <p class="case-study-desc">Security assessment of Layer 2 scaling solution.</p>
+        <div class="case-study-tags">
+            <span class="tag">Move</span>
+            <span class="tag">L2</span>
+        </div>
+        <a href="#" class="case-study-link">View Report →</a>
+    </div>
+</section>
+
+<!-- Process Timeline Section -->
+<section class="process-section">
+    <h2 class="section-title">Our Process</h2>
+    <div class="process-timeline">
+        <div class="process-phase">
+            <h3>Pre-Audit</h3>
+            <div class="process-steps">
+                <div class="process-step">
+                    <h4>1. Quote</h4>
+                    <p>Initial assessment and pricing</p>
+                </div>
+                <div class="process-step">
+                    <h4>2. Preliminary Assessment</h4>
+                    <p>Code review and scope definition</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-phase">
+            <h3>Audit</h3>
+            <div class="process-steps">
+                <div class="process-step">
+                    <h4>3. Architecture Review</h4>
+                    <p>Deep analysis of system design</p>
+                </div>
+                <div class="process-step">
+                    <h4>4. Q&A with Client</h4>
+                    <p>Collaborative security discussion</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="process-phase">
+            <h3>Post-Audit</h3>
+            <div class="process-steps">
+                <div class="process-step">
+                    <h4>5. Fixes Review</h4>
+                    <p>Verification of remediation</p>
+                </div>
+                <div class="process-step">
+                    <h4>6. Public Report</h4>
+                    <p>Final audit report publication</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <h2 class="section-title">Frequently Asked Questions</h2>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>Why do I need a security audit?</h4>
+            <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>Security audits are essential to identify vulnerabilities before deployment, protecting your users' assets and your project's reputation.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>How long does an audit take?</h4>
+            <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>Audit duration varies based on codebase complexity, typically ranging from 2-6 weeks for most projects.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>What does the audit process involve?</h4>
+            <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>Our process includes manual code review, automated testing, architecture analysis, and collaborative Q&A sessions with your team.</p>
+        </div>
+    </div>
+
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+            <h4>Do you provide post-audit support?</h4>
+            <span>+</span>
+        </div>
+        <div class="faq-answer">
+            <p>Yes, we offer ongoing support including fixes review and consultation for implementing security recommendations.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <h2 class="section-title">Get in Touch</h2>
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h3>Contact Us</h3>
+            <p>Ready to secure your Web3 project? Reach out to discuss your security needs.</p>
+            <a href="mailto:security@inversive.io" class="contact-email">security@inversive.io</a>
+        </div>
+
+        <form class="contact-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="project">Project Name (Optional)</label>
+                <input type="text" id="project" name="project">
+            </div>
+
+            <div class="form-group">
+                <label for="website">Website (Optional)</label>
+                <input type="url" id="website" name="website">
+            </div>
+
+            <div class="form-group">
+                <label for="message">Additional Information (Optional)</label>
+                <textarea id="message" name="message"></textarea>
+            </div>
+
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+</section>
+
+<script>
+function toggleFaq(element) {
+    const answer = element.nextElementSibling;
+    const icon = element.querySelector('span');
+
+    if (answer.style.display === 'block') {
+        answer.style.display = 'none';
+        icon.textContent = '+';
+    } else {
+        answer.style.display = 'block';
+        icon.textContent = '−';
+    }
+}
+</script>
+
+        </main>
+
+        
+        <style>
+    .modern-footer {
+        border-top: 1px solid rgba(128, 128, 128, 0.2);
+        margin-top: 4rem;
+        position: relative;
+        background: #000000;
+    }
+
+    .modern-footer .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 1.75rem 1rem 1.5rem;
+    }
+
+    @media (min-width: 640px) {
+        .modern-footer .container {
+            padding: 2.5rem 1.5rem 2.25rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .modern-footer .container {
+            padding: 3rem 2rem 2.75rem;
+        }
+    }
+
+    .footer-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-grid {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+    }
+
+    .footer-center {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    @media (min-width: 768px) {
+        .footer-center {
+            justify-content: flex-start;
+        }
+    }
+
+    .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
+
+    .footer-brand img {
+        height: 1.5rem;
+        width: auto;
+        opacity: 0.6;
+    }
+
+    .footer-brand .copyright {
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.35);
+        font-family: 'Geist', sans-serif;
+        white-space: nowrap;
+    }
+
+    .footer-links-wrapper {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-section h4 {
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.025em;
+        font-family: 'Geist', sans-serif;
+        margin-bottom: 0.4rem;
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    @media (min-width: 768px) {
+        .footer-section ul {
+            flex-direction: row;
+        }
+    }
+
+    .footer-section ul li a {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+        display: inline-block;
+    }
+
+    .footer-section ul li a:hover {
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .footer-contact-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.4rem 0.875rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 0.9);
+        background: rgba(128, 128, 128, 0.1);
+        border: 1px solid rgba(128, 128, 128, 0.3);
+        border-radius: 6px;
+        text-decoration: none;
+        font-family: 'Geist', sans-serif;
+        transition: all 0.2s;
+    }
+
+    .footer-contact-btn:hover {
+        background: rgba(128, 128, 128, 0.15);
+        border-color: rgba(128, 128, 128, 0.5);
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .footer-grid {
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .footer-center {
+            flex-direction: row;
+            gap: 0.75rem;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .footer-section {
+            flex: 0 0 auto;
+        }
+
+        .footer-section ul {
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: nowrap;
+            margin: 0;
+        }
+
+        .footer-section ul li a {
+            font-size: 0.85rem;
+            padding: 0;
+        }
+
+        .footer-section ul li:nth-child(n+4) {
+            display: none;
+        }
+
+        .footer-contact-btn {
+            font-size: 0.85rem;
+            padding: 0.5rem 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .footer-brand {
+            flex-direction: column;
+            gap: 0.5rem;
+            justify-content: center;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .footer-brand img {
+            height: 1.5rem;
+        }
+
+        .footer-brand .copyright {
+            display: block;
+            font-size: 0.65rem;
+            margin-left: 0;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .modern-footer .container {
+            padding: 1.5rem 1rem;
+        }
+    }
+</style>
+
+<footer class="modern-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-center">
+                <div class="footer-section">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/tooling">Tooling</a></li>
+                        <li><a href="/portfolio">Portfolio</a></li>
+                        <li><a href="/team">Team</a></li>
+                        <li><a href="/blog">Blog</a></li>
+                    </ul>
+                </div>
+                <a href="/#contact" class="footer-contact-btn">Contact</a>
+            </div>
+
+            <div class="footer-brand">
+                <a href="/">
+                    <img src="/images/logo.svg" alt="Inversive Labs">
+                </a>
+                <span class="copyright">&copy; 2026 Inversive Labs. All rights reserved.</span>
+            </div>
+        </div>
+    </div>
+</footer>
+
+        
+    </div>
+
+    <script src="/assets/js/shader-background.js"></script>
+    <script src="/assets/js/site.js"></script>
+</body>

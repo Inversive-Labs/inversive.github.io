@@ -1,0 +1,214 @@
+/* Mobile-optimized animations for smooth discovery effects */
+
+/* Force hardware acceleration for smoother animations */
+#latest-blogs,
+#latest-blogs * {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+}
+
+/* Override the slideInUp animation that causes choppiness */
+@media (max-width: 768px) {
+    @keyframes slideInUp {
+        to {
+            opacity: 1;
+            transform: none; /* Remove transform completely */
+        }
+    }
+}
+
+/* Disable will-change on mobile for better performance */
+@media (max-width: 768px) {
+    /* CRITICAL FIX: Completely override Latest Blogs section animations */
+    #latest-blogs.section {
+        opacity: 0 !important;
+        transform: translateY(15px) !important;
+        transition: opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                    transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+        animation: none !important;
+    }
+
+    #latest-blogs.section.animate-in {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    /* Remove ALL child animations in latest blogs */
+    #latest-blogs * {
+        animation: none !important;
+        animation-delay: 0s !important;
+        transition-delay: 0s !important;
+    }
+
+    #latest-blogs > .container > * {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+
+    /* Reduce animation complexity for other sections */
+    .section:not(.first):not(#latest-blogs) {
+        opacity: 0;
+        transform: translateY(20px); /* Reduced from 30px */
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Faster, simpler easing */
+    }
+
+    .section.animate-in {
+        opacity: 1 !important;
+        transform: translateY(0) !important;
+    }
+
+    /* Simplify child animations - remove staggered animations on mobile */
+    .section:not(.first) > * {
+        opacity: 1 !important; /* Start visible */
+        transform: none !important; /* No transform */
+    }
+
+    /* Optimize blog posts grid for mobile - OVERRIDE EVERYTHING */
+    #latest-blogs .blog-posts,
+    .blog-posts {
+        opacity: 1 !important; /* Always visible */
+        transform: none !important; /* No transform */
+        animation: none !important; /* Disable animation */
+        transition: none !important; /* No transition */
+    }
+
+    /* Simplify blog post previews */
+    .blog-post-preview {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: background-color 0.2s ease, border-color 0.2s ease !important;
+    }
+
+    /* Remove hover transforms on mobile */
+    .blog-post-preview:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Disable image animations on mobile */
+    .blog-post-preview:hover .blog-post-image img {
+        transform: none !important;
+        filter: none !important;
+    }
+
+    /* Remove all fadeInUp animations on mobile */
+    .section.animate-in:not(.first) > *:nth-child(1),
+    .section.animate-in:not(.first) > *:nth-child(2),
+    .section.animate-in:not(.first) > *:nth-child(3),
+    .section.animate-in:not(.first) > *:nth-child(4) {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Optimize tooling grid animations */
+    .section.animate-in .tooling-grid {
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    /* Disable complex keyframe animations on mobile */
+    @keyframes fadeInUpChild {
+        from {
+            opacity: 0;
+            transform: translateY(10px); /* Reduced movement */
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Simplified fade-in for critical content */
+    @keyframes simpleFadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    /* Use GPU-accelerated properties only */
+    .section,
+    .blog-post-preview,
+    .blog-posts {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        perspective: 1000px;
+        -webkit-perspective: 1000px;
+    }
+
+    /* Add no-transition class for instant reveals */
+    .no-transition {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* Reduce transition delays */
+    * {
+        animation-delay: 0s !important;
+        transition-delay: 0s !important;
+    }
+}
+
+/* Specific optimizations for very small screens */
+@media (max-width: 480px) {
+    /* Further simplify for small devices */
+    .section:not(.first) {
+        opacity: 0;
+        transform: translateY(10px); /* Even less movement */
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+    }
+
+    /* Disable all hover effects on small touch devices */
+    .blog-post-preview:hover,
+    .tooling-card:hover,
+    .service-card:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+}
+
+/* Performance mode for low-end devices */
+@media (max-width: 768px) and (hover: none) {
+    /* Touch devices - disable all hover animations */
+    *:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    /* Use only opacity for transitions */
+    .section:not(.first) {
+        transform: none !important;
+        transition: opacity 0.3s ease-out;
+    }
+
+    .section.animate-in {
+        transform: none !important;
+    }
+}
+
+/* Prefers reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .section:not(.first) {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}

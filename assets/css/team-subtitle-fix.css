@@ -1,0 +1,42 @@
+/* Team Card Subtitle Centering Fix */
+
+/* Force center alignment for all team member titles/subtitles */
+.member-title,
+.team-member-card .member-title,
+.team-member .member-title,
+p.member-title {
+    text-align: center !important;
+    display: block !important;
+    width: 100% !important;
+}
+
+/* Ensure centering on mobile devices */
+@media screen and (max-width: 991px) {
+    .member-title,
+    .team-member-card .member-title,
+    .team-member .member-title,
+    p.member-title {
+        text-align: center !important;
+        display: block !important;
+        width: 100% !important;
+    }
+}
+
+/* Extra specificity to override any conflicting styles */
+.team-page .member-title,
+#team .member-title,
+.container .member-title {
+    text-align: center !important;
+}
+
+/* Ensure the parent container allows centering */
+.team-member-card .member-header,
+.team-member .member-header {
+    text-align: center !important;
+}
+
+.team-member-card .member-header .member-title {
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
