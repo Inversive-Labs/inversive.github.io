@@ -349,13 +349,18 @@ div[style*="color: rgba(209, 213, 219"] pre {
 }
 
 .carousel-track {
-    animation: scroll 20s linear infinite;
+    animation: scroll 45s linear infinite;
     animation-delay: 1.5s;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
 }
 
 .carousel-logo {
     filter: grayscale(1) brightness(0.5);
-    transition: transform 0.3s ease, filter 0.3s ease;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), filter 0.3s ease;
+    will-change: transform, filter;
 }
 
 /* One-time wave effect on page load - each logo bounces with a delay */
@@ -900,9 +905,12 @@ div[style*="color: rgba(209, 213, 219"] pre {
 .carousel-track {
     display: flex;
     gap: 3rem;
-    animation: scroll 35s linear infinite;
+    animation: scroll 50s linear infinite;
     width: fit-content;
     align-items: center;
+    will-change: transform;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .carousel-logo {
@@ -986,7 +994,7 @@ div[style*="color: rgba(209, 213, 219"] pre {
 
     .carousel-track {
         gap: 2rem;
-        animation: scroll 25s linear infinite;
+        animation: scroll 35s linear infinite;
     }
 
     .carousel-logo {

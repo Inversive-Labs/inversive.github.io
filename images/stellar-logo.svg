@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" fill="none">
+  <g transform="translate(0, 10)">
+    <!-- Stellar rocket icon -->
+    <path d="M20 20 L25 10 L30 20 L28 20 L28 30 L22 30 L22 20 Z" fill="#000000"/>
+    <path d="M22 30 L20 35 L22 33 L25 35 L28 33 L30 35 L28 30 Z" fill="#000000"/>
+
+    <!-- Stellar text -->
+    <text x="40" y="28" font-family="Arial, sans-serif" font-size="24" font-weight="500" fill="#000000">Stellar</text>
+  </g>
+</svg>
