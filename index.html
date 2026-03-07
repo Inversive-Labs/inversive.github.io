@@ -24,8 +24,8 @@
     <!-- Load Monaco font -->
     <link href="/assets/css/fonts.css" rel="stylesheet" type="text/css"/>
 
-    <!-- Load Raleway font -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Load Inter font (Framer signature) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Team Subtitle Centering Fix - Must load last -->
     <link href="/assets/css/team-subtitle-fix.css" rel="stylesheet" type="text/css"/>
@@ -113,6 +113,79 @@
     <!-- Solid black bar with extra coverage for Safari mobile -->
     <div style="position: fixed; top: -100px; left: 0; width: 100vw; height: 112px; background-color: rgb(0,0,0); opacity: 1; z-index: 999999; pointer-events: none; -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);"></div>
 
+    <!-- Noise texture overlay (Framer-style grain) -->
+    <div class="noise-overlay"></div>
+
+    <!-- Ambient gradient orbs -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- Grid revealed through orbs -->
+    <div class="orb-grid orb-grid-1"></div>
+    <div class="orb-grid orb-grid-2"></div>
+    <div class="orb-grid orb-grid-3"></div>
+
+    <!-- Rising particles -->
+    <canvas id="particles-canvas" class="particles-canvas"></canvas>
+    <script>
+    (function() {
+        var canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var particles = [];
+        var count = 50;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 20,
+                r: Math.random() * 1 + 0.3,
+                speed: Math.random() * 0.5 + 0.2,
+                opacity: Math.random() * 0.2 + 0.08,
+                drift: 0
+            };
+        }
+
+        function init() {
+            resize();
+            particles = [];
+            for (var i = 0; i < count; i++) {
+                var p = createParticle();
+                p.y = Math.random() * canvas.height;
+                particles.push(p);
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.y -= p.speed;
+                p.x += p.drift;
+                if (p.y < -10) {
+                    particles[i] = createParticle();
+                    continue;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + p.opacity + ')';
+                ctx.fill();
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+        draw();
+    })();
+    </script>
+
     <!-- Navbar -->
     <div data-animation="default" class="navbar w-nav" data-easing2="ease" data-hide="true" data-easing="ease" data-collapse="medium" role="banner" data-duration="400" id="navbar">
         <div class="container nav">
@@ -151,13 +224,14 @@
                 Blockchain
                 <span class="h1-yellow"> Protocols</span>
             </h1>
-            <p class="paragraph-4">Expert security auditing, secure protocol development, and custom tooling for blockchain ecosystems. Combining advanced security research with tailored fuzzing and automation to protect cross-chain protocols and DeFi systems.</p>
+            <p class="paragraph-4">Expert security assessments, protocol development, and custom tooling for blockchain ecosystems. Combining advanced security research with AI-augmented automation to protect cross-chain protocols and DeFi systems.</p>
             <a href="#contact" class="button-big-copy w-inline-block">
                 <div class="button-text">Contact Us</div>
                 <div class="second-text">Contact Us</div>
             </a>
             <div class="logo-carousel">
                 <div class="carousel-track">
+                    <!-- Iteration 1 -->
                     <img src="/images/ethereum-logo.svg" alt="Ethereum" class="carousel-logo">
                     <img src="/images/solana-logo.svg" alt="Solana" class="carousel-logo">
                     <img src="/images/solidity-logo.svg" alt="Solidity" class="carousel-logo">
@@ -168,7 +242,40 @@
                     <img src="/images/anchor-logo.png" alt="Anchor" class="carousel-logo">
                     <img src="/images/circom-logo.png" alt="Circom" class="carousel-logo carousel-logo-large" style="height: 55px !important; width: 55px !important;">
                     <img src="/images/sui-logo.svg" alt="Sui" class="carousel-logo">
-                    <!-- Duplicate for seamless loop -->
+                    <!-- Iteration 2 -->
+                    <img src="/images/ethereum-logo.svg" alt="Ethereum" class="carousel-logo">
+                    <img src="/images/solana-logo.svg" alt="Solana" class="carousel-logo">
+                    <img src="/images/solidity-logo.svg" alt="Solidity" class="carousel-logo">
+                    <img src="/images/rust-logo.svg" alt="Rust" class="carousel-logo carousel-logo-large">
+                    <img src="/images/stellar-logo.png" alt="Stellar" class="carousel-logo" style="filter: invert(1);">
+                    <img src="/images/aptos-logo.png" alt="Aptos" class="carousel-logo">
+                    <img src="/images/move-logo.png" alt="Move" class="carousel-logo">
+                    <img src="/images/anchor-logo.png" alt="Anchor" class="carousel-logo">
+                    <img src="/images/circom-logo.png" alt="Circom" class="carousel-logo carousel-logo-large" style="height: 55px !important; width: 55px !important;">
+                    <img src="/images/sui-logo.svg" alt="Sui" class="carousel-logo">
+                    <!-- Iteration 3 -->
+                    <img src="/images/ethereum-logo.svg" alt="Ethereum" class="carousel-logo">
+                    <img src="/images/solana-logo.svg" alt="Solana" class="carousel-logo">
+                    <img src="/images/solidity-logo.svg" alt="Solidity" class="carousel-logo">
+                    <img src="/images/rust-logo.svg" alt="Rust" class="carousel-logo carousel-logo-large">
+                    <img src="/images/stellar-logo.png" alt="Stellar" class="carousel-logo" style="filter: invert(1);">
+                    <img src="/images/aptos-logo.png" alt="Aptos" class="carousel-logo">
+                    <img src="/images/move-logo.png" alt="Move" class="carousel-logo">
+                    <img src="/images/anchor-logo.png" alt="Anchor" class="carousel-logo">
+                    <img src="/images/circom-logo.png" alt="Circom" class="carousel-logo carousel-logo-large" style="height: 55px !important; width: 55px !important;">
+                    <img src="/images/sui-logo.svg" alt="Sui" class="carousel-logo">
+                    <!-- Iteration 4 -->
+                    <img src="/images/ethereum-logo.svg" alt="Ethereum" class="carousel-logo">
+                    <img src="/images/solana-logo.svg" alt="Solana" class="carousel-logo">
+                    <img src="/images/solidity-logo.svg" alt="Solidity" class="carousel-logo">
+                    <img src="/images/rust-logo.svg" alt="Rust" class="carousel-logo carousel-logo-large">
+                    <img src="/images/stellar-logo.png" alt="Stellar" class="carousel-logo" style="filter: invert(1);">
+                    <img src="/images/aptos-logo.png" alt="Aptos" class="carousel-logo">
+                    <img src="/images/move-logo.png" alt="Move" class="carousel-logo">
+                    <img src="/images/anchor-logo.png" alt="Anchor" class="carousel-logo">
+                    <img src="/images/circom-logo.png" alt="Circom" class="carousel-logo carousel-logo-large" style="height: 55px !important; width: 55px !important;">
+                    <img src="/images/sui-logo.svg" alt="Sui" class="carousel-logo">
+                    <!-- Iteration 5 -->
                     <img src="/images/ethereum-logo.svg" alt="Ethereum" class="carousel-logo">
                     <img src="/images/solana-logo.svg" alt="Solana" class="carousel-logo">
                     <img src="/images/solidity-logo.svg" alt="Solidity" class="carousel-logo">
@@ -186,35 +293,110 @@
     <div class="div-block-7"><div class="html-embed w-embed"></div></div>
 </div>
 
+<section id="trusted-by" class="section">
+    <div class="container">
+        <h2>Trusted By</h2>
+        <p class="paragraph-4">protocols building the future of Web3</p>
+
+        <div class="trusted-logos-carousel">
+            <div class="trusted-carousel-track">
+                <!-- Iteration 1 -->
+                <img src="/images/clients/68c469ed2785d44aa3317693_Fuul logo.svg" alt="Fuul" class="trusted-client-logo">
+                <img src="/images/clients/la-familia-name.png" alt="La Familia" class="trusted-client-logo logo-lafamilia">
+                <img src="/images/clients/logo-mixoor-t7XBqEOc.png" alt="Mixoor" class="trusted-client-logo logo-mixoor">
+                <img src="/images/clients/logo-neptun-web1.png" alt="Neptun" class="trusted-client-logo logo-neptun">
+                <img src="/images/clients/Smithii-png.webp" alt="Smithii" class="trusted-client-logo logo-smithii">
+                <!-- Iteration 2 -->
+                <img src="/images/clients/68c469ed2785d44aa3317693_Fuul logo.svg" alt="Fuul" class="trusted-client-logo">
+                <img src="/images/clients/la-familia-name.png" alt="La Familia" class="trusted-client-logo logo-lafamilia">
+                <img src="/images/clients/logo-mixoor-t7XBqEOc.png" alt="Mixoor" class="trusted-client-logo logo-mixoor">
+                <img src="/images/clients/logo-neptun-web1.png" alt="Neptun" class="trusted-client-logo logo-neptun">
+                <img src="/images/clients/Smithii-png.webp" alt="Smithii" class="trusted-client-logo logo-smithii">
+                <!-- Iteration 3 -->
+                <img src="/images/clients/68c469ed2785d44aa3317693_Fuul logo.svg" alt="Fuul" class="trusted-client-logo">
+                <img src="/images/clients/la-familia-name.png" alt="La Familia" class="trusted-client-logo logo-lafamilia">
+                <img src="/images/clients/logo-mixoor-t7XBqEOc.png" alt="Mixoor" class="trusted-client-logo logo-mixoor">
+                <img src="/images/clients/logo-neptun-web1.png" alt="Neptun" class="trusted-client-logo logo-neptun">
+                <img src="/images/clients/Smithii-png.webp" alt="Smithii" class="trusted-client-logo logo-smithii">
+                <!-- Iteration 4 -->
+                <img src="/images/clients/68c469ed2785d44aa3317693_Fuul logo.svg" alt="Fuul" class="trusted-client-logo">
+                <img src="/images/clients/la-familia-name.png" alt="La Familia" class="trusted-client-logo logo-lafamilia">
+                <img src="/images/clients/logo-mixoor-t7XBqEOc.png" alt="Mixoor" class="trusted-client-logo logo-mixoor">
+                <img src="/images/clients/logo-neptun-web1.png" alt="Neptun" class="trusted-client-logo logo-neptun">
+                <img src="/images/clients/Smithii-png.webp" alt="Smithii" class="trusted-client-logo logo-smithii">
+                <!-- Iteration 5 -->
+                <img src="/images/clients/68c469ed2785d44aa3317693_Fuul logo.svg" alt="Fuul" class="trusted-client-logo">
+                <img src="/images/clients/la-familia-name.png" alt="La Familia" class="trusted-client-logo logo-lafamilia">
+                <img src="/images/clients/logo-mixoor-t7XBqEOc.png" alt="Mixoor" class="trusted-client-logo logo-mixoor">
+                <img src="/images/clients/logo-neptun-web1.png" alt="Neptun" class="trusted-client-logo logo-neptun">
+                <img src="/images/clients/Smithii-png.webp" alt="Smithii" class="trusted-client-logo logo-smithii">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="testimonials" class="section">
+    <div class="container">
+        <h2>Testimonials</h2>
+        <p class="paragraph-4">What our clients say about working with us</p>
+
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"Inversive audited our v2 Solana program and delivered a thorough review with multiple types of testing and investigations. Fast turnaround, clear communication, and a detailed report that gave us real confidence. Looking forward to working with the Inversive team again!"</p>
+                    <div class="testimonial-author">
+                        <strong>Andre Brener</strong>
+                        <span class="testimonial-role">CTO, Fuul</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"The entire experience has been excellent, nothing but gratitude. Thank you for you professionalism every step of the way. We look forward to continuing to work together"</p>
+                    <div class="testimonial-author">
+                        <strong>Juan Manuel Sanchez</strong>
+                        <span class="testimonial-role">CEO, Mixoor</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-content">
+                    <p class="testimonial-text">"Overall very nice execution of the mission. We are very happy with it. Thanks for the professionalism and keeping the support all throughout"</p>
+                    <div class="testimonial-author">
+                        <strong>Kassi</strong>
+                        <span class="testimonial-role">CTO, Neptun</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section id="services" class="section">
     <div class="container">
         <h2>Services</h2>
         <div data-current="Tab 1" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
             <div class="tabs-menu w-tab-menu">
                 <a data-w-tab="Tab 1" class="tab-1 _1st w-inline-block w-tab-link w--current">
-                    <div>Smart Contract Audits</div>
+                    <div>Security Assessments</div>
                 </a>
                 <a data-w-tab="Tab 2" class="tab-1 w-inline-block w-tab-link">
-                    <div>Secure Development</div>
-                </a>
-                <a data-w-tab="Tab 3" class="tab-1 _3d w-inline-block w-tab-link">
-                    <div>Web2 Penetration Testing</div>
-                </a>
-                <a data-w-tab="Tab 4" class="tab-1 w-inline-block w-tab-link">
-                    <div>Infrastructure Security</div>
+                    <div>Protocol Development</div>
                 </a>
             </div>
             <div class="tabs-content w-tab-content">
                 <div data-w-tab="Tab 1" class="tab-pane-tab-1 w-tab-pane w--tab-active">
-                    <div class="service-title">Smart Contract Audits</div>
-                    <div class="tab-text">Protocol security reviews designed to uncover vulnerabilities through manual analysis and fuzzing campaigns. Our adversarial testing approach identifies critical vulnerabilities before they can be exploited.</div>
+                    <div class="service-title">Security Assessments</div>
+                    <div class="tab-text">Protocol security reviews designed to uncover vulnerabilities through AI-augmented manual analysis and automation. Our adversarial testing approach identifies critical vulnerabilities before they can be exploited.</div>
                     <div class="tab-text">
                         <strong>What we provide:</strong>
                         <ul class="tab-list">
-                            <li>Adversarial Testing Campaigns</li>
+                            <li>AI-Augmented Security Review</li>
                             <li>Security Architecture Analysis</li>
                             <li>Vulnerability Discovery & Remediation</li>
-                            <li>Security Reports & Coverage Reports</li>
+                            <li>Security & Coverage Reports</li>
                         </ul>
                     </div>
                     <div class="buttons">
@@ -229,14 +411,14 @@
                     </div>
                 </div>
                 <div data-w-tab="Tab 2" class="tab-pane-tab-2 w-tab-pane">
-                    <div class="service-title">Secure Development</div>
-                    <div class="tab-text">End-to-end secure protocol development from architecture design to production deployment with security-first engineering practices. We build robust systems designed to withstand attacks.</div>
+                    <div class="service-title">Protocol Development</div>
+                    <div class="tab-text">End-to-end protocol development from architecture design to production deployment. We build robust blockchain protocols and smart contracts with security built in from the ground up.</div>
                     <div class="tab-text">
                         <strong>What we provide:</strong>
                         <ul class="tab-list">
-                            <li>Security-Focused Protocol Development</li>
-                            <li>Threat Modeling & Architecture Review</li>
-                            <li>Continuous Security Integration</li>
+                            <li>Smart Contract & Protocol Development</li>
+                            <li>Architecture Design & Review</li>
+                            <li>Cross-Chain Integration</li>
                             <li>Production Deployment Support</li>
                         </ul>
                     </div>
@@ -248,52 +430,6 @@
                         <a href="#contact" class="button-big w-inline-block">
                             <div class="button-text">Get Started</div>
                             <div class="second-text">Get Started</div>
-                        </a>
-                    </div>
-                </div>
-                <div data-w-tab="Tab 3" class="tab-pane-tab-3 w-tab-pane">
-                    <div class="service-title">Web2 Penetration Testing</div>
-                    <div class="tab-text">Traditional security assessments for the off-chain infrastructure powering your blockchain applications. We secure the full stack from APIs to databases.</div>
-                    <div class="tab-text">
-                        <strong>What we provide:</strong>
-                        <ul class="tab-list">
-                            <li>Application Security Testing</li>
-                            <li>Infrastructure & API Assessment</li>
-                            <li>Web3 Integration Security Review</li>
-                            <li>Compliance & Best Practices</li>
-                        </ul>
-                    </div>
-                    <div class="buttons">
-                        <a href="/services/web2-penetration-testing" class="button-big w-inline-block" style="margin-right: 1rem;">
-                            <div class="button-text">Learn More</div>
-                            <div class="second-text">Learn More</div>
-                        </a>
-                        <a href="#contact" class="button-big w-inline-block">
-                            <div class="button-text">Request Assessment</div>
-                            <div class="second-text">Request Assessment</div>
-                        </a>
-                    </div>
-                </div>
-                <div data-w-tab="Tab 4" class="tab-pane-tab-4 w-tab-pane">
-                    <div class="service-title">Infrastructure Security</div>
-                    <div class="tab-text">Core blockchain infrastructure security including runtime environments, consensus mechanisms, and network-level protocol validation. We secure the foundation your protocols are built on.</div>
-                    <div class="tab-text">
-                        <strong>What we provide:</strong>
-                        <ul class="tab-list">
-                            <li>Consensus Layer Security</li>
-                            <li>Runtime & VM Analysis</li>
-                            <li>Network Protocol Fuzzing</li>
-                            <li>Infrastructure Hardening</li>
-                        </ul>
-                    </div>
-                    <div class="buttons">
-                        <a href="/services/infrastructure-security" class="button-big w-inline-block" style="margin-right: 1rem;">
-                            <div class="button-text">Learn More</div>
-                            <div class="second-text">Learn More</div>
-                        </a>
-                        <a href="#contact" class="button-big w-inline-block">
-                            <div class="button-text">Contact Us</div>
-                            <div class="second-text">Contact Us</div>
                         </a>
                     </div>
                 </div>
@@ -457,7 +593,7 @@
 
                     <div class="form-field">
                         <label for="Additional-information" class="field-label">Additional Information <span class="optional">(optional)</span></label>
-                        <textarea id="Additional-information" name="Additional-information" placeholder="Tell us about your project and security needs..." class="textarea w-input"></textarea>
+                        <textarea id="Additional-information" name="Additional-information" placeholder="Tell us about your project and your needs..." class="textarea w-input"></textarea>
                     </div>
 
                     <div class="div-block-13">
@@ -473,7 +609,7 @@
     <!-- Footer -->
     <style>
     .modern-footer {
-        border-top: 1px solid rgba(128, 128, 128, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 4rem;
         position: relative;
         background: #000000;
@@ -543,7 +679,7 @@
     .footer-brand .copyright {
         font-size: 0.7rem;
         color: rgba(255, 255, 255, 0.35);
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         white-space: nowrap;
     }
 
@@ -558,7 +694,7 @@
         font-size: 0.7rem;
         font-weight: 500;
         letter-spacing: 0.025em;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         margin-bottom: 0.4rem;
         color: rgba(255, 255, 255, 0.5);
     }
@@ -583,7 +719,7 @@
         font-size: 0.8rem;
         color: rgba(255, 255, 255, 0.5);
         text-decoration: none;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         transition: all 0.2s;
         display: inline-block;
     }
@@ -599,17 +735,17 @@
         font-size: 0.8rem;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
-        background: rgba(128, 128, 128, 0.1);
-        border: 1px solid rgba(128, 128, 128, 0.3);
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        border-radius: 8px;
         text-decoration: none;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         transition: all 0.2s;
     }
 
     .footer-contact-btn:hover {
-        background: rgba(128, 128, 128, 0.15);
-        border-color: rgba(128, 128, 128, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.18);
         transform: translateY(-1px);
     }
 

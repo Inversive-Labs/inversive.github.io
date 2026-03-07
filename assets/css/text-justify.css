@@ -33,7 +33,7 @@
 }
 
 /* General paragraph text throughout the landing page */
-.section p:not(.copyright):not(.footer-text) {
+.section p:not(.copyright):not(.footer-text):not(.service-subtitle) {
     text-align: justify !important;
     text-justify: inter-word;
 }
@@ -68,7 +68,7 @@ h1, h2, h3, h4, h5, h6 {
     .service-card-sophisticated .service-description,
     .blog-excerpt,
     .post-summary,
-    .section p:not(.copyright):not(.footer-text),
+    .section p:not(.copyright):not(.footer-text):not(.service-subtitle),
     .team-member-bio,
     .member-description {
         text-align: left !important;

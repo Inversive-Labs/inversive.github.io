@@ -412,12 +412,18 @@
 }
 
 @media (max-width: 768px) {
+    .service-hero .section-header {
+        text-align: center !important;
+    }
+
     .service-title {
         font-size: 2.5rem !important;
+        text-align: center !important;
     }
 
     .service-subtitle {
         font-size: 1.1rem !important;
+        text-align: center !important;
     }
 
     .steps-grid,

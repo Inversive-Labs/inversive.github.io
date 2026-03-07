@@ -24,8 +24,8 @@
     <!-- Load Monaco font -->
     <link href="/assets/css/fonts.css" rel="stylesheet" type="text/css"/>
 
-    <!-- Load Raleway font -->
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Load Inter font (Framer signature) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Team Subtitle Centering Fix - Must load last -->
     <link href="/assets/css/team-subtitle-fix.css" rel="stylesheet" type="text/css"/>
@@ -113,6 +113,79 @@
     <!-- Solid black bar with extra coverage for Safari mobile -->
     <div style="position: fixed; top: -100px; left: 0; width: 100vw; height: 112px; background-color: rgb(0,0,0); opacity: 1; z-index: 999999; pointer-events: none; -webkit-transform: translate3d(0,0,0); transform: translate3d(0,0,0);"></div>
 
+    <!-- Noise texture overlay (Framer-style grain) -->
+    <div class="noise-overlay"></div>
+
+    <!-- Ambient gradient orbs -->
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+    <div class="ambient-orb orb-3"></div>
+
+    <!-- Grid revealed through orbs -->
+    <div class="orb-grid orb-grid-1"></div>
+    <div class="orb-grid orb-grid-2"></div>
+    <div class="orb-grid orb-grid-3"></div>
+
+    <!-- Rising particles -->
+    <canvas id="particles-canvas" class="particles-canvas"></canvas>
+    <script>
+    (function() {
+        var canvas = document.getElementById('particles-canvas');
+        if (!canvas) return;
+        var ctx = canvas.getContext('2d');
+        var particles = [];
+        var count = 50;
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticle() {
+            return {
+                x: Math.random() * canvas.width,
+                y: canvas.height + Math.random() * 20,
+                r: Math.random() * 1 + 0.3,
+                speed: Math.random() * 0.5 + 0.2,
+                opacity: Math.random() * 0.2 + 0.08,
+                drift: 0
+            };
+        }
+
+        function init() {
+            resize();
+            particles = [];
+            for (var i = 0; i < count; i++) {
+                var p = createParticle();
+                p.y = Math.random() * canvas.height;
+                particles.push(p);
+            }
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (var i = 0; i < particles.length; i++) {
+                var p = particles[i];
+                p.y -= p.speed;
+                p.x += p.drift;
+                if (p.y < -10) {
+                    particles[i] = createParticle();
+                    continue;
+                }
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(255, 255, 255, ' + p.opacity + ')';
+                ctx.fill();
+            }
+            requestAnimationFrame(draw);
+        }
+
+        window.addEventListener('resize', resize);
+        init();
+        draw();
+    })();
+    </script>
+
     <!-- Navbar -->
     <div data-animation="default" class="navbar w-nav" data-easing2="ease" data-hide="true" data-easing="ease" data-collapse="medium" role="banner" data-duration="400" id="navbar">
         <div class="container nav">
@@ -143,6 +216,73 @@
     <div class="container">
         <h2>Portfolio</h2>
         <p class="paragraph-4">Security research, open source contributions, and responsible disclosure</p>
+
+        <h3>Web3 Security Audits</h3>
+        <p class="paragraph-4">Smart contract security assessments and invariant testing</p>
+
+        <table class="portfolio-table">
+            <thead>
+                <tr>
+                    <th>Report ID</th>
+                    <th>Type</th>
+                    <th>Protocol</th>
+                    <th>Chain</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Link</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ILAR-2026-01</td>
+                    <td>Security Assessment</td>
+                    <td>Fuul</td>
+                    <td>Solana</td>
+                    <td>Dec 22-29, 2025</td>
+                    <td>Smart contract security assessment of Fuul Solana Protocol smart contracts</td>
+                    <td>
+                        <a href="https://github.com/Inversive-Labs/audits/blob/main/Inversive-Fuul_ILAR-2026-01.pdf" target="_blank" class="table-link">
+                            View
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ILAR-2026-02</td>
+                    <td>Invariant Testing</td>
+                    <td>Fuul</td>
+                    <td>Solana</td>
+                    <td>Jan 8-15, 2026</td>
+                    <td>Invariant Testing of Fuul Solana Protocol with Solaris</td>
+                    <td>
+                        <a href="https://github.com/Inversive-Labs/audits/blob/main/Inversive-Fuul_ILAR-2026-02.pdf" target="_blank" class="table-link">
+                            View
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ILAR-2026-03</td>
+                    <td>Security Assessment</td>
+                    <td>Mixoor</td>
+                    <td>Solana</td>
+                    <td>Dec 29, 2025 - Feb 9, 2026</td>
+                    <td>Smart contract security assessment of Mixoor Solana privacy mixer protocol</td>
+                    <td>
+                        <a href="https://github.com/Inversive-Labs/audits/blob/main/Inversive-Mixoor_ILAR-2026-03.pdf" target="_blank" class="table-link">
+                            View
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
         <h3>Web2 Security Advisories</h3>
         <p class="paragraph-4">Responsible disclosure of vulnerabilities</p>
@@ -294,11 +434,24 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Radare2 sBPF Architecture Support</td>
+                    <td>Radare2</td>
                     <td>Solana</td>
-                    <td>Initial sBPF architecture support for Solana's sBPF v0, v1, v2 and v3 including disassembly, and Rust string aggregation capabilities for Solana programs</td>
+                    <td>Initial architecture support for sBPF v0, v1, v2 and v3 including disassembly and pseudo-decompilation with Rust string aggregation capabilities</td>
                     <td>
                         <a href="https://github.com/radareorg/radare2" target="_blank" class="table-link">
+                            View
+                            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Radius2</td>
+                    <td>Solana</td>
+                    <td>Initial architecture support for sBPF v0 symbolic execution</td>
+                    <td>
+                        <a href="https://github.com/radareorg/radius2" target="_blank" class="table-link">
                             View
                             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M7 13L10 10L7 7" stroke-linecap="round" stroke-linejoin="round"/>
@@ -409,7 +562,7 @@
     <!-- Footer -->
     <style>
     .modern-footer {
-        border-top: 1px solid rgba(128, 128, 128, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
         margin-top: 4rem;
         position: relative;
         background: #000000;
@@ -479,7 +632,7 @@
     .footer-brand .copyright {
         font-size: 0.7rem;
         color: rgba(255, 255, 255, 0.35);
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         white-space: nowrap;
     }
 
@@ -494,7 +647,7 @@
         font-size: 0.7rem;
         font-weight: 500;
         letter-spacing: 0.025em;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         margin-bottom: 0.4rem;
         color: rgba(255, 255, 255, 0.5);
     }
@@ -519,7 +672,7 @@
         font-size: 0.8rem;
         color: rgba(255, 255, 255, 0.5);
         text-decoration: none;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         transition: all 0.2s;
         display: inline-block;
     }
@@ -535,17 +688,17 @@
         font-size: 0.8rem;
         font-weight: 500;
         color: rgba(255, 255, 255, 0.9);
-        background: rgba(128, 128, 128, 0.1);
-        border: 1px solid rgba(128, 128, 128, 0.3);
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.10);
+        border-radius: 8px;
         text-decoration: none;
-        font-family: 'Geist', sans-serif;
+        font-family: 'Inter', -apple-system, sans-serif;
         transition: all 0.2s;
     }
 
     .footer-contact-btn:hover {
-        background: rgba(128, 128, 128, 0.15);
-        border-color: rgba(128, 128, 128, 0.5);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.18);
         transform: translateY(-1px);
     }
 

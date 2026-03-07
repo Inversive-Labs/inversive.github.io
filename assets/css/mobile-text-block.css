@@ -9,7 +9,7 @@
     .service-card-sophisticated .service-description,
     .blog-excerpt,
     .post-summary,
-    .section p:not(.copyright):not(.footer-text),
+    .section p:not(.copyright):not(.footer-text):not(.service-subtitle),
     .team-member-bio,
     .member-description {
         text-align: left !important;
@@ -48,7 +48,7 @@
 @media screen and (max-width: 479px) {
     .paragraph-4,
     .tab-text,
-    .section p:not(.copyright):not(.footer-text) {
+    .section p:not(.copyright):not(.footer-text):not(.service-subtitle) {
         line-height: 1.45 !important;
         letter-spacing: -0.02em !important;
         word-spacing: -0.08em !important;
