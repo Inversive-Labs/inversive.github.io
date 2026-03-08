@@ -140,9 +140,22 @@
     }
 
     function resize() {
-        w = window.innerWidth;
-        h = window.innerHeight;
-        isMobile = w <= 768;
+        var newW = window.innerWidth;
+        var newH = window.innerHeight;
+        isMobile = newW <= 768;
+
+        // On mobile, the URL bar show/hide changes innerHeight by ~50-100px.
+        // Setting canvas.width or .height clears the entire canvas, causing a
+        // blank flash until the next rAF redraws. Skip resize when only the
+        // height changed by a small amount (typical URL-bar toggle).
+        var widthChanged = newW !== w;
+        var heightDelta = Math.abs(newH - h);
+        if (!widthChanged && isMobile && heightDelta > 0 && heightDelta < 150 && w > 0) {
+            return;
+        }
+
+        w = newW;
+        h = newH;
 
         // Render at full CSS pixel resolution for crisp lines
         cw = w;
@@ -156,6 +169,9 @@
         coordScale = Math.max(scaleX, scaleY);
         coordOffX = (cw - 696 * coordScale) / 2;
         coordOffY = (ch - 316 * coordScale) / 2;
+
+        // Re-render immediately so the canvas is never blank after clearing
+        render();
     }
 
     // --- Easing ---
